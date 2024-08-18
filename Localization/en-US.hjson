@@ -2247,19 +2247,98 @@ Mods: {
 				Tooltip:
 					'''
 					Allows any bobber to shoot bullets when idle.
-					Shoots a bullet every 1.5 seconds.
+					Shoots every 1.5 seconds:
+					- A (meteorite) bullet
 					Maximum 5 minutes duration
 					'''
 			}
 
 			PistolTurretV2: {
-				DisplayName: Pistol Turret V2
-				Tooltip: ""
+				DisplayName: Pistol Turret v2
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A meteorite bullet
+					Maximum 7 minutes duration
+					'''
 			}
 
 			PistolTurretV3: {
-				DisplayName: Pistol Turret V3
-				Tooltip: ""
+				DisplayName: Pistol Turret v3
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A chlorophyte bullet
+					Maximum 10 minutes duration
+					'''
+			}
+
+			BeeTurretV1: {
+				DisplayName: Bee Turret
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots every 2 seconds:
+					- either a Bee straight to the target, or 2 Bees with 75% damage
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeeTurretV2: {
+				DisplayName: Bee Turret v2
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a spreader every 2 seconds that, when exhausted, spawns:
+					- either a Bee straight to the target, or 2 Bees with 75% damage
+					Maximum 7 minutes duration
+					'''
+			}
+
+			BeeTurretV3: {
+				DisplayName: Bee Turret v3
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a Lv 2 spreader every 2 seconds that, when exhausted, spawns:
+					- either a Bee straight to the target, or 2 Bees with 75% damage
+					Maximum 10 minutes duration
+					'''
+			}
+
+			BeetleTurretV1: {
+				DisplayName: Beetle Turret
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots every second:
+					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeetleTurretV2: {
+				DisplayName: Beetle Turret v2
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a spreader every second that, when exhausted, spawns:
+					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
+					Maximum 7 minutes duration
+					'''
+			}
+
+			BeetleTurretV3: {
+				DisplayName: Beetle Turret v3
+				Tooltip: 
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a Lv 2 spreader every second that, when exhausted, spawns:
+					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
+					Maximum 10 minutes duration
+					'''
 			}
 		}
 

@@ -79,7 +79,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     public class PistolTurretV2 : PistolTurret
     {
         public override int Level => 2;
-        public override int DurationInTicks => 24000;
+        public override int DurationInTicks => 25200;
         public override void SetDefaults()
         {
             base.SetDefaults();

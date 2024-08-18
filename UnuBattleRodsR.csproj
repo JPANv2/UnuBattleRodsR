@@ -53,6 +53,8 @@
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterChlorophyte.png" />
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterCrystal.png" />
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterMeteor.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV1.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV1.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV2.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV3.png" />
@@ -69,7 +71,6 @@
   <ItemGroup>
     <Folder Include="Items\Consumables\Discardables\PostMoonLord\" />
     <Folder Include="Items\Consumables\Options\" />
-    <Folder Include="Items\Consumables\Turrets\HardMode\" />
     <Folder Include="Items\Consumables\Turrets\PostMoonLord\" />
   </ItemGroup>
 </Project>
