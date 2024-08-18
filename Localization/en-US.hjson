@@ -1,0 +1,2557 @@
+Mods: {
+	UnuBattleRodsR: {
+		Currencies.FishSteaks: Fish Steaks
+
+		Tooltips: {
+			FishingDamage: "{0} Fishing Damage"
+			FishingDamageBobbers: ({0}x{1} bobbers)
+			FishingDamageBoost: Boosted by speed by {0}%
+			NoFishingDamage: No Fishing Damage
+			NoBobs: No bobs
+			BobSpeed: "{0} seconds per bobs ({1} ticks)"
+			ReelSpeedNoAcceleration: Cannot Reel, Tension multiplier: {0}
+			ReelSpeed: Reels at {0} pix/s (+{1}pix/s per tick) up to {2} pix/s
+			TensionMax: Breaks at {0} tension
+			TensionMaxNoLimit: Cannot break line
+			TensionSweetspot: Below {0} tension, {1}x {4}; At {2} tension or above, {3}x {4}. Scales in the middle.
+			TensionBobSpeed: Bob Speed
+			TensionBobDamage: Damage
+			TensionBobSpeedAndDamage: Bob Speed and Damage
+			DragSizeNoLimit: Always drags enemies towards you
+			DragSizeSmaller: Drags enemies at least {0}x smaller than you
+			DragSizeEqual: Drags enemies up to your size
+			DragSizeBigger: Drags enemies at most {0}x bigger than you
+			Syphon: Syphons {0}% mana
+			LifeSteal: Steals {0}% life
+			NeverDrops: Line always breaks when retracted
+			DropsPercentage: Line breaks {0}% of the time when retracted
+			AlwaysDrops: Line always drops to the floor when retracted
+			Retracts: Bobber can attach to enemies from behind
+			NoRetracts: Bobber cannot attach to enemies from behind
+			NoBaits: Cannot use baits
+			Baits: Uses {0} equipped baits at once
+			NoDiscardables: Cannot use discardable bobbers
+			Discardables: Uses {0} discardable bobbers at once
+		}
+
+		TownNPCMood: {
+			Fishylady: {
+				Content: This place is ok, I guess.
+				NoHome: I have no place to display my wares! Please, let me live somewhere.
+				LoveSpace: I have no choice but to sell it cheap to thrive here.
+				FarFromHome: I'm too far away from home. The trek there will be a killer!
+				DislikeCrowded: I can raise prices here because there are so many customers...
+				HateCrowded: There's more people here than in the Fish Market! That would be good if they bought something, but no...
+				LikeBiome: Living in the {BiomeName} is not so bad!
+				LoveBiome: I love the {BiomeName}, so many fish to catch and sell!
+				DislikeBiome: I really don't like it here...
+				HateBiome: This place is so bad, I don't feel like doing anything for you, {PlayerName}.
+				LikeNPC: "{NPCName} is great! They buy lots and lots from me! They sometimes even sell me stuff too!"
+				LoveNPC: Do you think {NPCName} notices me?
+				DislikeNPC: That {NPCName} terrifies me! Is he Man or Machine?
+				HateNPC: I hate {NPCName}. Why? No reason!
+			}
+		}
+
+		Tiles: {
+			SnowstormCrate.MapEntry: Snowstorm Crate
+			SlimeCrate.MapEntry: Slime Crate
+			ShroomiteCrate.MapEntry: Shroomite Crate
+			SandstormCrate.MapEntry: Sandstorm Crate
+			OldOnesCrate.MapEntry: Old Ones Crate
+			ObsidianCrate.MapEntry: Obsidian Crate
+			MimicCrate.MapEntry: Mimic Crate
+			MeteorCrate.MapEntry: Meteor Crate
+			MarbleCrate.MapEntry: Marble Crate
+			LuminiteCrate.MapEntry: Luminite Crate
+			HallowedCrate.MapEntry: Hallowed Crate
+			GraniteCrate.MapEntry: Granite Crate
+			GoblinCrate.MapEntry: Goblin Crate
+			FrostMoonCrate.MapEntry: Frost Moon Crate
+			FrostLegionCrate.MapEntry: Frost Legion Crate
+			EclipseCrate.MapEntry: Eclipse Crate
+			CritterCrate.MapEntry: Critter Crate
+			CrimsonCrate.MapEntry: Crimson Crate
+			CorruptCrate.MapEntry: Corrupt Crate
+			ChlorophyteCrate.MapEntry: Chlorophyte Crate
+			BloodCrate.MapEntry: Blood Crate
+			BeeCrate.MapEntry: Bee Crate
+			AnkhCrate.MapEntry: Ankh Crate
+			AlienCrate.MapEntry: Alien Crate
+			BaitWorkshop.MapEntry: Bait Workshop
+			SoulCrate.MapEntry: Soul Crate
+			SpookyCrate.MapEntry: Spooky Crate
+			TerraCrate.MapEntry: Terra Crate
+			TreasureCrate.MapEntry: Treasure Crate
+			WingCrate.MapEntry: Wing Crate
+		}
+
+		NPCs: {
+			CoolerBoss: {
+				DisplayName: Cooler Boss
+
+				BossChecklistIntegration: {
+					EntryName: Cooler
+					SpawnInfo: Fish in the ocean with an Icy Worm as Bait.
+					DespawnMessage: "{0} is no longer after you..."
+				}
+			}
+
+			CrateMimic.DisplayName: Odd Crate
+
+			Fishylady: {
+				DisplayName: Fishylady
+
+				TownNPCMood: {
+					Content: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.Content}"
+					NoHome: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.NoHome}"
+					FarFromHome: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.FarFromHome}"
+					LoveSpace: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.LoveSpace}"
+					DislikeCrowded: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.DislikeCrowded}"
+					HateCrowded: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.HateCrowded}"
+					LoveBiome: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.LoveBiome}"
+					DislikeBiome: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.DislikeBiome}"
+					LikeNPC: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.LikeNPC}"
+					DislikeNPC: "{$Mods.UnuBattleRodsR.TownNPCMood.Fishylady.DislikeNPC}"
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+
+				Census.SpawnCondition: Have a Fish Steak in your inventory
+			}
+		}
+
+		Buffs: {
+			BobEscalation: {
+				DisplayName: Bob Escalation
+				Description:
+					'''
+					(Old) 2% damage increase per second while attatched to the same enemy, up to 100%.
+					(New) Over Tension and Over Tension damage increased by 20%. Provides Over Tension.
+					'''
+			}
+
+			BobTimeReduction: {
+				DisplayName: Bob Time Reduction
+				Description: 25% less time between bobs
+			}
+
+			EnemyFrozenDebuff: {
+				DisplayName: Enemy Frozen Debuff
+				Description: Sticks an NPC in place.
+			}
+
+			FasterEscalationBuff: {
+				DisplayName: Faster Escalation Buff
+				Description:
+					'''
+					(Old) 5% damage increase per second while attatched to the same enemy, up to 100%.
+					(New) Max Tension increased by 20%. Over Tension and Over Tension damage increased by 50%. Provides Over Tension.
+					'''
+			}
+
+			Frostfire: {
+				DisplayName: Frostfire
+				Description: Cold burns!
+			}
+
+			FurtherEscalationBuff: {
+				DisplayName: Further Escalation Buff
+				Description:
+					'''
+					(Old)Bob Escalation can reach 300% Max Damage. Does not cause escalation damage.
+					(New)Increases Maximum Tension by double, and Maximum Over Tension Damage by 50%. Does not provide Over Tension.
+					'''
+			}
+
+			MaximumEscalationBuff: {
+				DisplayName: Maximum Escalation Buff
+				Description:
+					'''
+					(Old) 8% damage increase per second while attatched to the same enemy, up to 100 times normal damage.
+					(New) Over Tension and Over Tension Damage increased by 10 times. Maximum tension increased 8 times.
+					'''
+			}
+
+			Buddyfish: {
+				DisplayName: Buddyfish
+				Description: This pair will fight for you!
+			}
+
+			CratePetBuff: {
+				DisplayName: Crate Pet Buff
+				Description: A crate that helps you find crates!
+			}
+
+			PoweredBaitBuff: {
+				DisplayName: Powered Bait Buff
+				Description: You have the following Buffs active:
+			}
+
+			PoweredBaitDebuff: {
+				DisplayName: Powered Bait Debuff
+				Description: You have the following Debuffs active:
+			}
+
+			SandpaperBuff: {
+				DisplayName: Sandpaper Buff
+				Description: Bobber will remain when falling from a defeated enemy.
+			}
+
+			Solarfire: {
+				DisplayName: Solarfire
+				Description: From being too close to the sun.
+			}
+
+			FishingDamageBuff: {
+				DisplayName: Fishing Damage Buff
+				Description: Increases Fishing Damage by 25%
+			}
+
+			TensionOilBuff: {
+				DisplayName: Tension Oil Buff
+				Description: Decreases Minimum tension required by 50% and increases Maximum Tension by 50%
+			}
+
+			ActiveTurretBuff: {
+				DisplayName: Active Turret Buff
+				Description: Active:
+			}
+		}
+
+		Items: {
+			BaitDisperser: {
+				DisplayName: Bait Disperser
+				Tooltip: Inflicts used bait Debuffs to all surrounding enemies in a 8 block radius
+			}
+
+			WormCape: {
+				DisplayName: Cape of Worms
+				Tooltip:
+					'''
+					Spawns Worms as you walk.
+					Truffle worms do not flee from you
+					'''
+			}
+
+			BarbedHook: {
+				DisplayName: Barbed Hook
+				Tooltip: Increase fishing crit by 10%
+			}
+
+			CrateCallingHook: {
+				DisplayName: Crate Calling Hook
+				Tooltip: 5% chance for the enemy dropping a crate on kill. Crate type depends on the rod used
+			}
+
+			CurrencyHook: {
+				DisplayName: Currency Hook
+				Tooltip: 0.5% chance for hooked enemy to drop some money after a bob. Money types change with game progression
+			}
+
+			HeavenlyHook: {
+				DisplayName: Heavenly Hook
+				Tooltip: Increase fishing damage based on player altitude
+			}
+
+			HookSet: {
+				DisplayName: Hook Set
+				Tooltip:
+					'''
+					Increase fishing damage based on player altitude
+					Increase fishing damage if enemy is under water
+					Seals bobber-stuck enemies damage by 20%
+					Increase fishing crit by 20%
+					'''
+			}
+
+			RetractableHook: {
+				DisplayName: Retractable Hook
+				Tooltip: Allows the bobber to attack when returning to you!
+			}
+
+			RustyHook: {
+				DisplayName: Rusty Hook
+				Tooltip: Increase fishing damage if enemy is under water
+			}
+
+			SealedHook: {
+				DisplayName: Sealed Hook
+				Tooltip: Seals bobber-stuck enemies damage by 20%
+			}
+
+			SuperBarbedHook: {
+				DisplayName: Super Barbed Hook
+				Tooltip: Increase fishing crit by 20%
+			}
+
+			SuperiorBaitDisperser: {
+				DisplayName: Superior Bait Disperser
+				Tooltip: Inflicts used bait Debuffs to all surrounding enemies in a 16 block radius
+			}
+
+			UrgencyBobSpeeder: {
+				DisplayName: Urgency Bob Speeder
+				Tooltip: The lower the health, the faster the bob moves (up to 75% faster)
+			}
+
+			Wormicide: {
+				DisplayName: Wormicide
+				Tooltip: Doubles bobber damage when stuck on a worm-like enemy
+			}
+
+			BlazingFishingKnife: {
+				DisplayName: Blazing Fishing Knife
+				Tooltip:
+					'''
+					Attacks enemies who are very near you, once every second.
+					80 base Damage.
+					Average knockback.
+					Inflicts Solar Fire debuff.
+					Double damage to enemies stuck to your bobber.
+					'''
+			}
+
+			FishingKnife: {
+				DisplayName: Fishing Knife
+				Tooltip:
+					'''
+					Attacks enemies who are very near you, once every second.
+					40 base Damage.
+					Average knockback.
+					Double damage to enemies stuck to your bobber.
+					'''
+			}
+
+			FractaliteFishingKnife: {
+				DisplayName: Fractalite Fishing Knife
+				Tooltip:
+					'''
+					Attacks enemies who are near you, twice per second.
+					120 base Damage.
+					Strong knockback.
+					Inflicts Frost Fire debuff.
+					Double damage to enemies stuck to your bobber.
+					'''
+			}
+
+			WoodenFishingKnife: {
+				DisplayName: Wooden Fishing Knife
+				Tooltip:
+					'''
+					Attacks enemies who are almost touching you, once every 2 seconds.
+					15 base Damage.
+					Weak knockback.
+					Double damage to enemies stuck to your bobber.
+					'''
+			}
+
+			BobLoser: {
+				DisplayName: Bob Loser
+				Tooltip: Removes one fishing line from the rod using it. One line will always remain
+			}
+
+			BoxOfCountlessLures: {
+				DisplayName: Box Of Countless Lures
+				Tooltip: Allows for casting thirty-two extra lines while fishing
+			}
+
+			BoxOfLures: {
+				DisplayName: Box Of Lures
+				Tooltip: Allows for casting sixteen extra lines while fishing
+			}
+
+			DoubleBobLoser: {
+				DisplayName: Double Bob Loser
+				Tooltip: Removes two fishing lines from the rod using it. One line will always remain
+			}
+
+			DoubleLure: {
+				DisplayName: Double Lure
+				Tooltip: Allows for casting two extra lines while fishing
+			}
+
+			DoubleSelectiveBobbers: {
+				DisplayName: Double Selective Bobbers
+				Tooltip: Only two bobbers will hook to the same enemy
+			}
+
+			ExtraLure: {
+				DisplayName: Extra Lure
+				Tooltip: Allows for casting one extra lines while fishing
+			}
+
+			OctoLure: {
+				DisplayName: Octo Lure
+				Tooltip: Allows for casting eight extra lines while fishing
+			}
+
+			Omnilure: {
+				DisplayName: Omnilure
+				Tooltip:
+					'''
+					Forces only one lure, but with 20% more damage.
+					Increases Effect by 15% in hardmode and further 15% post Moonlord
+					'''
+			}
+
+			QuadBobLoser: {
+				DisplayName: Quad Bob Loser
+				Tooltip: Removes four fishing line from the rod using it. One line will always remain
+			}
+
+			QuadLure: {
+				DisplayName: Quad Lure
+				Tooltip: Allows for casting four extra lines while fishing
+			}
+
+			SelectiveBobbers: {
+				DisplayName: Selective Bobbers
+				Tooltip: Only one bobber will hook to the same enemy
+			}
+
+			SmartBobbers: {
+				DisplayName: Smart Bobbers
+				Tooltip: Bobbers will try to distribute themselves equaly on targeted enemies, on a two block range
+			}
+
+			TurretBobbers: {
+				DisplayName: Turret Bobbers
+				Tooltip:
+					'''
+					Bobbers will not hook to any enemy
+					30% extra Fishing Damage
+					100% extra Bob speed
+					'''
+			}
+
+			FastMetronome: {
+				DisplayName: Fast Metronome
+				Tooltip: Increases bob speed by 10%, but decreases fishing damage by 8%
+			}
+
+			HyperFastMetronome: {
+				DisplayName: Hyper Fast Metronome
+				Tooltip: Increases bob speed by 30%, but decreases fishing damage by 26%
+			}
+
+			HyperSlowMetronome: {
+				DisplayName: Hyper Slow Metronome
+				Tooltip: Increases fishing damage by 30%, but decreases bob speed by 20%
+			}
+
+			SlowMetronome: {
+				DisplayName: Slow Metronome
+				Tooltip: Increases fishing damage by 10%, but decreases bob speed by 5%
+			}
+
+			SuperFastMetronome: {
+				DisplayName: Super Fast Metronome
+				Tooltip: Increases bob speed by 20%, but decreases fishing damage by 18%
+			}
+
+			SuperSlowMetronome: {
+				DisplayName: Super Slow Metronome
+				Tooltip: Increases fishing damage by 20%, but decreases bob speed by 15%
+			}
+
+			BobAccelerator: {
+				DisplayName: Bob Accelerator
+				Tooltip: Increases your casting speed by 30%
+			}
+
+			BobScope: {
+				DisplayName: Bob Scope
+				Tooltip: Tries to hit all your bobbers where your cursor is aiming
+			}
+
+			DiscardableBobs: {
+				DisplayName: Discardable Bobs
+				Tooltip: Allows you to re-cast very fast if bobs are retrieved from an enemy (right-click with rod)
+			}
+
+			FasterFishingKit: {
+				DisplayName: Faster Fishing Kit
+				Tooltip:
+					'''
+					Allows you to re-cast very fast if bobs are retrieved from an enemy (right-click with rod).
+					   Tries to hit your bobber where your cursor is aiming.
+					Increases your casting speed by 30 %
+					'''
+			}
+
+			FishermansKit: {
+				DisplayName: Fishermans Kit
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your inventory!
+			}
+
+			FishermansKit1: {
+				DisplayName: Fishermans Kit1
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your piggy bank!
+			}
+
+			FishermansKit2: {
+				DisplayName: Fishermans Kit2
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your safe!
+			}
+
+			FishermansKit3: {
+				DisplayName: Fishermans Kit3
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your Defender's Forge!
+			}
+
+			FishermansKit4: {
+				DisplayName: Fishermans Kit4
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your Void Vault!
+			}
+
+			FishSlicer: {
+				DisplayName: Fish Slicer
+				Tooltip: Turns all caught fish into Fish Steaks (if they can be converted)
+			}
+
+			KillingGate: {
+				DisplayName: Killing Gate
+				Tooltip:
+					'''
+					Converts caught items with a Max Stack of 1 into coins.
+					Turns all caught fish into Fish Steaks (if they can be converted).
+					'''
+			}
+
+			MagneticTargetedThrow: {
+				DisplayName: Magnetic Targeted Throw
+				Tooltip:
+					'''
+					Sticks your bobbers to your mouse when getting too close.
+					Only works if your mouse is in the trajectory of the bobber.
+					They will follow the mouse until they either stick to something, get wet (with no Sinker) or you call them back.
+					'''
+			}
+
+			ManaEscalationReel: {
+				DisplayName: Mana Escalation Reel
+				Tooltip:
+					'''
+					Costs 8 mana per second while Reeling
+					Single-Gear Reel
+					Slow Gears: Decreases reeling acceleration by 20%
+					Fast Gears: Increases reeling acceleration by 20%
+					Provides Over Max Tension and Damage of 20% and decrease of Minimum tension by 20%
+					(Old)Increases bobber damage by 2% each second
+					'''
+			}
+
+			MaximumManaEscalationReel: {
+				DisplayName: Maximum Mana Escalation Reel
+				Tooltip:
+					'''
+					Costs 24 mana per second while Reeling
+					Quad-Gear Reel
+					Slow Gears: Decreases reeling acceleration by 20%/40%/60%/80%
+					Fast Gears: Increases reeling acceleration by 20%/40%/60%/80%
+					Provides Over Max Tension and Damage of 3x and decrease of Minimum tension by 60%
+					(Old)Increases bobber damage by 12% each second
+					'''
+			}
+
+			RetractableFasterFishingKit: {
+				DisplayName: Retractable Faster Fishing Kit
+				Tooltip:
+					'''
+					Allows you to re-cast very fast if bobs are retrieved from an enemy (right-click with rod)
+					Tries to hit your bobber where your cursor is aiming
+					Increases your casting speed by 30 %
+					Allows the bobber to attack when returning to you!
+					'''
+			}
+
+			SellGate: {
+				DisplayName: Sell Gate
+				Tooltip: Converts caught items with a Max Stack of 1 into coins
+			}
+
+			Sinker: {
+				DisplayName: Sinker
+				Tooltip:
+					'''
+					Makes bobbers Sink into water when cast. Does not allow for Fishing.
+					Also, 5% Bob speed and Fishing damage increase if the player is underwater
+					'''
+			}
+
+			StickyTargetedThrow: {
+				DisplayName: Sticky Targeted Throw
+				Tooltip:
+					'''
+					Sticks your bobbers to your mouse when getting too close
+					Only works if your mouse is in the trajectory of the bobber
+					They fall off if you remove the mouse
+					'''
+			}
+
+			StrongerManaEscalationReel: {
+				DisplayName: Stronger Mana Escalation Reel
+				Tooltip:
+					'''
+					Costs 16 mana per second while Reeling
+					Triple-Gear Reel
+					Slow Gears: Decreases reeling acceleration by 20%/40%/60%
+					Fast Gears: Increases reeling acceleration by 20%/40%/60%
+					Provides Over Max Tension and Damage of 150% and decrease of Minimum tension by 40%
+					(Old)Increases bobber damage by 7% each second
+					'''
+			}
+
+			TargetedThrow: {
+				DisplayName: Targeted Throw
+				Tooltip:
+					'''
+					Stops your bobbers when getting too close to your mouse
+					Only works if your mouse is in the trajectory of the bobber
+					'''
+			}
+
+			ManaShieldShaft: {
+				DisplayName: Mana Shield Shaft
+				Tooltip: Up to 15% of all damage received is deducted from your Mana instead
+			}
+
+			MaximumManaShieldShaft: {
+				DisplayName: Maximum Mana Shield Shaft
+				Tooltip: Up to 50% of all damage received is deducted from your Mana instead
+			}
+
+			ProjectileCancelerShaft: {
+				DisplayName: Projectile Canceler Shaft
+				Tooltip: 30% chance to disable an incoming hostile projectile if hooked to an enemy
+			}
+
+			StrongerManaShieldShaft: {
+				DisplayName: Stronger Mana Shield Shaft
+				Tooltip: Up to 30% of all damage received is deducted from your Mana instead
+			}
+
+			HookshotWire: {
+				DisplayName: Hookshot Wire
+				Tooltip: Always reeled in towards the enemy
+			}
+
+			LinkCable: {
+				DisplayName: Link Cable
+				Tooltip: Damage increased by ammount bobbers stuck to different enemies
+			}
+
+			MoonWire: {
+				DisplayName: Moon Wire
+				Tooltip: Increases fishing damage based on the weather, time and moon phase
+			}
+
+			RedirectorWire: {
+				DisplayName: Redirector Wire
+				Tooltip: Thorns damage is instead dealt equally to all enemies with your bobber attached
+			}
+
+			SyphoningWire: {
+				DisplayName: Syphoning Wire
+				Tooltip: Provides 10% mana Syphon on damage dealt with the bobber
+			}
+
+			ThornyRedirectorWire: {
+				DisplayName: Thorny Redirector Wire
+				Tooltip: Thorns damage is also dealt equally to all enemies with your bobber attached
+			}
+
+			TitanWire: {
+				DisplayName: Titan Wire
+				Tooltip: Can always reel in the enemy, no matter the size (except if immobile). Fishing line never breaks
+			}
+
+			VacuumWire: {
+				DisplayName: Vacuum Wire
+				Tooltip: Items in contact with the bobber will be picked up
+			}
+
+			VampiricWire: {
+				DisplayName: Vampiric Wire
+				Tooltip: Provides 10% life steal on damage dealt with the bobber
+			}
+
+			EvilHatOfBlood: {
+				DisplayName: Evil Hat Of Blood
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Bob Speed and Fishing Damage by 5%
+					'''
+			}
+
+			EvilHatOfDarkness: {
+				DisplayName: Evil Hat Of Darkness
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Bob Speed and Fishing Damage by 5%
+					'''
+			}
+
+			EvilPantsOfBlood: {
+				DisplayName: Evil Pants Of Blood
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Bob Speed and Fishing Damage by 5%
+					'''
+			}
+
+			EvilPantsOfDarkness: {
+				DisplayName: Evil Pants Of Darkness
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Bob Speed and Fishing Damage by 5%
+					'''
+			}
+
+			EvilVestOfBlood: {
+				DisplayName: Evil Vest Of Blood
+				Tooltip:
+					'''
+					Increases Fishing Skill by 10
+					Increases Bob Speed and Fishing Damage by 8%
+					'''
+			}
+
+			EvilVestOfDarkness: {
+				DisplayName: Evil Vest Of Darkness
+				Tooltip:
+					'''
+					Increases Fishing Skill by 10
+					Increases Bob Speed and Fishing Damage by 8%
+					'''
+			}
+
+			HardTriadHat: {
+				DisplayName: Hard Triad Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 12
+					Increases Bob Speed and Fishing Damage by 8%
+					'''
+			}
+
+			HardTriadPants: {
+				DisplayName: Hard Triad Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 13
+					Increases Bob Speed and Fishing Damage by 8%
+					'''
+			}
+
+			HardTriadVest: {
+				DisplayName: Hard Triad Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 15
+					Increases Bob Speed and Fishing Damage by 12%
+					'''
+			}
+
+			LifeforceHat: {
+				DisplayName: Lifeforce Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 20
+					Increases Bob Speed and Fishing Damage by 12%
+					'''
+			}
+
+			LifeforcePants: {
+				DisplayName: Lifeforce Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 20
+					Increases Bob Speed and Fishing Damage by 20%
+					'''
+			}
+
+			LifeforceVest: {
+				DisplayName: Lifeforce Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 25
+					Increases Bob Speed and Fishing Damage by 16%
+					'''
+			}
+
+			BeeteoriteHat: {
+				DisplayName: Beeteorite Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 12
+					Increases Bob Speed and Fishing Damage by 12%
+					'''
+			}
+
+			BeeteoritePants: {
+				DisplayName: Beeteorite Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 15
+					Increases Bob Speed and Fishing Damage by 12%
+					'''
+			}
+
+			BeeteoriteVest: {
+				DisplayName: Beeteorite Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 20
+					Increases Bob Speed and Fishing Damage by 20%
+					'''
+			}
+
+			FlinxHat: {
+				DisplayName: Flinx Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 3
+					Increases Bob Speed and Fishing Damage by 3%
+					Made out of real Flinx!
+					'''
+			}
+
+			SnowSlothPants: {
+				DisplayName: Snow Sloth Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 3
+					Increases Bob Speed and Fishing Damage by 2%
+					Made out of real Flinx!
+					'''
+			}
+
+			SnowSlothVest: {
+				DisplayName: Snow Sloth Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 5
+					Increases Bob Speed and Fishing Damage by 3%
+					Made out of real Flinx!
+					'''
+			}
+
+			StarmixHat: {
+				DisplayName: Starmix Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 6
+					Increases Bob Speed by 5%
+					Gives doubles defense in Hardmode
+					'''
+			}
+
+			StarmixPants: {
+				DisplayName: Starmix Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 6
+					Increases Bob Speed by 5%
+					Gives doubles defense in Hardmode
+					'''
+			}
+
+			StarmixVest: {
+				DisplayName: Starmix Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Fishing Damage by 5%
+					Gives doubles defense in Hardmode
+					'''
+			}
+
+			VacationHat: {
+				DisplayName: Vacation Hat
+				Tooltip: Increases Fishing Skill by 3
+			}
+
+			VacationPants: {
+				DisplayName: Vacation Pants
+				Tooltip: Increases Fishing Skill by 3
+			}
+
+			VacationVest: {
+				DisplayName: Vacation Vest
+				Tooltip: Increases Fishing Skill by 5
+			}
+
+			WerewolfHat: {
+				DisplayName: Werewolf Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill damage and bob speed.
+					Nighttime and Moon Phases alter stats.
+					Moon events too!
+					Werewolf friendly
+					'''
+			}
+
+			WerewolfPants: {
+				DisplayName: Werewolf Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill damage and bob speed.
+					Nighttime and Moon Phases alter stats.
+					Moon events too!
+					Werewolf friendly
+					'''
+			}
+
+			WerewolfVest: {
+				DisplayName: Werewolf Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill damage and bob speed.
+					Nighttime and Moon Phases alter stats.
+					Moon events too!
+					Werewolf friendly
+					'''
+			}
+
+			FractaliteHat: {
+				DisplayName: Fractalite Hat
+				Tooltip:
+					'''
+					Increases Fishing Skill by 30
+					Increases Bob Speed and Fishing Damage by 15%
+					'''
+			}
+
+			FractalitePants: {
+				DisplayName: Fractalite Pants
+				Tooltip:
+					'''
+					Increases Fishing Skill by 30
+					Increases Bob Speed and Fishing Damage by 10%
+					Increases movement speed by 35%
+					'''
+			}
+
+			FractaliteVest: {
+				DisplayName: Fractalite Vest
+				Tooltip:
+					'''
+					Increases Fishing Skill by 50
+					Increases Bob Speed and Fishing Damage by 20%
+					'''
+			}
+
+			DoctorBait: {
+				DisplayName: Doctor Bait
+				Tooltip: Heals you just right
+			}
+
+			DryadApprenticeBait: {
+				DisplayName: Dryad Apprentice Bait
+				Tooltip: Dryad protection in bait form
+			}
+
+			DryadBait: {
+				DisplayName: Dryad Bait
+				Tooltip: Dryad protection in bait form
+			}
+
+			DryadMasterBait: {
+				DisplayName: Dryad Master Bait
+				Tooltip: Dryad protection in bait form
+			}
+
+			BetsyCurseApprenticeBait: {
+				DisplayName: Betsy Curse Apprentice Bait
+				Tooltip: Curse of the Dragon!
+			}
+
+			BetsyCurseBait: {
+				DisplayName: Betsy Curse Bait
+				Tooltip: Curse of the Dragon!
+			}
+
+			BetsyCurseMasterBait: {
+				DisplayName: Betsy Curse Master Bait
+				Tooltip: Curse of the Dragon!
+			}
+
+			ConfusionApprenticeBait: {
+				DisplayName: Confusion Apprentice Bait
+				Tooltip: Confusing bugs!
+			}
+
+			ConfusionBait: {
+				DisplayName: Confusion Bait
+				Tooltip: Confusing bugs!
+			}
+
+			ConfusionMasterBait: {
+				DisplayName: Confusion Master Bait
+				Tooltip: Confusing bugs!
+			}
+
+			CursedFlameApprenticeBait: {
+				DisplayName: Cursed Flame Apprentice Bait
+				Tooltip: The power of Green Fire!
+			}
+
+			CursedFlameBait: {
+				DisplayName: Cursed Flame Bait
+				Tooltip: The power of Green Fire!
+			}
+
+			CursedFlameMasterBait: {
+				DisplayName: Cursed Flame Master Bait
+				Tooltip: The power of Green Fire!
+			}
+
+			FireApprenticeBait: {
+				DisplayName: Fire Apprentice Bait
+				Tooltip: Hot to the touch!
+			}
+
+			FireBait: {
+				DisplayName: Fire Bait
+				Tooltip: Hot to the touch!
+			}
+
+			FireMasterBait: {
+				DisplayName: Fire Master Bait
+				Tooltip: Hot to the touch!
+			}
+
+			FrostburnApprenticeBait: {
+				DisplayName: Frostburn Apprentice Bait
+				Tooltip: Cold to the touch!
+			}
+
+			FrostburnBait: {
+				DisplayName: Frostburn Bait
+				Tooltip: Cold to the touch!
+			}
+
+			FrostburnMasterBait: {
+				DisplayName: Frostburn Master Bait
+				Tooltip: Cold to the touch!
+			}
+
+			FrostfireApprenticeBait: {
+				DisplayName: Frostfire Apprentice Bait
+				Tooltip: Its either too hot or too cold!
+			}
+
+			FrostfireBait: {
+				DisplayName: Frostfire Bait
+				Tooltip: Its either too hot or too cold!
+			}
+
+			FrostfireMasterBait: {
+				DisplayName: Frostfire Master Bait
+				Tooltip: Its either too hot or too cold!
+			}
+
+			IchorApprenticeBait: {
+				DisplayName: Ichor Apprentice Bait
+				Tooltip: Icky and Sticky!
+			}
+
+			IchorBait: {
+				DisplayName: Ichor Bait
+				Tooltip: Icky and Sticky!
+			}
+
+			IchorMasterBait: {
+				DisplayName: Ichor Master Bait
+				Tooltip: Icky and Sticky!
+			}
+
+			MidasApprenticeBait: {
+				DisplayName: Midas Apprentice Bait
+				Tooltip: Turns enemies into Coins!
+			}
+
+			MidasBait: {
+				DisplayName: Midas Bait
+				Tooltip: Turns enemies into Coins!
+			}
+
+			MidasMasterBait: {
+				DisplayName: Midas Master Bait
+				Tooltip: Turns enemies into Coins!
+			}
+
+			OilApprenticeBait: {
+				DisplayName: Oil Apprentice Bait
+				Tooltip: Very flammable!
+			}
+
+			OilBait: {
+				DisplayName: Oil Bait
+				Tooltip: Very flammable!
+			}
+
+			OilMasterBait: {
+				DisplayName: Oil Master Bait
+				Tooltip: Very flammable!
+			}
+
+			PoisonApprenticeBait: {
+				DisplayName: Poison Apprentice Bait
+				Tooltip: Poisonous!
+			}
+
+			PoisonBait: {
+				DisplayName: Poison Bait
+				Tooltip: Poisonous!
+			}
+
+			PoisonMasterBait: {
+				DisplayName: Poison Master Bait
+				Tooltip: Poisonous!
+			}
+
+			ShadowflameApprenticeBait: {
+				DisplayName: Shadowflame Apprentice Bait
+				Tooltip: Straight from the goblins!
+			}
+
+			ShadowflameBait: {
+				DisplayName: Shadowflame Bait
+				Tooltip: Straight from the goblins!
+			}
+
+			ShadowflameMasterBait: {
+				DisplayName: Shadowflame Master Bait
+				Tooltip: Straight from the goblins!
+			}
+
+			Shadowflame: {
+				DisplayName: Shadowflame
+				Tooltip: Purest flame from the Goblin Summoners
+			}
+
+			SolarfireApprenticeBait: {
+				DisplayName: Solarfire Apprentice Bait
+				Tooltip: Hot as the Sun!
+			}
+
+			SolarfireBait: {
+				DisplayName: Solarfire Bait
+				Tooltip: Hot as the Sun!
+			}
+
+			SolarfireMasterBait: {
+				DisplayName: Solarfire Master Bait
+				Tooltip: Hot as the Sun!
+			}
+
+			VenomApprenticeBait: {
+				DisplayName: Venom Apprentice Bait
+				Tooltip: Venomous!
+			}
+
+			VenomBait: {
+				DisplayName: Venom Bait
+				Tooltip: Venomous!
+			}
+
+			VenomMasterBait: {
+				DisplayName: Venom Master Bait
+				Tooltip: Venomous!
+			}
+
+			IceyWorm: {
+				DisplayName: Icey Worm
+				Tooltip: I wonder what I could catch with this...
+			}
+
+			CoolerBossBag: {
+				DisplayName: Treasure Bag (Cooler)
+				Tooltip: Right click to open
+			}
+
+			Sandpaper: {
+				DisplayName: Sandpaper
+				Tooltip: Smooths things, including Bobbers, allowing them to mostly fall to the floor after killing or being jerked free from an enemy.
+			}
+
+			AlienCrate: {
+				DisplayName: Alien Crate
+				Tooltip: Right-click to open
+			}
+
+			AnkhCrate: {
+				DisplayName: Ankh Crate
+				Tooltip: Right-click to open
+			}
+
+			BeeCrate: {
+				DisplayName: Bee Crate
+				Tooltip: Right-click to open
+			}
+
+			BloodCrate: {
+				DisplayName: Blood Crate
+				Tooltip: Right-click to open
+			}
+
+			ChlorophyteCrate: {
+				DisplayName: Chlorophyte Crate
+				Tooltip: Right-click to open
+			}
+
+			CorruptCrate: {
+				DisplayName: Corrupt Crate
+				Tooltip: Right-click to open
+			}
+
+			CrimsonCrate: {
+				DisplayName: Crimson Crate
+				Tooltip: Right-click to open
+			}
+
+			CritterCrate: {
+				DisplayName: Critter Crate
+				Tooltip: Right-click to open
+			}
+
+			EclipseCrate: {
+				DisplayName: Eclipse Crate
+				Tooltip: Right-click to open
+			}
+
+			FrostLegionCrate: {
+				DisplayName: Frost Legion Crate
+				Tooltip: Right-click to open
+			}
+
+			FrostMoonCrate: {
+				DisplayName: Frost Moon Crate
+				Tooltip: Right-click to open
+			}
+
+			GoblinCrate: {
+				DisplayName: Goblin Crate
+				Tooltip: Right-click to open
+			}
+
+			GraniteCrate: {
+				DisplayName: Granite Crate
+				Tooltip: Right-click to open
+			}
+
+			HallowedCrate: {
+				DisplayName: Hallowed Crate
+				Tooltip: Right-click to open
+			}
+
+			LuminiteCrate: {
+				DisplayName: Luminite Crate
+				Tooltip: Right-click to open
+			}
+
+			MarbleCrate: {
+				DisplayName: Marble Crate
+				Tooltip: Right-click to open
+			}
+
+			MeteorCrate: {
+				DisplayName: Meteor Crate
+				Tooltip: Right-click to open
+			}
+
+			MimicCrate: {
+				DisplayName: Odd Crate
+				Tooltip: Something tells me I should not try and open this...
+			}
+
+			ObsidianCrate: {
+				DisplayName: Obsidian Crate
+				Tooltip: Right-click to open
+			}
+
+			OldOnesCrate: {
+				DisplayName: Old Ones Crate
+				Tooltip: Right-click to open
+			}
+
+			SandstormCrate: {
+				DisplayName: Sandstorm Crate
+				Tooltip: Right-click to open
+			}
+
+			ShroomiteCrate: {
+				DisplayName: Shroomite Crate
+				Tooltip: Right-click to open
+			}
+
+			SlimeCrate: {
+				DisplayName: Slime Crate
+				Tooltip: Right-click to open
+			}
+
+			SnowstormCrate: {
+				DisplayName: Snowstorm Crate
+				Tooltip: Right-click to open
+			}
+
+			SoulCrate: {
+				DisplayName: Soul Crate
+				Tooltip: Right-click to open
+			}
+
+			SpookyCrate: {
+				DisplayName: Spooky Crate
+				Tooltip: Right-click to open
+			}
+
+			TerraCrate: {
+				DisplayName: Terra Crate
+				Tooltip: Right-click to open
+			}
+
+			TreasureCrate: {
+				DisplayName: Treasure Crate
+				Tooltip: Right-click to open
+			}
+
+			WingCrate: {
+				DisplayName: Wing Crate
+				Tooltip: Right-click to open
+			}
+
+			FishSteaks: {
+				DisplayName: Fish Steaks
+				Tooltip: Made from Fish, used as Currency
+			}
+
+			BetsyBobbers: {
+				DisplayName: Betsy Bobbers
+				Tooltip: Will shoot two Flying Dragon's sonic booms when breaking the line
+			}
+
+			DynamiteBobbers: {
+				DisplayName: Dynamite Bobbers
+				Tooltip: Will leave a Dynamite behind when breaking the line. Not tile friendly.
+			}
+
+			ExplosiveBobbers: {
+				DisplayName: Explosive Bobbers
+				Tooltip: Will leave a grenade behind when breaking the line
+			}
+
+			MolotovBobbers: {
+				DisplayName: Molotov Bobbers
+				Tooltip: Will leave a fire behind when breaking the line that spawns fires
+			}
+
+			NuclearBobbers: {
+				DisplayName: Nuclear Bobbers
+				Tooltip: Will leave an Inferno blast behind when breaking the line
+			}
+
+			SandnadoBobbers: {
+				DisplayName: Sandnado Bobbers
+				Tooltip: Will leave a Sandnado behind when breaking the line
+			}
+
+			ScytheBobbers: {
+				DisplayName: Scythe Bobbers
+				Tooltip: Will shoot two Demon Scythes when breaking the line
+			}
+
+			ShadowBobbers: {
+				DisplayName: Shadow Bobbers
+				Tooltip: Will leave behind spinning blades when breaking the line
+			}
+
+			SnowyBobbers: {
+				DisplayName: Snowy Bobbers
+				Tooltip: Will leave a freezing core behind that will freeze enemies in place (except the one it's attatched to)
+			}
+
+			SpikyBallBobbers: {
+				DisplayName: Spiky Ball Bobbers
+				Tooltip: Will leave a bunck of Spiky Balls behind when breaking the line
+			}
+
+			ApprenticeBaitBox: {
+				DisplayName: Apprentice Bait Box
+				Tooltip:
+					'''
+					A box containing 6 Apprentice Bait
+					Right-click to open it
+					'''
+			}
+
+			BetsyBobbersBox: {
+				DisplayName: Betsy Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Betsy Bobbers
+					Right-click to open it
+					'''
+			}
+
+			DynamiteBobbersBox: {
+				DisplayName: Dynamite Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Dynamite Bobbers
+					Right-click to open it
+					'''
+			}
+
+			ExplosiveBobbersBox: {
+				DisplayName: Explosive Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Explosive Bobbers
+					Right-click to open it
+					'''
+			}
+
+			MolotovBobbersBox: {
+				DisplayName: Molotov Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Molotov Bobbers
+					Right-click to open it
+					'''
+			}
+
+			NuclearBobbersBox: {
+				DisplayName: Nuclear Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Nuclear Bobbers
+					Right-click to open it
+					'''
+			}
+
+			SandnadoBobbersBox: {
+				DisplayName: Sandnado Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Sandnado Bobbers
+					Right-click to open it
+					'''
+			}
+
+			ScytheBobbersBox: {
+				DisplayName: Scythe Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Scythe Bobbers
+					Right-click to open it
+					'''
+			}
+
+			ShadowBobbersBox: {
+				DisplayName: Shadow Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Shadow Bobbers
+					Right-click to open it
+					'''
+			}
+
+			SnowyBobbersBox: {
+				DisplayName: Snowy Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Snowy Bobbers
+					Right-click to open it
+					'''
+			}
+
+			SpikyBallBobbersBox: {
+				DisplayName: Spiky Ball Bobbers Box
+				Tooltip:
+					'''
+					A box containing 6 Spiky Ball Bobbers
+					Right-click to open it
+					'''
+			}
+
+			JourneymanBaitBox: {
+				DisplayName: Journeyman Bait Box
+				Tooltip:
+					'''
+					A box containing 6 Journeyman Bait
+					Right-click to open it
+					'''
+			}
+
+			MasterBaitBox: {
+				DisplayName: Master Bait Box
+				Tooltip:
+					'''
+					A box containing 6 Master Bait
+					Right-click to open it
+					'''
+			}
+
+			BetsyScales: {
+				DisplayName: Betsy Scales
+				Tooltip: ""
+			}
+
+			CrustyStar: {
+				DisplayName: Crusty Star
+				Tooltip:
+					'''
+					A fallen star, crusty with obsidian.
+					To be used in the Extractinator.
+					'''
+			}
+
+			EnergyAmalgamate: {
+				DisplayName: Energy Amalgamate
+				Tooltip: Concentrated Souls
+			}
+
+			FractaliteBar: {
+				DisplayName: Fractalite Bar
+				Tooltip: ""
+			}
+
+			FungalSpores: {
+				DisplayName: Fungal Spores
+				Tooltip: This could be used to prepare fur
+			}
+
+			HoneyStar: {
+				DisplayName: Honey Star
+				Tooltip:
+					'''
+					Fallen stars, glued together by bees.
+					Burn off the honey on the Furnace.
+					'''
+			}
+
+			LesserEnergyAmalgamate: {
+				DisplayName: Lesser Energy Amalgamate
+				Tooltip: Concentrated Souls Lite
+			}
+
+			MasterBaiterCertificate: {
+				DisplayName: Certificate of a Master Baiter
+				Tooltip: Allows you to craft Powered Baits when placed in the world
+			}
+
+			SeaweedStar: {
+				DisplayName: Seaweed Star
+				Tooltip:
+					'''
+					A Fallen star, covered in damp (sea)weed.
+					Burn off the weed on the Furnace.
+					'''
+			}
+
+			StarMix: {
+				DisplayName: Star Mix
+				Tooltip: A Royal Kind of Gel
+			}
+
+			Buddylure: {
+				DisplayName: Buddylure
+				Tooltip:
+					'''
+					Summons two buddy fish to fight for you
+					Double damage against regular enemies!
+					'''
+			}
+
+			CoolerPart: {
+				DisplayName: Cooler Part
+				Tooltip: ""
+			}
+
+			FishSteakPart: {
+				DisplayName: Fish Steak Part
+				Tooltip: ""
+			}
+
+			CratePetItem: {
+				DisplayName: Crate Charm
+				Tooltip: Summons a Crate Pet that greatly helps you fish crates
+			}
+
+			BobEscalationPotion: {
+				DisplayName: Bob Escalation Potion
+				Tooltip:
+					'''
+					(Old) 2% damage increase per second while attatched to the same enemy, up to 100%.
+					(New) Over Tension and Over Tension damage increased by 20%. Provides Over Tension.
+					'''
+			}
+
+			BobSpeedingPotion: {
+				DisplayName: Bob Speeding Potion
+				Tooltip: Increases your bob speed by 25%
+			}
+
+			FasterEscalationPotion: {
+				DisplayName: Faster Escalation Potion
+				Tooltip:
+					'''
+					(Old) 5% damage increase per second while attatched to the same enemy, up to 100%.
+					(New) Max Tension increased by 20%. Over Tension and Over Tension damage increased by 50%. Provides Over Tension.
+					'''
+			}
+
+			FurtherEscalationPotion: {
+				DisplayName: Further Escalation Potion
+				Tooltip:
+					'''
+					(Old)Bob Escalation can reach 300% Max Damage. Does not cause escalation damage.
+					(New)Increases Maximum Tension by double, and Maximum Over Tension Damage by 50%. Does not provide Over Tension.
+					'''
+			}
+
+			MaximumEscalationPotion: {
+				DisplayName: Maximum Escalation Potion
+				Tooltip:
+					'''
+					(Old) 8% damage increase per second while attatched to the same enemy, up to 100 times normal damage.
+					(New) Over Tension and Over Tension Damage increased by 10 times. Maximum tension increased 8 times.
+					'''
+			}
+
+			AdamantiteBattlerod: {
+				DisplayName: Adamantite Battlerod
+				Tooltip: ""
+			}
+
+			BeeteoriteBattlerod: {
+				DisplayName: Beeteorite Battlerod
+				Tooltip:
+					'''
+					Spawns fire bees that inflict On Fire and any other debuffs your baits may have
+					Bait time decreased each time bees get spawned
+					'''
+			}
+
+			BeetleBattlerod: {
+				DisplayName: Beetle Battlerod
+				Tooltip: Releases beetles
+			}
+
+			BetsyBattlerod: {
+				DisplayName: Betsy Battlerod
+				Tooltip:
+					'''
+					Inflicts Betsy's Curse debuff(on npcs)
+					Allows 2 different powered baits at once
+					'''
+			}
+
+			BlazeBeetleBattlerod: {
+				DisplayName: Blaze Beetle Battlerod
+				Tooltip: Releases blazing, exploding beetles
+			}
+
+			ChlorophyteBattlerod: {
+				DisplayName: Chlorophyte Battlerod
+				Tooltip: Spreads spores when idle
+			}
+
+			CobaltBattlerod: {
+				DisplayName: Cobalt Battlerod
+				Tooltip: ""
+			}
+
+			DeerstruckBattlerod: {
+				DisplayName: Deerstruck Battlerod
+				Tooltip: Shadow hands and Falling stars...
+			}
+
+			DragonMixBattlerod: {
+				DisplayName: Dragon Mix Battlerod
+				Tooltip:
+					'''
+					The Power of Dragons!
+					Inflicts Betsy's Curse debuff(on npcs).
+					Releases bubbles.
+					Allows 2 different powered baits at once
+					'''
+			}
+
+			EmpresssPersonalBattlerod: {
+				DisplayName: Empress's Personal Battlerod
+				Tooltip: Pretty Lights!
+			}
+
+			EvilRodOfBlood: {
+				DisplayName: Evil Rod Of Blood
+				Tooltip: Provides slight life steal
+			}
+
+			EvilRodOfDarkness: {
+				DisplayName: Evil Rod Of Darkness
+				Tooltip: Provides slight mana shyphon
+			}
+
+			FishronBattlerod: {
+				DisplayName: Fishron Battlerod
+				Tooltip:
+					'''
+					King of the Sea.
+					Releases bubbles.
+					'''
+			}
+
+			ForbiddenBattlerod: {
+				DisplayName: Forbidden Battlerod
+				Tooltip: Watch out for sandnados!
+			}
+
+			FrostBattlerod: {
+				DisplayName: Frost Battlerod
+				Tooltip: Imbued with the power of Frost Fire.
+			}
+
+			HallowedBattlerod: {
+				DisplayName: Hallowed Battlerod
+				Tooltip: Super effective against Bosses!
+			}
+
+			HardTriadBattlerod: {
+				DisplayName: Hard Triad Battlerod
+				Tooltip:
+					'''
+					Not very good against Bosses, but supereffective regular enemies.
+					Generates tornadoes and inflicts Frost Fire.
+					'''
+			}
+
+			LifeforceBattlerod: {
+				DisplayName: Lifeforce Battlerod
+				Tooltip:
+					'''
+					Drains lifeforce from your opponent.
+					Suprisingly fast.
+					'''
+			}
+
+			MythrilBattlerod: {
+				DisplayName: Mythril Battlerod
+				Tooltip: ""
+			}
+
+			OrichalcumBattlerod: {
+				DisplayName: Orichalcum Battlerod
+				Tooltip: So pretty!
+			}
+
+			PalladiumBattlerod: {
+				DisplayName: Palladium Battlerod
+				Tooltip: ""
+			}
+
+			ShroomiteBattlerod: {
+				DisplayName: Shroomite Battlerod
+				Tooltip:
+					'''
+					Spreads mushrooms when idle. 
+					Suprisingly fast.
+					'''
+			}
+
+			SlimeQueenBattlerod: {
+				DisplayName: Queen Slime's Battlerod
+				Tooltip: Slimy!
+			}
+
+			SpectreBattlerod: {
+				DisplayName: Spectre Battlerod
+				Tooltip:
+					'''
+					Spreads magnet spheres when idle. 
+					Slight life steal.
+					'''
+			}
+
+			SpinyTurtleBattlerod: {
+				DisplayName: Spiny Turtle Battlerod
+				Tooltip:
+					'''
+					Reflects double the damage when attached. 
+					Inherently Smart!
+					'''
+			}
+
+			SpookyBattlerod: {
+				DisplayName: Spooky Battlerod
+				Tooltip: Shoots bats
+			}
+
+			TerraBattlerod: {
+				DisplayName: Terra Battlerod
+				Tooltip:
+					'''
+					The Legendary Rod. 
+					Shoots blades when idle.
+					'''
+			}
+
+			TitaniumBattlerod: {
+				DisplayName: Titanium Battlerod
+				Tooltip: ""
+			}
+
+			TurtleBattlerod: {
+				DisplayName: Turtle Battlerod
+				Tooltip: Reflects all damage when attached
+			}
+
+			BeeBattlerod: {
+				DisplayName: Bee Battlerod
+				Tooltip: So many Bees!
+			}
+
+			CactusBattlerod: {
+				DisplayName: Cactus Battlerod
+				Tooltip: Prickly!
+			}
+
+			CoolerBattlerod: {
+				DisplayName: Cooler Battlerod
+				Tooltip:
+					'''
+					Allows 3 different powered baits at once.
+					Does (almost) no damage.
+					'''
+			}
+
+			CopperBattlerod: {
+				DisplayName: Copper Battlerod
+				Tooltip: ""
+			}
+
+			CorruptBattlerod: {
+				DisplayName: Corrupt Battlerod
+				Tooltip: Very slight mana syphon
+			}
+
+			CrimsonBattlerod: {
+				DisplayName: Crimson Battlerod
+				Tooltip: Very slight life steal
+			}
+
+			DeerclopsBattlerod: {
+				DisplayName: Deerclops Battlerod
+				Tooltip:
+					'''
+					Creates two shadows
+					Allows 2 different powered baits at once
+					'''
+			}
+
+			DungeonBattlerod: {
+				DisplayName: Dungeon Battlerod
+				Tooltip: I feel like I'm being watched...
+			}
+
+			EdgeBattlerod: {
+				DisplayName: Edge Battlerod
+				Tooltip: ""
+			}
+
+			GoldBattlerod: {
+				DisplayName: Gold Battlerod
+				Tooltip:
+					'''
+					Not a Golden Fishing Rod...
+					I can hear the money raining down!
+					'''
+			}
+
+			HellstoneBattlerod: {
+				DisplayName: Hellstone Battlerod
+				Tooltip:
+					'''
+					Sets enemies on fire!
+					Can fish in lava
+					'''
+			}
+
+			IronBattlerod: {
+				DisplayName: Iron Battlerod
+				Tooltip: ""
+			}
+
+			JungleBattlerod: {
+				DisplayName: Jungle Battlerod
+				Tooltip: Poison enemies
+			}
+
+			LeadBattlerod: {
+				DisplayName: Lead Battlerod
+				Tooltip: ""
+			}
+
+			MeteorBattlerod: {
+				DisplayName: Meteor Battlerod
+				Tooltip: Sets enemies on fire!
+			}
+
+			PlatinumBattlerod: {
+				DisplayName: Platinum Battlerod
+				Tooltip: ""
+			}
+
+			SilverBattlerod: {
+				DisplayName: Silver Battlerod
+				Tooltip: Really effective against werewolves
+			}
+
+			StarMixBattlerod: {
+				DisplayName: Star Mix Battlerod
+				Tooltip: Doubles the damage against bosses
+			}
+
+			StarstruckBattlerod: {
+				DisplayName: Starstruck Battlerod
+				Tooltip: ""
+			}
+
+			TinBattlerod: {
+				DisplayName: Tin Battlerod
+				Tooltip: ""
+			}
+
+			TungstenBattlerod: {
+				DisplayName: Tungsten Battlerod
+				Tooltip: ""
+			}
+
+			WoodenBattlerod: {
+				DisplayName: Wooden Battlerod
+				Tooltip: ""
+			}
+
+			FractaliteBattlerod: {
+				DisplayName: Fractalite Battlerod
+				Tooltip:
+					'''
+					Creates an area where it infilcts enemies with the Solar Fire debuff
+					Really strong!
+					Fires homing bullets
+					'''
+			}
+
+			NebulaBattlerod: {
+				DisplayName: Nebula Battlerod
+				Tooltip: Releases helpfull pickups when wet
+			}
+
+			PowerGuardBattlerod: {
+				DisplayName: Power Guard Battlerod
+				Tooltip:
+					'''
+					Reflects triple the damage when attached
+					Inherently Smart!
+					Releases blazing, exploding beetles
+					'''
+			}
+
+			RegalSistersBattlerod: {
+				DisplayName: Regal Sisters Battlerod
+				Tooltip:
+					'''
+					Homing Projectiles galore!
+					Really good at fishing!
+					'''
+			}
+
+			RodContainmentUnit: {
+				DisplayName: Rod Containment Unit
+				Tooltip:
+					'''
+					The Ultimate Battle Rod!
+					Creates a large area around the bobber that damages whoever is inside
+					'''
+			}
+
+			SolarBattlerod: {
+				DisplayName: Solar Battlerod
+				Tooltip:
+					'''
+					Creates an area where it infilcts enemies with the Solar Fire debuff
+					Really strong!
+					Can fish in lava
+					'''
+			}
+
+			StardustBattlerod: {
+				DisplayName: Stardust Battlerod
+				Tooltip:
+					'''
+					Creates two Stardust Cell minions on swing
+					Really good at fishing!
+					'''
+			}
+
+			VortexBattlerod: {
+				DisplayName: Vortex Battlerod
+				Tooltip:
+					'''
+					Fires homing bullets
+					Really Fast!
+					'''
+			}
+
+			BeerPack: {
+				DisplayName: Pack of Beer
+				Tooltip: Not so cold anymore
+			}
+
+			IceCreamer: {
+				DisplayName: Ice Creamer
+				Tooltip: Shoots one of four different flavors!
+			}
+
+			MagicSoda: {
+				DisplayName: Magic Soda
+				Tooltip: Shake and Spray! Damage usually decreases with distance.
+			}
+
+			Melonbrand: {
+				DisplayName: Melonbrand
+				Tooltip: Throws melon slices on swing
+			}
+
+			VestContainmentVest: {
+				Tooltip: Increases Fishing Skill by 200\nIncreases Bob Speed and Fishing Damage by 50%"
+				DisplayName: Vest Containment Vest
+			}
+
+			PantsContainmentPants: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 100
+					Increases Bob Speed and Fishing Damage by 25%
+					'''
+				DisplayName: Pants Containment Pants
+			}
+
+			HatContainmentHat: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 100
+					Increases Bob Speed and Fishing Damage by 25%
+					'''
+				DisplayName: Hat Containment Hat
+			}
+
+			LilSeidonVest: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Fishing Damage by 5%
+					'''
+				DisplayName: Lil'Seidon Vest
+			}
+
+			LilSeidonPants: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 8
+					Increases Bob Speed by 3%
+					'''
+				DisplayName: Lil'Seidon Pants
+			}
+
+			LilSeidonHat: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 10
+					Increases Bob Speed by 2%
+					'''
+				DisplayName: Lil'Seidon Hat
+			}
+
+			BoneeBeeVest: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 15
+					Increases Fishing Damage by 10%
+					'''
+				DisplayName: Bonee Bee Vest
+			}
+
+			BoneeBeePants: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 10
+					Increases Bob Speed by 8%
+					'''
+				DisplayName: Bonee Bee Pants
+			}
+
+			BoneeBeeHat: {
+				Tooltip:
+					'''
+					Increases Fishing Skill by 10
+					Increases Bob Speed by 8%
+					'''
+				DisplayName: Bonee Bee Hat
+			}
+
+			FishingEmblem: {
+				DisplayName: Fishing Emblem
+				Tooltip: Incresaes Fishing Damage by 15%
+			}
+
+			FishingEmblemSpeed: {
+				DisplayName: Fishing Emblem (Bob Speed)
+				Tooltip: Increases Bob Speed by 15%
+			}
+
+			ReelAdvanced: {
+				DisplayName: Reel Advanced
+				Tooltip:
+					'''
+					Triple-Gear Reel
+					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%
+					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%
+					Getting there in tech!
+					'''
+			}
+
+			ReelExpert: {
+				DisplayName: Reel Expert
+				Tooltip:
+					'''
+					Quad-Gear Reel
+					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%/60%
+					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%/60%
+					(Almost) Total speed control!
+					'''
+			}
+
+			ReelLossless: {
+				DisplayName: Lossless Reel
+				Tooltip:
+					'''
+					Qunituple-Gear Reel
+					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%/60%/75%
+					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%/60%/75%
+					Also increases Maximum Tension by 15%/60%/135%/240%/375%!
+					'''
+			}
+
+			ReelSimple: {
+				DisplayName: Reel Simple
+				Tooltip:
+					'''
+					Double-Gear Reel
+					Slow Gears: Decreases reeling acceleration by 15%/30%
+					Fast Gears: Increases reeling acceleration by 15%/30%
+					Not that complicated, reely
+					'''
+			}
+
+			ReelTraining: {
+				DisplayName: Training Reel
+				Tooltip:
+					'''
+					Single-Gear Reel
+					Slow Gear: Decreases reeling acceleration by 15%
+					Fast Gear: Increases reeling acceleration by 15%
+					Baby Steps...
+					'''
+			}
+
+			FishingDamagePotion: {
+				DisplayName: Fisherman's Brawn
+				Tooltip: Increases Fishing damage by 25%
+			}
+
+			TensionOil: {
+				DisplayName: Tension Oil
+				Tooltip:
+					'''
+					For those hard to reach Bosses!
+					Decreases Minimum Tension by 50% and Increases Maximum Tension by 50%
+					'''
+			}
+
+			MachinegunTurretV2: {
+				DisplayName: Machinegun Turret V2
+				Tooltip: ""
+			}
+
+			DiscardableFlintlockShooterChlorophyte: {
+				DisplayName: Flintlock Bobber (Chlorophyte)
+				Tooltip: Shoots a chlorophyte bullet when breaking the line
+			}
+
+			DiscardableFlintlockShooterCrystal: {
+				DisplayName: Flintlock Bobber (Crystal)
+				Tooltip: Shoots a crystal bullet when breaking the line
+			}
+
+			DiscardableFlintlockShooterLoaded: {
+				DisplayName: Flintlock Bobber (Loaded)
+				Tooltip: Shoots a bullet when breaking the line
+			}
+
+			DiscardableFlintlockShooterMeteor: {
+				DisplayName: Flintlock Bobber (Meteorite)
+				Tooltip: Shoots a meteorite bullet when breaking the line
+			}
+
+			DiscardableFlintlockShooterUnloaded: {
+				DisplayName: Flintlock Bobber (Unloaded)
+				Tooltip: Load it with a bullet to use it as a discardable bobber again!
+			}
+
+			DiscardableBoomstickShooterChlorophyte: {
+				DisplayName: Boomstick Bobber (Chlorophyte)
+				Tooltip: Shoots 5 chlorophyte bullets when breaking the line
+			}
+
+			DiscardableBoomstickShooterCrystal: {
+				DisplayName: Boomstick Bobber (Crystal)
+				Tooltip: Shoots 5 crystal bullets when breaking the line
+			}
+
+			DiscardableBoomstickShooterLoaded: {
+				DisplayName: Boomstick Bobber (Loaded)
+				Tooltip: Shoots 5 bullets when breaking the line
+			}
+
+			DiscardableBoomstickShooterMeteor: {
+				DisplayName: Boomstick Bobber (Meteor)
+				Tooltip: Shoots 5 meteorite bullets when breaking the line
+			}
+
+			DiscardableBoomstickShooterUnloaded: {
+				DisplayName: Boomstick Bobber (Unloaded)
+				Tooltip: Load it with a bullet to use it as a discardable bobber again!
+			}
+
+			PistolTurretV1: {
+				DisplayName: Pistol Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a bullet every 1.5 seconds.
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV2: {
+				DisplayName: Pistol Turret V2
+				Tooltip: ""
+			}
+
+			PistolTurretV3: {
+				DisplayName: Pistol Turret V3
+				Tooltip: ""
+			}
+		}
+
+		Prefixes: {
+			BaitAdd1Prefix.DisplayName: Baiter's
+			BaitAdd2Prefix.DisplayName: Skilled Baiter's
+			BaseBattlerodPrefix.DisplayName: ""
+			BobAdd1Prefix.DisplayName: Extra Lure's
+			BobAdd4Prefix.DisplayName: Quad Lure's
+			BobberAndDamageDecrease3Prefix.DisplayName: Still
+			BobberAndDamageIncrease3Prefix.DisplayName: Twin
+			BobLose4Prefix.DisplayName: Quad Loser's
+			BobLosePrefix.DisplayName: Loser's
+			BobSpeedDecrease1Prefix.DisplayName: Slower Bobbing
+			BobSpeedDecrease2Prefix.DisplayName: Slow Bobbing
+			BobSpeedDecrease3Prefix.DisplayName: Still
+			BobSpeedIncrease1Prefix.DisplayName: Bobbing
+			BobSpeedIncrease2Prefix.DisplayName: Fast Bobbing
+			BobSpeedIncrease3Prefix.DisplayName: Fastest Bobbing
+			CrappyPrefix.DisplayName: Crabby
+			DamageBobDecrease3Prefix.DisplayName: Short-ended
+			DamageBobIncrease3Prefix.DisplayName: Deadly
+			DamageDecrease2Prefix.DisplayName: Softer
+			DamageDecrease1Prefix.DisplayName: Soft
+			DamageDecrease3Prefix.DisplayName: Softest
+			DamageIncrease1Prefix.DisplayName: Hard
+			DamageIncrease2Prefix.DisplayName: Harder
+			DamageIncrease3Prefix.DisplayName: Hardest
+			FishingOnlyPrefix.DisplayName: Trawler's
+			LegendaryPrefix.DisplayName: Legendary
+			OmnilurePrefix.DisplayName: Omnilure's
+			SuperiorOmnilurePrefix.DisplayName: Superior Omnilure's
+			VelocityDecrease1Prefix.DisplayName: Short-reached
+			VelocityDecrease2Prefix.DisplayName: Flaccid
+			VelocityIncrease1Prefix.DisplayName: Speedy
+			VelocityIncrease2Prefix.DisplayName: Caster's
+		}
+
+		Projectiles: {
+			Beetle.DisplayName: Beetle
+			BlazeBeetleProjectile.DisplayName: Blaze Beetle Projectile
+			AdamantiteBobber.DisplayName: Adamantite Bobber
+			BeeteoriteBobber.DisplayName: Beeteorite Bobber
+			BeetleBobber.DisplayName: Beetle Bobber
+			BetsyBobber.DisplayName: Betsy Bobber
+			BlazeBeetleBobber.DisplayName: Blaze Beetle Bobber
+			ChlorophyteBobber.DisplayName: Chlorophyte Bobber
+			CobaltBobber.DisplayName: Cobalt Bobber
+			DeerstruckBobber.DisplayName: Deerstruck Bobber
+			DragonMixBobber.DisplayName: Dragon Mix Bobber
+			EmpresssPersonalBobber.DisplayName: Empresss Personal Bobber
+			EvilRodOfBloodBobber.DisplayName: Evil Rod Of Blood Bobber
+			EvilRodOfDarknessBobber.DisplayName: Evil Rod Of Darkness Bobber
+			FishronBobber.DisplayName: Fishron Bobber
+			ForbiddenBobber.DisplayName: Forbidden Bobber
+			FrostBobber.DisplayName: Frost Bobber
+			HallowedBobber.DisplayName: Hallowed Bobber
+			HardTriadBobber.DisplayName: Hard Triad Bobber
+			LifeforceBobber.DisplayName: Lifeforce Bobber
+			MythrilBobber.DisplayName: Mythril Bobber
+			OrichalcumBobber.DisplayName: Orichalcum Bobber
+			PalladiumBobber.DisplayName: Palladium Bobber
+			QueenSlimeBobber.DisplayName: Queen Slime Bobber
+			ShroomiteBobber.DisplayName: Shroomite Bobber
+			SpectreBobber.DisplayName: Spectre Bobber
+			SpinyTurtleBobber.DisplayName: Spiny Turtle Bobber
+			SpookyBobber.DisplayName: Spooky Bobber
+			TerraBobber.DisplayName: Terra Bobber
+			TitaniumBobber.DisplayName: Titanium Bobber
+			TurtleBobber.DisplayName: Turtle Bobber
+			BeeBobber.DisplayName: Bee Bobber
+			CactusBobber.DisplayName: Cactus Bobber
+			CoolerBobber.DisplayName: Cooler Bobber
+			CopperBobber.DisplayName: Copper Bobber
+			CorruptBobber.DisplayName: Corrupt Bobber
+			CrimsonBobber.DisplayName: Crimson Bobber
+			DeerclopsBobber.DisplayName: Deerclops Bobber
+			DungeonBobber.DisplayName: Dungeon Bobber
+			EdgeBobber.DisplayName: Edge Bobber
+			GoldBobber.DisplayName: Gold Bobber
+			HellstoneBobber.DisplayName: Hellstone Bobber
+			IronBobber.DisplayName: Iron Bobber
+			JungleBobber.DisplayName: Jungle Bobber
+			LeadBobber.DisplayName: Lead Bobber
+			MeteorBobber.DisplayName: Meteor Bobber
+			PlatinumBobber.DisplayName: Platinum Bobber
+			SilverBobber.DisplayName: Silver Bobber
+			StarMixBobber.DisplayName: Star Mix Bobber
+			StarstruckBobber.DisplayName: Starstruck Bobber
+			TinBobber.DisplayName: Tin Bobber
+			TungstenBobber.DisplayName: Tungsten Bobber
+			WoodenBobber.DisplayName: Wooden Bobber
+			FractaliteBobber.DisplayName: Fractalite Bobber
+			NebulaBobber.DisplayName: Nebula Bobber
+			PowerGuardBobber.DisplayName: Power Guard Bobber
+			RegalSistersBobber.DisplayName: Regal Sisters Bobber
+			RodContainmentUnitBobber.DisplayName: Rod Containment Unit Bobber
+			SolarBobber.DisplayName: Solar Bobber
+			StardustBobber.DisplayName: Stardust Bobber
+			VortexBobber.DisplayName: Vortex Bobber
+			DiscardableBlade.DisplayName: Discardable Blade
+			DiscardableDynamite.DisplayName: Discardable Dynamite
+			DiscardableElectricCore.DisplayName: Discardable Electric Core
+			DiscardableFireSpawner.DisplayName: Discardable Fire Spawner
+			DiscardableGrenade.DisplayName: Discardable Grenade
+			DiscardableNuke.DisplayName: Discardable Nuke
+			DiscardableSnowball.DisplayName: Discardable Snowball
+			DiscardableSpikyBall.DisplayName: Discardable Spiky Ball
+			FireBee.DisplayName: Fire Bee
+			FishyladyCleaver.DisplayName: Fishylady Cleaver
+			FishyladyKnife.DisplayName: Fishylady Knife
+			Buddyfish.DisplayName: Buddyfish
+			CratePetProjectile.DisplayName: Crate Pet Projectile
+			Beer.DisplayName: Beer
+			ChocolateShot.DisplayName: Chocolate Shot
+			GrapeSodaSpray.DisplayName: Grape Soda Spray
+			MelonProjectile.DisplayName: Melon Projectile
+			MintShot.DisplayName: Mint Shot
+			StrawberryShot.DisplayName: Strawberry Shot
+			VanillaShot.DisplayName: Vanilla Shot
+			BoneeBee.DisplayName: Bonee Bee
+			ChainsawBee.DisplayName: Chainsaw Bee
+			TurretSpreader.DisplayName: Turret Spreader
+		}
+
+		Configs: {
+			FishSteakRecipesConfig: {
+				DisplayName: Fish Steak Recipes Config
+
+				fishRecipes: {
+					Label: Fish Steak Value
+					Tooltip: List of items that can be converted into Fish Steaks. Changing it requires reload.
+				}
+
+				fishRecipesNotAuto: {
+					Label: Fish that the Slicer won't cut
+					Tooltip: List of items that can't be converted into Fish Steaks automatically using the Fish Slicer or Killing Gate. Changing it does not require reload.
+				}
+			}
+
+			FishToReplaceConfig: {
+				DisplayName: Fish To Replace Config
+
+				replaceAllFish: {
+					Label: Replace all fish
+					Tooltip: This mod will be able to replace any fished items with its own. If set, the below list is ignored.
+				}
+
+				fishToReplace: {
+					Label: Fish to Replace
+					Tooltip: List of fished items that can be replaced with this mod's items. Changing it does not require reload.
+				}
+			}
+
+			UnuPlayerConfig: {
+				DisplayName: Unu Player Config
+
+				startWithRod: {
+					Label: Start with Wooden Battlerod
+					Tooltip: ""
+				}
+
+				startWithBait: {
+					Label: Start with Poison Bait
+					Tooltip: ""
+				}
+			}
+
+			UnuServerConfig: {
+				DisplayName: Unu Server Config
+
+				allowPrefixes: {
+					Label: Allow rod prefixes
+					Tooltip: If this mod should roll prefixes for the rods. Disable it for a less easy time.
+				}
+
+				allowBorrowDamage: {
+					Label: Allow borrowing Damage stars from other classes
+					Tooltip: If this mod should use the old system of having the max stat of the vanilla classes count towards Fishing Damage.
+				}
+
+				allowFishedItems: {
+					Label: Allow this mod's fished items
+					Tooltip: If the crates added by this mod should appear at all when fishing.
+				}
+
+				dontFallOnFloor: {
+					Label: Bobbers always break
+					Tooltip: If bobbers should never fall from the target when detatching.
+				}
+
+				explosivesDamageEveryone: {
+					Label: Explosives damage everyone
+					Tooltip: Should Grenade and Dynamite Bobbers damage everyone (including the player that triggered it), or not.
+				}
+
+				noSellItems: {
+					Label: Items that should not be sold
+					Tooltip: Items that the Sell Gate and Killing Gate will not replace with coins.
+				}
+
+				forceSellItems: {
+					Label: Items that should always be sold
+					Tooltip:
+						'''
+						Items that the Sell Gate and Killing Gate will replace with coins even if their max stack is not 1.
+
+						Warning:Anything added here will take precedence to any other replacing, so if all fish from the replace option are here, no crates will appear.
+						Same with Fish Steaks.
+						'''
+				}
+
+				rodBonus: {
+					Label: Rod Tension Bonus
+					Tooltip: If rods from this mod will benefit from the Rod Tension Bonuses.
+				}
+
+				rodDamageBonus: {
+					Label: Rod Tension Bonus - Damage
+					Tooltip: If this mod has Rod Tension bonus, if it multipies damage.
+				}
+
+				rodBobbingBonus: {
+					Label: Rod Tension Bonus - Bob Speed
+					Tooltip: If this mod has Rod Tension bonus, if it reduces Bob speed.
+				}
+
+				randomizedBobs: {
+					Label: Slightly Random Bobs
+					Tooltip: If bobbers should bob at a fixed interval (false) or can vary between 1/2 and 3/2 times the base bob time
+				}
+			}
+
+			Difficulties: {
+				Tooltip: ""
+				Vanilla.Label: Vanilla
+				Calamity.Label: Calamity
+				Battlerods.Label: Battlerods
+			}
+
+			UnuDificultyConfig: {
+				DisplayName: Unu Dificulty Config
+
+				difficulty: {
+					Label: Balance
+					Tooltip: If this mod should be balanced around the Vanilla Terraria Expert Mode experience, Calamity mod expert, or stick to the original (un)balanced Battlerods.
+				}
+
+				tensionOnly: {
+					Label: Tension only
+					Tooltip: If Battlerods only do damage if the tension is above the minimum. Defaults to false
+				}
+
+				oldEscalation: {
+					Label: Old Escalation
+					Tooltip: If Battlerods should use the old (fixed increase) escalation code, or the new (tension modifier) one. Defaults to false
+				}
+
+				tensionMode: {
+					Label: Tension only
+					Tooltip: If Battlerods only do damage if there is tension on the wire, or always, or only tension on Bosses, and no tension on regular enemies. Defaults to No Tension Needed
+				}
+
+				ammoMode: {
+					Label: Rod Ammo Mode
+					Tooltip: If you should use no Rod Ammo (Baits, Discardables, Turrets or Options), the old system (only on Ammo slot), use both Ammo and Rod Pouch, with ammo being picked first or the Rod Pouch picked first, or use the Rod pouch exclusively. Defaults to Rod Pouch First.
+				}
+			}
+
+			TensionMode: {
+				Tooltip: ""
+				TensionOnly.Label: Tension Only
+				TensionOnBosses.Label: Tension On Bosses
+				NoTension.Label: No Tension
+			}
+
+			AmmoMode: {
+				Tooltip: ""
+				NoAmmo.Label: No Ammo
+				Old.Label: Old
+				AmmoFirst.Label: Ammo First
+				DedicatedFirst.Label: Dedicated First
+				DedicatedOnly.Label: Dedicated Only
+			}
+		}
+
+		Keybinds: {
+			"Gear Shift.DisplayName": Gear  Shift
+			"Turret Mode.DisplayName": Turret  Mode
+		}
+
+		DamageClasses.FishingDamage.DisplayName: Fishing Damage
+		InfoDisplays.RodTensionInfoDisplay.DisplayName: Rod Tension Info Display
+	}
+}

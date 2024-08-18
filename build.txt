@@ -1,0 +1,11 @@
+author = Unusacies, JPAN
+
+version = 1.0
+
+displayName = Unusacies' Battle Rods Re-Balanced
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, .git\*, wiki_images\*
+includePDB = false
+homepage = https://forums.terraria.org/index.php?threads/unusacies-battle-rods-mod-use-special-fishing-rods-as-weapons.59998/

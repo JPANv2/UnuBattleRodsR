@@ -1,0 +1,78 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Rods.Battlerods;
+using UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord;
+
+namespace UnuBattleRodsR.Items.Rods.PostMoonLord
+{
+    public class NebulaBattlerod : BattleRod
+	{
+        public override int BaseDamage
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 666;
+                    default:
+                    case Difficulties.Battlerods:
+                        return 666;
+                }
+            }
+        }
+
+        public override int BobSpeedInTicks => 60;
+        public override int BaseNumberOfBobbers => 6;
+        public override int BaseNumberOfBaits => 1;
+        public override int BaseNumberOfDiscardables => 1;
+        public override bool IsCrowdControlRod => true;
+        public override bool IsCrowdControlOnlyInTurretMode => false;
+        public override bool CanReel => true;
+        public override float BaseReelingSpeed => 0.25f;
+        public override float BaseReelingSpeedMax => 16f;
+        public override float BaseReelingAcceleration => 1 / 16f;
+        public override float BaseSizeUntilDragged => float.MaxValue;
+        public override float BaseMinTensionDamageMultiplier => 1.0f;
+        public override float BaseMaxTensionDamageMultiplier => 2.5f;
+        public override float BaseIdealTensileStrenghtMin => 48000f;
+        public override float BaseIdealTensileStrenghtMax => 240000f;
+        public override float BaseTensileStrenghtMax => float.MaxValue;
+        public override float BaseVampiricPercent => 0f;
+        public override float BaseSyphoningPercent => 0f;
+        public override float BaseBobberDroppingPercent => 0.0f;
+        public override bool BaseAttachesOnRetracting => true;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            // DisplayName.SetDefault("Nebula Battle Rod");
+            // Tooltip.SetDefault("Releases helpfull pickups when wet.");
+        }
+
+        public override void SetDefaults()
+		{
+            base.SetDefaults();
+            base.Item.shootSpeed = 22.0f;
+            base.Item.shoot = ModContent.ProjectileType<NebulaBobber>();
+            base.Item.damage = 666;
+            base.Item.crit = 20;
+            base.Item.rare = 9;
+            base.Item.fishingPole = 75;
+            base.Item.value = Item.sellPrice(0,5,0,0);
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = CreateRecipe(1);
+            recipe.AddIngredient(ItemID.LunarBar, 10);
+            recipe.AddIngredient(ItemID.FragmentNebula, 8);
+            recipe.AddIngredient(ItemID.Cobweb, 5);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
+        }
+    }
+}

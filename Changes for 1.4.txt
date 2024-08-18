@@ -1,0 +1,2 @@
+﻿- Dungeon Battlerod no longer spawns in world, instead can be crafted with any vanilla locked chest item (ie: cobalt shield) and 5 cobweb at a tinker's
+- Recipes no longer have easy and hard mode variants - All are the hard mode version.

@@ -1,0 +1,75 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>UnuBattleRodsR</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Buffs\FishingDamageBuff.png" />
+    <None Remove="Buffs\RodAmmo\ActiveTurretBuff.png" />
+    <None Remove="Buffs\TensionOilBuff.png" />
+    <None Remove="Dusts\SweatDust.png" />
+    <None Remove="Items\Accessories\Emblems\FishingEmblem.png" />
+    <None Remove="Items\Accessories\Emblems\FishingEmblemSpeed.png" />
+    <None Remove="Items\Accessories\Knives\Slash1.png" />
+    <None Remove="Items\Accessories\Knives\Slash2.png" />
+    <None Remove="Items\Accessories\Knives\Slash3.png" />
+    <None Remove="Items\Accessories\Knives\Slash4.png" />
+    <None Remove="Items\Accessories\Knives\Slash5.png" />
+    <None Remove="Items\Accessories\Other\FishingEmblem.png" />
+    <None Remove="Items\Accessories\Other\TensionMeter.png" />
+    <None Remove="Items\Accessories\Other\TensionOil.png" />
+    <None Remove="Items\Accessories\Reels\ReelAdvanced.png" />
+    <None Remove="Items\Accessories\Reels\ReelExpert.png" />
+    <None Remove="Items\Accessories\Reels\ReelLossless.png" />
+    <None Remove="Items\Accessories\Reels\ReelSimple.png" />
+    <None Remove="Items\Accessories\Reels\ReelTraining.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeeHat.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeeHat_Head.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeePants.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeePants_Legs.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeeVest.png" />
+    <None Remove="Items\Armors\NormalMode\BoneeBeeVest_Body.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonHat.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonHat_Head.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonPants.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonPants_Legs.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonVest.png" />
+    <None Remove="Items\Armors\NormalMode\LilSeidonVest_Body.png" />
+    <None Remove="Items\Armors\PostMoonLord\HatContainmentHat.png" />
+    <None Remove="Items\Armors\PostMoonLord\HatContainmentHat_Head.png" />
+    <None Remove="Items\Armors\PostMoonLord\PantsContainmentPants.png" />
+    <None Remove="Items\Armors\PostMoonLord\PantsContainmentPants_Legs.png" />
+    <None Remove="Items\Armors\PostMoonLord\VestContainmentVest.png" />
+    <None Remove="Items\Armors\PostMoonLord\VestContainmentVest_Body.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\DiscardableFlintlockShooterLoaded.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\DiscardableFlintlockShooterUnloaded.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableBoomstickShooterChlorophyte.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableBoomstickShooterCrystal.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableBoomstickShooterLoaded.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableBoomstickShooterMeteor.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableBoomstickShooterUnloaded.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterChlorophyte.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterCrystal.png" />
+    <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterMeteor.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV2.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV3.png" />
+    <None Remove="Items\Potions\FishingDamagePotion.png" />
+    <None Remove="Items\Potions\TensionOil.png" />
+    <None Remove="Players\RodTensionInfoDisplay.png" />
+    <None Remove="Projectiles\Bees\BoneeBee.png" />
+    <None Remove="Projectiles\Bees\ChainsawBee.png" />
+    <None Remove="Projectiles\Bobbers\HardMode\BlazeBeetleBobber.png" />
+    <None Remove="Projectiles\Bobbers\PostMoonLord\BlazeBeetleBobber.png" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\Consumables\Discardables\PostMoonLord\" />
+    <Folder Include="Items\Consumables\Options\" />
+    <Folder Include="Items\Consumables\Turrets\HardMode\" />
+    <Folder Include="Items\Consumables\Turrets\PostMoonLord\" />
+  </ItemGroup>
+</Project>

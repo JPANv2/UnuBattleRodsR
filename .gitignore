@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/packages/
+.vs
+*.user
+*.suo
+*.cache
+*.force
+installer2/*.class
+installer2/*.jar
+**/packages/
+**/.vs/
+**/.idea/

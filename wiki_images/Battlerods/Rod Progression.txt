@@ -1,0 +1,39 @@
+- Pre-hardmode
+Wooden ~= Cactus
+Copper ~= Tin
+Iron ~= Lead
+Silver ~= Tungsten
+Gold ~= Platinum
+Corrupt ~= Crimson
+Jungle
+Meteor
+Dungeon
+Hellstone
+Star Mix
+Edge
+Bee
+
+- Hardmode
+Cobalt ~= Palladium
+Mythril ~= Orichalcum
+Adamantite ~= Titanium
+Forbidden
+Frost
+Evil Rod of Darkness
+Evil Rod of Blood
+Hallowed
+Spooky
+Chlorophyte
+Turtle
+shroomite ~= Spectre
+Beetle
+Hard Triad
+Fishron
+Terra
+Lifeforce
+
+- Post Moon Lord
+Nebula ~= Stardust
+Vortex ~= Solar
+Fractalite
+Rod Containment Unit
