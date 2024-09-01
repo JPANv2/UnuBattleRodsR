@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using UnuBattleRodsR.Buffs;
 using UnuBattleRodsR.NPCs;
 using UnuBattleRodsR.Players;
@@ -32,6 +34,9 @@ namespace UnuBattleRodsR
             ManaEffect = 5,
             MoveEnemyTowardsPlayer = 6,
             MovePlayerTowardsEnemy = 7,
+            UpdateAmmoRecharger = 8,
+            CreateAmmoRecharger = 9,
+            RemoveAmmoRecharger = 10,
             /*
             BobProjectilePosition = 0,
             MimicSpawn = 1,
@@ -75,6 +80,15 @@ namespace UnuBattleRodsR
                         break;
                     case Message.MovePlayerTowardsEnemy:
                         result = MovePlayerTowardsEnemy(reader, whoAmI);
+                        break;
+                    case Message.UpdateAmmoRecharger:
+                        result = UpdateAmmoRecharger(reader, whoAmI);
+                        break;
+                    case Message.CreateAmmoRecharger:
+                        result = CreateAmmoRecharger(reader, whoAmI);
+                        break;
+                    case Message.RemoveAmmoRecharger:
+                        result = RemoveAmmoRecharger(reader, whoAmI);
                         break;
                 }
             }
@@ -277,6 +291,116 @@ namespace UnuBattleRodsR
                 pk.Write(y);
                 // pk.Write(xSpeed);
                 // pk.Write(ySpeed);
+                pk.Send();
+            }
+            return true;
+        }
+
+        public bool UpdateAmmoRecharger(BinaryReader reader, int whoAmI)
+        {
+            int who = reader.ReadInt16();
+            int arslot = reader.ReadByte();
+            int slot = reader.ReadByte();
+            TagCompound itmTC = TagIO.Read(reader);
+            Item itm = itmTC.Get<Item>("i");
+            if (Main.netMode == NetmodeID.MultiplayerClient && who == Main.myPlayer)
+            {
+                return true;
+            }
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            if (world.ammoRechargers[arslot] == null)
+            {
+                world.ammoRechargers[arslot] = new Tiles.AmmoRecharger();
+            }
+            if (Main.netMode != NetmodeID.Server)
+            {
+                switch (slot)
+                {
+                    case 0:
+                        world.ammoRechargers[arslot].toRecharge = itm;
+                        return true;
+                    case 1:
+                        world.ammoRechargers[arslot].toConsume = itm;
+                        return true;
+                    case 2:
+                        world.ammoRechargers[arslot].recharged = itm;
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                switch (slot)
+                {
+                    case 0:
+                        world.ammoRechargers[arslot].SetToRecharge(itm);
+                        return true;
+                    case 1:
+                        world.ammoRechargers[arslot].SetToConsume(itm);
+                        return true;
+                    case 2:
+                        world.ammoRechargers[arslot].SetRecharged(itm);
+                        return true;
+                }
+                return false;
+            }
+
+        }
+        public bool CreateAmmoRecharger(BinaryReader reader, int whoAmI)
+        {
+            int who = reader.ReadInt16();
+            int slot = reader.ReadByte();
+            int X = reader.ReadInt32();
+            int Y = reader.ReadInt32();
+            int ticks = reader.ReadInt32();
+
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            world.ammoRechargers[slot] = new Tiles.AmmoRecharger()
+            {
+                slot = slot,
+                X = X,
+                Y = Y,
+                ticksPerUpdate = ticks
+            };
+
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
+                pk.Write((byte)UnuBattleRodsR.Message.CreateAmmoRecharger);
+                pk.Write((short)who);
+                pk.Write((byte)slot);
+                pk.Write((int)X);
+                pk.Write((int)Y);
+                pk.Write((int)ticks);
+                pk.Send();
+            }
+            return true;
+        }
+
+        public bool RemoveAmmoRecharger(BinaryReader reader, int whoAmI)
+        {
+            int who = reader.ReadInt16();
+            int slot = reader.ReadByte();
+            int X = reader.ReadInt32();
+            int Y = reader.ReadInt32();
+
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            if (world.ammoRechargers[slot] != null)
+            {
+                if (world.ammoRechargers[slot].X == X && world.ammoRechargers[slot].Y == Y)
+                {
+                    world.ammoRechargers[slot] = null;
+                    return true;
+                }
+            }
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
+                pk.Write((byte)UnuBattleRodsR.Message.RemoveAmmoRecharger);
+                pk.Write((short)who);
+                pk.Write((byte)slot);
+                pk.Write((int)X);
+                pk.Write((int)Y);
                 pk.Send();
             }
             return true;

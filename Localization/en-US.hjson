@@ -481,27 +481,27 @@ Mods: {
 			}
 
 			FishermansKit: {
-				DisplayName: Fishermans Kit
-				Tooltip: Allows you to use several types of Fishing Accessories directly from your inventory!
+				DisplayName: Global Fishermans Kit
+				Tooltip: Allows you to use several types of Fishing Accessories directly from your inventory or banks!
 			}
 
 			FishermansKit1: {
-				DisplayName: Fishermans Kit1
+				DisplayName: Fishermans Kit - Piggy
 				Tooltip: Allows you to use several types of Fishing Accessories directly from your piggy bank!
 			}
 
 			FishermansKit2: {
-				DisplayName: Fishermans Kit2
+				DisplayName: Fishermans Kit - Safe
 				Tooltip: Allows you to use several types of Fishing Accessories directly from your safe!
 			}
 
 			FishermansKit3: {
-				DisplayName: Fishermans Kit3
+				DisplayName: Fishermans Kit - Forge
 				Tooltip: Allows you to use several types of Fishing Accessories directly from your Defender's Forge!
 			}
 
 			FishermansKit4: {
-				DisplayName: Fishermans Kit4
+				DisplayName: Fishermans Kit - Vault
 				Tooltip: Allows you to use several types of Fishing Accessories directly from your Void Vault!
 			}
 
@@ -2277,7 +2277,7 @@ Mods: {
 
 			BeeTurretV1: {
 				DisplayName: Bee Turret
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots every 2 seconds:
@@ -2288,7 +2288,7 @@ Mods: {
 
 			BeeTurretV2: {
 				DisplayName: Bee Turret v2
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots a spreader every 2 seconds that, when exhausted, spawns:
@@ -2299,7 +2299,7 @@ Mods: {
 
 			BeeTurretV3: {
 				DisplayName: Bee Turret v3
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots a Lv 2 spreader every 2 seconds that, when exhausted, spawns:
@@ -2310,7 +2310,7 @@ Mods: {
 
 			BeetleTurretV1: {
 				DisplayName: Beetle Turret
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots every second:
@@ -2321,7 +2321,7 @@ Mods: {
 
 			BeetleTurretV2: {
 				DisplayName: Beetle Turret v2
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots a spreader every second that, when exhausted, spawns:
@@ -2332,13 +2332,33 @@ Mods: {
 
 			BeetleTurretV3: {
 				DisplayName: Beetle Turret v3
-				Tooltip: 
+				Tooltip:
 					'''
 					Allows any bobber to shoot bees when idle.
 					Shoots a Lv 2 spreader every second that, when exhausted, spawns:
 					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
 					Maximum 10 minutes duration
 					'''
+			}
+
+			LaserTurret: {
+				DisplayName: Laser Turret
+				Tooltip: ""
+			}
+
+			DoubleLaserTurret: {
+				DisplayName: Double Laser Turret
+				Tooltip: ""
+			}
+
+			LandmineTurret: {
+				DisplayName: Landmine Turret
+				Tooltip: ""
+			}
+
+			UnusaciesBattlerod: {
+				DisplayName: Unusacies Battlerod
+				Tooltip: ""
 			}
 		}
 
@@ -2462,6 +2482,8 @@ Mods: {
 			BoneeBee.DisplayName: Bonee Bee
 			ChainsawBee.DisplayName: Chainsaw Bee
 			TurretSpreader.DisplayName: Turret Spreader
+			TurretLaser.DisplayName: Turret Laser
+			UnusaciesBobber.DisplayName: Unusacies Bobber
 		}
 
 		Configs: {

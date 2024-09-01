@@ -140,9 +140,15 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                 Main.projectile[proj].wet = false;
             }
             (Main.projectile[proj].ModProjectile as Bobber).shooter = this;
-
-            SpawnBaits(p);
-            p.initTurrets();
+            if (!Owner.HasBuff<PoweredBaitBuff>() || Owner.buffTime[Owner.FindBuffIndex(ModContent.BuffType<PoweredBaitBuff>())] < 600)
+            {
+                SpawnBaits(p);
+            }
+            if (!Owner.HasBuff<ActiveTurretBuff>() || Owner.buffTime[Owner.FindBuffIndex(ModContent.BuffType<ActiveTurretBuff>())] < 600)
+            {
+                p.resetTurrets();
+                p.initTurrets();
+            }
             return false;
         }
 
@@ -159,6 +165,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                 (p.baitTimer < 600 || usedBaitCount != useableBaits && baitTotal != usedBaitCount)
                 && totalBuffs < p.Player.buffType.Length)
             {
+                p.forceResetBaits();
                 p.initBaits();
             }
         }

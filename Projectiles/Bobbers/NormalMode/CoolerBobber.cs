@@ -12,6 +12,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.NormalMode
         public override bool IsCrowdControl => false;
         public override void SetDefaults()
         {
+            base.SetDefaults();
         }
 
         public override void alterCenter(float gravDir, ref float x, ref float y)

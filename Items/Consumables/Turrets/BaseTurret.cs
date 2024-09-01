@@ -21,6 +21,21 @@ using static UnuBattleRodsR.Players.FishPlayer;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets
 {
+    public abstract class BaseEmptyTurret : ModItem
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.ammo = ModContent.ItemType<PistolTurretV1>();
+            Item.value = Item.buyPrice(0, 0, 0, 5);
+        }
+    }
+
     public abstract class BaseTurret : ModItem
     {
         /// <summary>
@@ -40,6 +55,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         /// The number of bobs of the parent rod before firing this projectile. Only valid if UseBobCycles is true
         /// </summary>
         public virtual int BobCycles => 1;
+
+        /// <summary>
+        /// if it shoots as soon as the bobber exists, or not. defaults to false
+        /// </summary>
+        public virtual bool ShootFirst => false;
 
         /// <summary>
         /// If this Turret shoots its projectiles only when stationary on the floor (true) or if can also shoot it when moving (usually attached to something)
@@ -87,6 +107,10 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         /// </summary>
         public virtual int Level => 1;
 
+        /// <summary>
+        /// The item this turret produces after consumed. For Rechargeable turrets. 0 = no item
+        /// </summary>
+        public virtual int EmptyTurretType => 0;
         public override void SetDefaults()
         {
             base.SetDefaults();

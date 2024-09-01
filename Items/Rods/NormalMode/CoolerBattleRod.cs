@@ -25,8 +25,9 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         }
         public override int BobSpeedInTicks => 120;
         public override int BaseNumberOfBobbers => 2;
-        public override int BaseNumberOfBaits => 4;
+        public override int BaseNumberOfBaits => 3;
         public override int BaseNumberOfDiscardables => 4;
+        public override int BaseNumberOfTurrets => 3;
         public override bool IsCrowdControlRod => false;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => true;
@@ -53,7 +54,7 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override void SetDefaults()
 		{
             base.SetDefaults();
-            base.Item.shootSpeed = 20.0f;
+            base.Item.shootSpeed = 15.0f;
             base.Item.shoot = ModContent.ProjectileType<CoolerBobber>();
             base.Item.damage = 1;
             base.Item.crit = 0;

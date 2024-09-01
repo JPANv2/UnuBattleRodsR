@@ -16,7 +16,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        return 120;
+                        return 115;
                     default:
                     case Difficulties.Battlerods:
                         return 180;

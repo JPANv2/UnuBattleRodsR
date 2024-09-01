@@ -30,6 +30,15 @@ namespace UnuBattleRodsR.Projectiles.Turrets
             AIType = ProjectileID.Grenade;
         }
 
+        public override void AI()
+        {
+            base.AI();
+            if (Owner.explodeTurretOnCommand)
+            {
+                OnTileCollide(Projectile.oldVelocity);
+            }
+        }
+
         public override bool? CanHitNPC(NPC target)
         {
             return false;
@@ -47,7 +56,7 @@ namespace UnuBattleRodsR.Projectiles.Turrets
         {
             level--;
             this.AIType = 0;
-            if (level == 0 && turret != null)
+            if (level <= 1  && turret != null)
             {
                 turret.baseTurret.ShootRealProjectile(turret, Projectile);
                 Projectile.Kill();

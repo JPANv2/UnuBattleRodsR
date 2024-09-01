@@ -54,19 +54,55 @@
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterCrystal.png" />
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterMeteor.png" />
     <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\LandmineTurret.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\DoubleLaserTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\LaserTurret.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV1.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV2.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV3.png" />
     <None Remove="Items\Potions\FishingDamagePotion.png" />
     <None Remove="Items\Potions\TensionOil.png" />
+    <None Remove="Items\Rods\PostMoonLord\UnusaciesBattlerod.png" />
     <None Remove="Players\RodTensionInfoDisplay.png" />
     <None Remove="Projectiles\Bees\BoneeBee.png" />
     <None Remove="Projectiles\Bees\ChainsawBee.png" />
     <None Remove="Projectiles\Bobbers\HardMode\BlazeBeetleBobber.png" />
     <None Remove="Projectiles\Bobbers\PostMoonLord\BlazeBeetleBobber.png" />
+    <None Remove="Projectiles\Bobbers\PostMoonLord\UnusaciesBobber0.png" />
+    <None Remove="Projectiles\Bobbers\PostMoonLord\UnusaciesBobber1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Projectiles\Turrets\Laser\Beam1.png" />
+    <None Remove="Projectiles\Turrets\Laser\Beam2.png" />
+    <None Remove="Projectiles\Turrets\Laser\Beam3.png" />
+    <None Remove="Projectiles\Turrets\Laser\Beam4.png" />
+    <None Remove="Projectiles\Turrets\Laser\Beam5.png" />
+    <None Remove="Projectiles\Turrets\Laser\Beam6.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit1.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit2.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit3.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit4.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit5.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamHit6.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart1.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart2.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart3.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart4.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart5.png" />
+    <None Remove="Projectiles\Turrets\Laser\BeamStart6.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge1.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge10.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge11.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge12.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge2.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge3.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge4.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge5.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge6.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge7.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge8.png" />
+    <None Remove="Projectiles\Turrets\Laser\Charge9.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Consumables\Discardables\PostMoonLord\" />

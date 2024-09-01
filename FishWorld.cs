@@ -19,6 +19,11 @@ using UnuBattleRodsR.Items.Accessories.Wires;
 using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Items.Armors.HardMode;
 using Microsoft.Xna.Framework;
+using UnuBattleRodsR.Items.Accessories.Metronomes;
+using UnuBattleRodsR.Items.Accessories.Lures;
+using UnuBattleRodsR.Items.Accessories.Emblems;
+using UnuBattleRodsR.Players.AmmoUI;
+using UnuBattleRodsR.Tiles;
 
 namespace UnuBattleRodsR
 {
@@ -33,6 +38,20 @@ namespace UnuBattleRodsR
 
         public bool downedCooler = false;
         public bool FishyLadySpawned = false;
+
+        public AmmoRecharger[] ammoRechargers = new AmmoRecharger[100];
+
+        public override void PreUpdateWorld()
+        {
+            for (int i = 0; i < ammoRechargers.Length; i++)
+            {
+                if(ammoRechargers[i] != null)
+                {
+                    ammoRechargers[i].Update();
+                }
+            }
+            base.PreUpdateWorld();
+        }
 
         public override void PostUpdateWorld()
         {
@@ -71,6 +90,13 @@ namespace UnuBattleRodsR
             
             tag["downedCooler"] = downedCooler;
             tag["FishyLadySpawned"] = FishyLadySpawned;
+            for(int i = 0; i< ammoRechargers.Length; i++)
+            {
+                if (ammoRechargers[i] != null)
+                {
+                    tag["ar."+i] = ammoRechargers[i].Save();
+                }
+            }
             return;
         }
 
@@ -87,6 +113,15 @@ namespace UnuBattleRodsR
                     FishyLadySpawned = tag.GetBool("FishyLadySpawned");
                 }
 
+                for(int i = 0; i< ammoRechargers.Length; i++)
+                {
+                    if (tag.ContainsKey("ar." + i))
+                    {
+                        ammoRechargers[i] = new AmmoRecharger();
+                        ammoRechargers[i].Load(tag.GetCompound("ar." + i));
+                    }
+                }
+
             } catch (InvalidCastException ex)
             {
                 Mod.Logger.Error("" + tag["downedCooler"] + " : " + tag["downedCooler"].GetType().Name + ";\n" + ex);
@@ -100,6 +135,15 @@ namespace UnuBattleRodsR
         {
             base.NetSend(writer);
             writer.Write((byte)((downedCooler ? 1 : 0) + (FishyLadySpawned ? 2: 0)));
+            for (int i = 0; i < ammoRechargers.Length; i++)
+            {
+                if (ammoRechargers[i] != null && ammoRechargers[i].updated)
+                {
+                    writer.Write((byte)i);
+                    TagIO.Write(ammoRechargers[i].Save(), writer);
+                }
+            }
+            writer.Write((byte)0xff);
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -108,6 +152,14 @@ namespace UnuBattleRodsR
             byte rec = reader.ReadByte();
             downedCooler = (rec & 1) == 1;
             FishyLadySpawned = (rec & 2) == 2; 
+            byte read = reader.ReadByte();
+            while(read != 0xff)
+            {
+                if(ammoRechargers[(int)read] == null)
+                    ammoRechargers[(int)read] = new AmmoRecharger();
+                ammoRechargers[((int)read)].Load(TagIO.Read(reader));
+                read = reader.ReadByte();
+            }
         }
 
         #region recipes
@@ -449,41 +501,298 @@ namespace UnuBattleRodsR
 
         public override void PostAddRecipes()
         {
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<WormCape>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<BaitDisperser>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<SuperiorBaitDisperser>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<CrateCallingHook>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<CurrencyHook>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<UrgencyBobSpeeder>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<SealedHook>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<HookSet>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<Wormicide>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<BobAccelerator>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<BobScope>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<DiscardableBobs>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<FasterFishingKit>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<RetractableFasterFishingKit>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<RetractableHook>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<FishSlicer>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<KillingGate>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<SellGate>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<Sinker>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<VacuumWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<MoonWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<HookshotWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<TitanWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<LinkCable>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<ThornyRedirectorWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<RedirectorWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<SyphoningWire>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<TargetedThrow>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<StickyTargetedThrow>());
-            FishermansKit.allowedAccessories.Add(ModContent.ItemType<MagneticTargetedThrow>());
-            FishermansKit.allowedAccessories.Add(ItemID.AnglerEarring);
-            FishermansKit.allowedAccessories.Add(ItemID.LavaFishingHook);
-            FishermansKit.allowedAccessories.Add(ItemID.AnglerTackleBag);
-            FishermansKit.allowedAccessories.Add(ItemID.TackleBox);
-            FishermansKit.allowedAccessories.Add(ItemID.LavaproofTackleBag);
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Metronomes",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<HyperFastMetronome>(),
+                    ModContent.ItemType<HyperSlowMetronome>(),
+                    ModContent.ItemType<SuperFastMetronome>(),
+                    ModContent.ItemType<SuperSlowMetronome>(),
+                    ModContent.ItemType<FastMetronome>(),
+                    ModContent.ItemType<SlowMetronome>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Fishing Emblems",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<FishingEmblem>(),
+                    ModContent.ItemType<FishingEmblemSpeed>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Lures",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<Omnilure>(),
+                    ModContent.ItemType<BoxOfCountlessLures>(),
+                    ModContent.ItemType<BoxOfLures>(),
+                    ModContent.ItemType<OctoLure>(),
+                    ModContent.ItemType<QuadLure>(),
+                    ModContent.ItemType<DoubleLure>(),
+                    ModContent.ItemType<BobLoser>(),
+                    ModContent.ItemType<DoubleBobLoser>(),
+                    ModContent.ItemType<QuadBobLoser>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Bob Selectors",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<TurretBobbers>(),
+                    ModContent.ItemType<SmartBobbers>(),
+                    ModContent.ItemType<SelectiveBobbers>(),
+                    ModContent.ItemType<DoubleSelectiveBobbers>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Bait Dispersers",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<BaitDisperser>(),
+                    ModContent.ItemType<SuperiorBaitDisperser>()
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Hooks",
+                mainItem = ModContent.ItemType<HookSet>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<SuperBarbedHook>(),
+                    ModContent.ItemType<BarbedHook>(),
+                    ModContent.ItemType<SealedHook>(),
+                    ModContent.ItemType<RustyHook>(),
+                    ModContent.ItemType<HeavenlyHook>(),
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Hooks",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<SuperBarbedHook>(),
+                    ModContent.ItemType<BarbedHook>(),
+                    ModContent.ItemType<SealedHook>(),
+                    ModContent.ItemType<RustyHook>(),
+                    ModContent.ItemType<HeavenlyHook>(),
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Retractable Faster Fishing Kit",
+                mainItem = ModContent.ItemType<RetractableFasterFishingKit>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<BobAccelerator>(),
+                    ModContent.ItemType<BobScope>(),
+                    ModContent.ItemType<DiscardableBobs>(),
+                    ModContent.ItemType<RetractableHook>(),
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Faster Fishing Kit",
+                mainItem = ModContent.ItemType<FasterFishingKit>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<BobAccelerator>(),
+                    ModContent.ItemType<BobScope>(),
+                    ModContent.ItemType<DiscardableBobs>(),
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Fishing Kit",
+                mainItem = ModContent.ItemType<RetractableFasterFishingKit>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<BobAccelerator>(),
+                    ModContent.ItemType<BobScope>(),
+                    ModContent.ItemType<DiscardableBobs>(),
+                    ModContent.ItemType<RetractableHook>(),
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Killing Gate",
+                mainItem = ModContent.ItemType<KillingGate>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<FishSlicer>(),
+                    ModContent.ItemType<SellGate>(),
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Fish Slicer",
+                mainItem = ModContent.ItemType<FishSlicer>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Sell Gate",
+                mainItem = ModContent.ItemType<SellGate>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Thorny Redirector Wire",
+                mainItem = ModContent.ItemType<ThornyRedirectorWire>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<RedirectorWire>(),
+                    ModContent.ItemType<LinkCable>(),
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Redirector Wire",
+                mainItem = ModContent.ItemType<RedirectorWire>(),
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<LinkCable>(),
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Link Cable",
+                mainItem = ModContent.ItemType<LinkCable>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Targeted Throws",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<MagneticTargetedThrow>(),
+                    ModContent.ItemType<StickyTargetedThrow>(),
+                    ModContent.ItemType<TargetedThrow>(),
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Lavaproof Tackle Bag",
+                mainItem = ItemID.LavaproofTackleBag,
+                accessoryTypes = new List<int>
+                {
+                    ItemID.AnglerTackleBag,
+                    ItemID.TackleBox,
+                    ItemID.AnglerEarring,
+                    ItemID.LavaFishingHook
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Angler Tackle Bag",
+                mainItem = ItemID.AnglerTackleBag,
+                accessoryTypes = new List<int>
+                {
+                    ItemID.TackleBox,
+                    ItemID.AnglerEarring,
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Tackle Box",
+                mainItem = ItemID.TackleBox,
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Angler Earring",
+                mainItem = ItemID.AnglerEarring,
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Sinker",
+                mainItem = ModContent.ItemType<Sinker>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Worm Cape",
+                mainItem = ModContent.ItemType<WormCape>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Crate Calling Hook",
+                mainItem = ModContent.ItemType<CrateCallingHook>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Currency Hook",
+                mainItem = ModContent.ItemType<CurrencyHook>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Urgency Bob Speeder",
+                mainItem = ModContent.ItemType<UrgencyBobSpeeder>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Wormicide",
+                mainItem = ModContent.ItemType<Wormicide>(),
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Wires",
+                blocking = false,
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<VacuumWire>(),
+                    ModContent.ItemType<MoonWire>(),
+                    ModContent.ItemType<TitanWire>(),
+                    ItemID.HighTestFishingLine,
+                    ModContent.ItemType<HookshotWire>(),
+                    ModContent.ItemType<SyphoningWire>(),
+                    ModContent.ItemType<VampiricWire>(),
+                }
+            });
         }
 
         public override void Load()

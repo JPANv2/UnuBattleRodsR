@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -60,7 +61,7 @@ namespace UnuBattleRodsR.Players.AmmoUI
             });
             int totalTurrets= cur.NumberOfTurrets;
             turretSlots = new VanillaItemSlotWrapper[cur.DedicatedTurrets.Length];
-            initTurretSlot(ref cur.DedicatedTurrets, turretSlots, totalDiscardables, startX, startY);
+            initTurretSlot(ref cur.DedicatedTurrets, turretSlots, totalTurrets, startX, startY);
         }
 
         public override void OnDeactivate()
@@ -72,7 +73,7 @@ namespace UnuBattleRodsR.Players.AmmoUI
         {
             base.Update(gameTime);
             FishPlayer cur = Main.player[Main.myPlayer].GetModPlayer<FishPlayer>();
-            if (cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar) || !Main.playerInventory || cur.Player.chest != -1)
+            if (cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar) || !Main.playerInventory || cur.Player.chest != -1 || Main.CreativeMenu.Enabled)
             {
                 this.Deactivate();
                 ModContent.GetInstance<AmmoUISystem>().AmmoUI.SetState(null);
@@ -80,10 +81,10 @@ namespace UnuBattleRodsR.Players.AmmoUI
             else
             {
                 syncSlots(cur);
-                if(selectedBattlerod != cur.HeldBattlerod)
+                if(selectedBattlerod != cur.HeldBattlerod && cur.HeldBattlerod != null) 
                 {
-                    this.Deactivate();
-                    this.Activate();
+                    this.Elements.Clear();
+                    this.Initialize();                    
                     this.selectedBattlerod = cur.HeldBattlerod;
                 }
             }

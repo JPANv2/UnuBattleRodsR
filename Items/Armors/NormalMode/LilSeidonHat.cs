@@ -47,8 +47,9 @@ namespace UnuBattleRodsR.Items.Armors.NormalMode
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Grants Unlimited, near exausted Breath\nBob speed increased by 10%";
+            player.setBonus = "Grants Unlimited, near exausted Breath and ability to swim\nBob speed increased by 10%";
             player.breath = 10;
+            player.accFlipper = true;
             FishPlayer pl = player.GetModPlayer<FishPlayer>();
             pl.bobberSpeed += 0.10f;
         }

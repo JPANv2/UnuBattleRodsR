@@ -19,14 +19,14 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         //Needs Balance
-                        return 120;
+                        return 115;
                     default:
                     case Difficulties.Battlerods:
                         return 190;
                 }
             }
         }
-        public override int BobSpeedInTicks => 32;
+        public override int BobSpeedInTicks => 30;
         public override int BaseNumberOfBobbers => 3;
         public override int BaseNumberOfBaits => 1;
         public override int BaseNumberOfDiscardables => 1;

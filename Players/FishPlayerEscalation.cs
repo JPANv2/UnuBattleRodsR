@@ -23,7 +23,7 @@ namespace UnuBattleRodsR.Players
                 {
                     return 0;
                 }
-                return HeldBattlerod.BaseDamage;
+                return HeldBattlerod.TrueBaseDamage;
             }
         }
 

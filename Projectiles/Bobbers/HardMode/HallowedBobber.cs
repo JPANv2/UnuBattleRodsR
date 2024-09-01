@@ -33,11 +33,13 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (target.boss || (target.realLife >=0 && Main.npc[target.realLife].boss))
+            if (target.boss || (target.realLife >= 0 && Main.npc[target.realLife].boss))
             {
-                modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(new StatModifier(2f,1f,0,0));
-                if (Main.rand.NextBool(4))
-                    modifiers.SetCrit();
+                modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(new StatModifier(2f, 1f, 0, 0));
+            }
+            else
+            {
+                modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(new StatModifier(0.5f, 1f, 0, 0));
             }
             base.ModifyHitNPC(target, ref modifiers);
         }

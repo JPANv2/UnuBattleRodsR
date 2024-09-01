@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+using UnuBattleRodsR.Players;
 
 namespace UnuBattleRodsR
 {
@@ -36,9 +37,14 @@ namespace UnuBattleRodsR
                 layers.Insert(invIndex, new LegacyGameInterfaceLayer(
                     "UnusBattlerodsR: Rod Ammo",
                     delegate {
-                        if (AmmoUI?.CurrentState != null)
+                        FishPlayer cur = Main.LocalPlayer.GetModPlayer<FishPlayer>();
+                        bool shouldDisplay = !(cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar) || !Main.playerInventory || cur.Player.chest != -1 || Main.CreativeMenu.Enabled || Main.npcShop > 0);
+                        if (shouldDisplay && AmmoUI?.CurrentState != null )
                         {
-                            AmmoUI.Draw(Main.spriteBatch, new GameTime());
+                            GameTime gt = new GameTime();
+                            AmmoUI.Update(gt);
+                            if (AmmoUI?.CurrentState != null)
+                            AmmoUI.Draw(Main.spriteBatch, gt);
                         }
                         return true;
                     },

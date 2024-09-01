@@ -78,8 +78,10 @@ namespace UnuBattleRodsR.Items
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (FishermansKit.allowedAccessories.Contains(item.type)){
-                tooltips.Add(new TooltipLine(this.Mod, "FishermansKitUsed", "Allowed in the Fisherman's Kit."));
+            
+            if (FishermansKit.ItemInAllowedAccessories(item)){
+                var ag = FishermansKit.GetItemGroup(item);
+                tooltips.Add(new TooltipLine(this.Mod, "FishermansKitUsed", "Allowed in the Fisherman's Kit, on group " + ag.key + ( ag.blocking ? " (exclusive)":" (not exclusive)")));
             }
         }
     }

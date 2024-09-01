@@ -136,7 +136,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
         private void resetTension()
         {
             currentTension = 0;
-            currentReelSpeed = shooter.ReelingSpeed;
+            currentReelSpeed = shooter != null ? shooter.ReelingSpeed : 0;
         }
 
         private void tryMoveTarget(Entity target)
@@ -209,25 +209,28 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
         private void movePlayerTowardsEnemy(Entity target)
         {
             Player our = Main.player[Projectile.owner];
-            Vector2 vel = our.position - target.position;
-            vel.Normalize();
-            vel *= currentReelSpeed;
+            if (!our.GetModPlayer<FishPlayer>().IncreaseTension)
+            {
+                Vector2 vel = our.position - target.position;
+                vel.Normalize();
+                vel *= currentReelSpeed;
 
-            our.position -= vel;
-            Vector2 posTile = our.position/16;
-            Tile t = (Main.tile[posTile.ToPoint().X, posTile.ToPoint().Y]);
-            if (t != null && t.HasTile && Main.tileSolid[t.TileType])
-            {
-                our.position += vel;
-            }
-            if (Main.netMode != 0)
-            {
-                ModPacket pk = Mod.GetPacket();
-                pk.Write((byte)UnuBattleRodsR.Message.MovePlayerTowardsEnemy);
-                pk.Write((short)Projectile.owner);
-                pk.Write(our.Center.X);
-                pk.Write(our.Center.Y);
-                pk.Send();
+                our.position -= vel;
+                Vector2 posTile = our.position / 16;
+                Tile t = (Main.tile[posTile.ToPoint().X, posTile.ToPoint().Y]);
+                if (t != null && t.HasTile && Main.tileSolid[t.TileType])
+                {
+                    our.position += vel;
+                }
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket pk = Mod.GetPacket();
+                    pk.Write((byte)UnuBattleRodsR.Message.MovePlayerTowardsEnemy);
+                    pk.Write((short)Projectile.owner);
+                    pk.Write(our.Center.X);
+                    pk.Write(our.Center.Y);
+                    pk.Send();
+                }
             }
         }
 

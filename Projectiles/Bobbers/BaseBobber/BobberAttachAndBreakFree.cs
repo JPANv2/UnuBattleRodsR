@@ -40,18 +40,18 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
 
         }
 
-        private void tryAndAttatchBobberToAnything()
+        private bool tryAndAttatchBobberToAnything()
         {
             List<Entity> possibleTargets = getAllCollidingEntities(new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height));
 
             if (possibleTargets.Count <= 0)
             {
-                return;
+                return false;
             }
             FishPlayer fOwner = shooter.OwnerFishPlayer;
             if (fOwner.smartBobberDistribution)
             {
-                smartAttatch(fOwner, possibleTargets);
+                return smartAttatch(fOwner, possibleTargets);
             }
             else
             {
@@ -66,21 +66,18 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
                         if (target is NPC)
                         {
                             simpleAttatch(fOwner, (NPC)target);
-                            return;
+                            return true;
                         }
                         if (target is Player)
                         {
                             simpleAttatch(fOwner, (Player)target);
-                            return;
+                            return true;
                         }
                     }
-
+                  
                 }
             }
-
-
-
-
+            return false;
         }
 
         public List<Entity> getAllCollidingEntities(Rectangle checkHitbox)

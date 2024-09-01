@@ -218,6 +218,8 @@ namespace UnuBattleRodsR.Players
                 }
             }
 
+           
+
             base.ResetEffects();
         }
 
@@ -528,7 +530,7 @@ namespace UnuBattleRodsR.Players
             resetTurretsIfBuffOver();
 
 
-            if (newCenter.X > -10000 && newCenter.Y > -10000)
+            if (newCenter.X > -10000 && newCenter.Y > -10000 && !IncreaseTension)
             {
                 //Main.NewText("Position: " + newCenter.X +" : " + newCenter.Y + " ;");
                 if (WorldGen.InWorld((int)(newCenter.X / 16.0f), (int)(newCenter.Y / 16.0f)))
@@ -549,17 +551,14 @@ namespace UnuBattleRodsR.Players
                 // player.velocity = new Vector2(newSpeed.X, newSpeed.Y);
                 newCenter = new Vector2(-10000, -10000);
             }
-
             
+
             /*if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 
             }*/
 
         }
-
-       
-
         
 
         private void updateLinkDamage()
@@ -643,37 +642,48 @@ namespace UnuBattleRodsR.Players
             if (FishWorld.GearShift.JustPressed)
             {
                 var oldGear = currentReelGear;
-                if (triggersSet.Down)
+                if (TurretMode)
                 {
-                    currentReelGear--;
-                    if (currentReelGear < -currentMaxReelGear)
-                        currentReelGear = -currentMaxReelGear;
+                    explodeTurretOnCommand = true;
                 }
                 else
                 {
-                    currentReelGear++;
-                    if (currentReelGear > currentMaxReelGear)
-                        currentReelGear = currentMaxReelGear;
+                    if (triggersSet.Down)
+                    {
+                        currentReelGear--;
+                        if (currentReelGear < -currentMaxReelGear)
+                            currentReelGear = -currentMaxReelGear;
+                    }
+                    else
+                    {
+                        currentReelGear++;
+                        if (currentReelGear > currentMaxReelGear)
+                            currentReelGear = currentMaxReelGear;
+                    }
+                    var v = new AdvancedPopupRequest();
+                    v.Color = Color.White;
+                    v.DurationInFrames = 50;
+                    if (currentMaxReelGear == 0)
+                        v.Text = "No Gears!";
+                    else if (currentReelGear == 0)
+                        v.Text = "Neutral Gear";
+                    else if (currentReelGear < 0)
+                        v.Text = "Slow Gear " + (-currentReelGear);
+                    else
+                        v.Text = "Fast Gear " + currentReelGear;
+                    PopupText.NewText(v, Player.Top + new Vector2(0, -16));
                 }
-                var v = new AdvancedPopupRequest();
-                v.Color = Color.White;
-                v.DurationInFrames = 50;
-                if (currentMaxReelGear == 0)
-                    v.Text = "No Gears!";
-                else if (currentReelGear == 0)
-                    v.Text = "Neutral Gear";
-                else if (currentReelGear < 0)
-                    v.Text = "Slow Gear " + (-currentReelGear);
-                else
-                    v.Text = "Fast Gear " + currentReelGear;
-                PopupText.NewText(v, Player.Top + new Vector2(0, -16));
                 if(oldGear < currentReelGear)
                 {
                     SoundEngine.PlaySound(Main.rand.NextBool() ? gear1 : gear3);
-                }else if (oldGear > currentReelGear)
+                }else if (oldGear >= currentReelGear)
                 {
                     SoundEngine.PlaySound(Main.rand.NextBool() ? gear2 : gear4);
                 }
+            }
+            else
+            {
+                explodeTurretOnCommand = false;
             }
             if(FishWorld.TurretMode.JustPressed)
             {

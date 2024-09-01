@@ -204,6 +204,11 @@ namespace UnuBattleRodsR.NPCs.TownNPC
                Condition.Hardmode
                ));
             shop.Add(
+               new NPCShop.Entry(
+                   new Item(Mod.Find<ModItem>("LandmineTurret").Type) { shopCustomPrice = 20, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID },
+               Condition.Hardmode
+               ));
+            shop.Add(
                   new NPCShop.Entry(
                                new Item(Mod.Find<ModItem>("ScytheBobbers").Type) { shopCustomPrice = 6, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID },
                            Condition.Hardmode, Condition.NotDownedMoonLord

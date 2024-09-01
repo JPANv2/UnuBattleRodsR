@@ -115,6 +115,23 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
                 timeUntilGrab <= 0 && fp.maxBobbersPerEnemy != 0 && !fp.TurretMode)
             {
                 tryAndAttatchBobberToAnything();
+                
+            }else if ((npcIndex == -1 && (Projectile.ai[0] < 1f) && !(Projectile.ai[0] >= 2f)) && fp.TurretMode)
+            {
+                if (Main.mouseRight && Main.mouseLeft)
+                {
+                    Projectile.position = Projectile.oldPosition;
+                    Projectile.velocity = Vector2.Zero;
+                    updatePos = false;
+                    if (CanActivateTurret())
+                    {
+                        if (IsCrowdControl)
+                        {
+                            doCrowdControl();
+                        }
+                    }
+                    return;
+                }
             }
             if (timeUntilGrab > 0)
             {

@@ -16,7 +16,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        return 300;
+                        return 85;
                     default:
                     case Difficulties.Battlerods:
                         return 300;
@@ -35,7 +35,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseReelingAcceleration => 32 / 60f;
         public override float BaseSizeUntilDragged => 5f;
         public override float BaseMinTensionDamageMultiplier => 1.0f;
-        public override float BaseMaxTensionDamageMultiplier => 5f;
+        public override float BaseMaxTensionDamageMultiplier => 3f;
         public override float BaseIdealTensileStrenghtMin => 1800f;
         public override float BaseIdealTensileStrenghtMax => 25000f;
         public override float BaseTensileStrenghtMax => 300000.0f;

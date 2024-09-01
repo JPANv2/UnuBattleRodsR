@@ -22,6 +22,8 @@ namespace UnuBattleRodsR.Players
 
         public int maxDedicatedSlots = 10; //Chest Row Size
 
+        public bool explodeTurretOnCommand = false;
+
         public int NumberOfBaits
         {
             get
@@ -269,8 +271,7 @@ namespace UnuBattleRodsR.Players
             this.baitTimer = timer;
             if (timer == 0)
             {
-                baitBuffs.Clear();
-                baitDebuffs.Clear();
+                forceResetBaits();
                 resetBaits();
 
             }
@@ -370,6 +371,13 @@ namespace UnuBattleRodsR.Players
 
         public int baitTimer = 0;
         public List<int> debuffsPresent = new List<int>();
+
+
+        public void forceResetBaits()
+        {
+            baitBuffs.Clear();
+            baitDebuffs.Clear();
+        }
 
         public void resetBaits()
         {
@@ -485,7 +493,8 @@ namespace UnuBattleRodsR.Players
             if (AnyBaitDebuffs && baitTimer > 0)
             {
                 baitTimer = Math.Max(0, baitTimer - v);
-                SendAllAmmoPacket(-1);
+                if(Main.netMode == NetmodeID.MultiplayerClient)
+                    SendAllAmmoPacket(-1);
             }
         }
 
@@ -580,6 +589,7 @@ namespace UnuBattleRodsR.Players
 
         public void initTurrets()
         {
+            resetTurrets();
             int maxDur = -1;
             List<(Item, int)> turrets = TotalTurrets;
             for (int i = 0; i < NumberOfTurrets && i < turrets.Count; i++)
@@ -622,6 +632,10 @@ namespace UnuBattleRodsR.Players
                         timer = new Dictionary<int, int>()
                     });
                     maxDur = Math.Max(bp.DurationInTicks, maxDur);
+                    if (consumed && bp.EmptyTurretType != 0)
+                    {
+                        Player.QuickSpawnItem(Player.GetSource_ItemUse(bp.Item), bp.EmptyTurretType, 1);
+                    }
                 }
             }
             for(int i = 0; i < activeTurrets.Count; i++) {
@@ -665,7 +679,7 @@ namespace UnuBattleRodsR.Players
                         if (owner.bobbed)
                         {
                             if (!this.activeTurrets[i].timer.ContainsKey(index))
-                                this.activeTurrets[i].timer[index] = 0;
+                                this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobCycles : 0; 
 
                             this.activeTurrets[i].timer[index]++;
                             if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobCycles)
@@ -683,7 +697,7 @@ namespace UnuBattleRodsR.Players
                     else
                     {
                         if (!this.activeTurrets[i].timer.ContainsKey(index))
-                            this.activeTurrets[i].timer[index] = 0;
+                            this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobTime : 0;
 
                         this.activeTurrets[i].timer[index]++;
                         if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobTime)

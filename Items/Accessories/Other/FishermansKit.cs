@@ -12,7 +12,20 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 {
     public class FishermansKit : ModItem
     {
-        public static List<int> allowedAccessories = new List<int>();
+
+        public class AccessoryGrouping
+        {
+            public string key;
+            public List<int> accessoryTypes;
+            public bool blocking = true;
+        }
+
+        public class AccessoryGroupingWithTop : AccessoryGrouping
+        {
+            public int mainItem;
+        }
+
+        public static List<AccessoryGrouping> allowedAccessories = new List<AccessoryGrouping>();
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -58,53 +71,96 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             
             List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
-            for(int i = 0; i < player.inventory.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.inventory[i].type) && allowedAccessories.Contains(player.inventory[i].type))
-                {
-                    kitVisistedItems.Add(player.inventory[i].type);
-                    updateEquips(player, player.inventory[i]);        
-                }
-            }
-            for (int i = 0; i < player.bank.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank.item[i].type) &&allowedAccessories.Contains(player.bank.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank.item[i].type);
-                    updateEquips(player, player.bank.item[i]);
-                }
-            }
-            for (int i = 0; i < player.bank2.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank2.item[i].type) && allowedAccessories.Contains(player.bank2.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank2.item[i].type);
-                    updateEquips(player, player.bank2.item[i]);
-                }
-            }
-            for (int i = 0; i < player.bank3.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank3.item[i].type) && allowedAccessories.Contains(player.bank3.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank3.item[i].type);
-                    updateEquips(player, player.bank3.item[i]);
-                }
-            }
-            for (int i = 0; i < player.bank4.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank4.item[i].type) && allowedAccessories.Contains(player.bank4.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank4.item[i].type);
-                    updateEquips(player, player.bank4.item[i]);
-                }
-            }
+            List<Item> collectible = gatherUseableEquips(player,player.inventory);
+            collectible.AddRange(gatherUseableEquips(player, player.bank.item));
+            collectible.AddRange(gatherUseableEquips(player, player.bank2.item));
+            collectible.AddRange(gatherUseableEquips(player, player.bank3.item));
+            collectible.AddRange(gatherUseableEquips(player, player.bank4.item));
 
+            updateAllCollectedItems(player, collectible);
+        }
+
+        public static bool ItemInAllowedAccessories(Item itm)
+        {
+            for(int i = 0; i < allowedAccessories.Count; i++)
+            {
+                var ag = allowedAccessories[i] as AccessoryGroupingWithTop;
+                if (ag != null)
+                {
+                    if(ag.mainItem == itm.type)
+                        return true;
+                }
+                if (allowedAccessories[i].accessoryTypes.Contains(itm.type))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static AccessoryGrouping GetItemGroup(Item itm)
+        {
+            for (int i = 0; i < allowedAccessories.Count; i++)
+            {
+                var ag = allowedAccessories[i] as AccessoryGroupingWithTop;
+                if (ag != null)
+                {
+                    if (ag.mainItem == itm.type)
+                        return ag;
+                }
+            }
+            for (int i = 0; i < allowedAccessories.Count; i++)
+            {
+                var ag = allowedAccessories[i] as AccessoryGroupingWithTop;
+                if (allowedAccessories[i].accessoryTypes.Contains(itm.type) && ag == null)
+                {
+                    return allowedAccessories[i];
+                }
+            }
+            return null;
+        }
+
+        public static List<Item> gatherUseableEquips(Player player, Item[] itemCollection)
+        {
+            List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
+            List<Item> ans = new List<Item>();
+            for (int i = 0; i < itemCollection.Length; i++)
+            {
+                if (!kitVisistedItems.Contains(itemCollection[i].type) && ItemInAllowedAccessories(itemCollection[i])){
+                    AccessoryGrouping ag = GetItemGroup(itemCollection[i]);
+                    if(ag is AccessoryGroupingWithTop && (ag as AccessoryGroupingWithTop).mainItem == itemCollection[i].type)
+                    {
+                        kitVisistedItems.AddRange(ag.accessoryTypes);
+                    }
+                    else if(!(ag is AccessoryGroupingWithTop) && ag.blocking)
+                    {
+                        kitVisistedItems.AddRange(ag.accessoryTypes);
+                    }
+                    ans.Add(itemCollection[i]);
+                    kitVisistedItems.Add(itemCollection[i].type);
+                }
+            }
+            return ans;
+        }
+
+        public static void updateAllCollectedItems(Player p , List<Item> toUpdate)
+        {
+            for (int i = 0; i < toUpdate.Count; i++)
+            {
+                updateEquips(p, toUpdate[i]);
+            }
+        }
+
+        public static void UpdateEquipsFromInv(Player p, Item[] itemCollection)
+        {
+            List<Item> toUpdate = gatherUseableEquips(p, itemCollection);
+            updateAllCollectedItems(p, toUpdate);
         }
 
         public static void updateEquips(Player p, Item itm)
         {
             Player.DefenseStat oldDefence = p.statDefense;
-            p.GrantPrefixBenefits(itm)/* tModPorter Note: Removed. Use either GrantPrefixBenefits (if Item.accessory) or GrantArmorBenefits (for armor slots) */;
+            //p.GrantPrefixBenefits(itm);
             p.ApplyEquipFunctional(itm, true);
             if (itm.ModItem != null)
             {
@@ -162,15 +218,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
-            for (int i = 0; i < player.bank.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank.item[i].type) && FishermansKit.allowedAccessories.Contains(player.bank.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank.item[i].type);
-                    FishermansKit.updateEquips(player, player.bank.item[i]);
-                }
-            }
+            FishermansKit.UpdateEquipsFromInv(player, player.bank.item);
         }
     }
 
@@ -219,15 +267,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
-            for (int i = 0; i < player.bank2.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank2.item[i].type) && FishermansKit.allowedAccessories.Contains(player.bank2.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank2.item[i].type);
-                    FishermansKit.updateEquips(player, player.bank2.item[i]);
-                }
-            }
+            FishermansKit.UpdateEquipsFromInv(player, player.bank2.item);
         }
     }
     public class FishermansKit3: ModItem
@@ -275,15 +315,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
-            for (int i = 0; i < player.bank3.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank3.item[i].type) && FishermansKit.allowedAccessories.Contains(player.bank3.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank3.item[i].type);
-                    FishermansKit.updateEquips(player, player.bank3.item[i]);
-                }
-            }
+            FishermansKit.UpdateEquipsFromInv(player, player.bank3.item);
         }
     }
 
@@ -332,15 +364,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            List<int> kitVisistedItems = player.GetModPlayer<FishPlayer>().kitVisistedItems;
-            for (int i = 0; i < player.bank4.item.Length; i++)
-            {
-                if (!kitVisistedItems.Contains(player.bank4.item[i].type) && FishermansKit.allowedAccessories.Contains(player.bank4.item[i].type))
-                {
-                    kitVisistedItems.Add(player.bank4.item[i].type);
-                    FishermansKit.updateEquips(player, player.bank4.item[i]);
-                }
-            }
+            FishermansKit.UpdateEquipsFromInv(player, player.bank4.item);
         }
     }
 }

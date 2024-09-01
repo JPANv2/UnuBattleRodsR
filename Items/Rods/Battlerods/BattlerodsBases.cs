@@ -83,7 +83,6 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
         /// </summary>
         public virtual bool IsCrowdControlOnlyInTurretMode => false;
 
-
         #endregion
         #region SecondaryStats
         /// <summary>
@@ -161,12 +160,14 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
         /// </summary>
         public float BobSpeedInSeconds => BobSpeedInTicks / 60f;
 
+        public int adaptedDamage = 0;
+        public virtual int TrueBaseDamage => UnuBattleRodsR.DEBUG && adaptedDamage != 0 ? adaptedDamage : BaseDamage;
 
         public int CurrentDamageNoBobbers
         {
             get
             {
-                float dmg = BaseDamage * baseDamageMultiplier;
+                float dmg = TrueBaseDamage * baseDamageMultiplier;
                 Player p = Main.player[owner];
                 if(p == null || !p.active)
                     p = Main.player[Main.myPlayer];

@@ -30,8 +30,11 @@ namespace UnuBattleRodsR.Items.Crates
             {
                 player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.PiranhaGun);
             }
-
-            if(Main.rand.Next(50) == 0)
+            if (Main.rand.Next(100) == 0)
+            {
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TurtleShell);
+            }
+            if (Main.rand.Next(50) == 0)
             {
                 player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Seedling);
             }

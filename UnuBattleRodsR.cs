@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using UnuBattleRodsR.Buffs;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items;
 using UnuBattleRodsR.Items.BossBags;
 using UnuBattleRodsR.Items.Consumables.Baits.SummonBaits;
 using UnuBattleRodsR.Items.Currency;
@@ -37,6 +38,11 @@ namespace UnuBattleRodsR
         public FishToReplaceConfig fishToReplaceConfig = ModContent.GetInstance<FishToReplaceConfig>();
         public FishSteakRecipesConfig fishRecipes = ModContent.GetInstance<FishSteakRecipesConfig>();
 
+        public Dictionary<int, List<RechargeRecipe>> rechargeableRecipesByResult = new Dictionary<int, List<RechargeRecipe>>();
+        public Dictionary<int, List<RechargeRecipe>> rechargeableRecipesByDepleted = new Dictionary<int, List<RechargeRecipe>>();
+
+
+        public static readonly bool DEBUG = true;
         
         public UnuBattleRodsR()
         {
@@ -48,7 +54,13 @@ namespace UnuBattleRodsR
             base.Load();
         }
 
-        
+        public override void Unload()
+        {
+            rechargeableRecipesByDepleted.Clear();
+            rechargeableRecipesByResult.Clear();    
+            base.Unload();
+        }
+
 
 
         public static bool thoriumPresent = false;

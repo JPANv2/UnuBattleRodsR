@@ -76,7 +76,7 @@ namespace UnuBattleRodsR.Items.Minions
 
         public virtual void GetRealWeaponDamage(Player player, ref int damage)
         {
-            damage = NPC.downedMoonlord ? 60 : (Main.hardMode ? 25 : 5);
+            damage = NPC.downedMoonlord ? 60 : (Main.hardMode ? 15 : 5);
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

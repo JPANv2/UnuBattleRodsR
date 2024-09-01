@@ -27,7 +27,7 @@ namespace UnuBattleRodsR.Items.Crates
         public override void RightClick(Player player)
         {
 
-            switch (Main.rand.Next(11))
+            switch (Main.rand.Next(12))
             {
                 case 0:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ObsidianSkull, 1);
@@ -58,6 +58,9 @@ namespace UnuBattleRodsR.Items.Crates
                     break;
                 case 9:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Bezoar, 1);
+                    break;
+                case 10:
+                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.PocketMirror, 1);
                     break;
                 default:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.AdhesiveBandage, 1);

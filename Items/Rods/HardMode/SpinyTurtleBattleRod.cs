@@ -20,8 +20,8 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        //Needs Balance
-                        return 600;
+                        
+                        return 180;
                     default:
                     case Difficulties.Battlerods:
                         return 600;
@@ -36,14 +36,14 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => false;
         public override float BaseReelingSpeed => 32.0f / 60f;
-        public override float BaseReelingSpeedMax => 64f;
+        public override float BaseReelingSpeedMax => 5f;
         public override float BaseReelingAcceleration => 32 / 60f;
         public override float BaseSizeUntilDragged => 15f;
         public override float BaseMinTensionDamageMultiplier => 1.0f;
         public override float BaseMaxTensionDamageMultiplier => 6.0f;
-        public override float BaseIdealTensileStrenghtMin => 1000f;
-        public override float BaseIdealTensileStrenghtMax => 60000f;
-        public override float BaseTensileStrenghtMax => 70000.0f;
+        public override float BaseIdealTensileStrenghtMin => 10000f;
+        public override float BaseIdealTensileStrenghtMax => 600000f;
+        public override float BaseTensileStrenghtMax => 700000.0f;
         public override float BaseVampiricPercent => 0f;
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.10f;

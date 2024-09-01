@@ -16,7 +16,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        return 129;
+                        return 118;
                     default:
                     case Difficulties.Battlerods:
                         return 160;
@@ -25,7 +25,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         }
         public override int BobSpeedInTicks => 60;
         public override int BaseNumberOfBobbers => 3;
-        public override int BaseNumberOfBaits => 1;
+        public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 1;
         public override bool IsCrowdControlRod => true;
         public override bool IsCrowdControlOnlyInTurretMode => true;

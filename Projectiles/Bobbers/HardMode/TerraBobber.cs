@@ -35,7 +35,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
         public override void doCrowdControl()
         {
             bobCounter++;
-            if (bobCounter >= 3)
+            if (bobCounter >= 6)
             {
                 bobCounter = 0;
                 shootTerra(Main.player[Projectile.owner], isStuck() ? getStuckEntity() : Projectile);
