@@ -219,6 +219,14 @@ namespace UnuBattleRodsR.Common.UI
             }
             return false;
         }
+
+        protected virtual void CallItemHandler()
+        {
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            world.ammoRechargers[slot].SetToRecharge(Item);
+            return;
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             float oldScale = Main.inventoryScale;
@@ -233,10 +241,7 @@ namespace UnuBattleRodsR.Common.UI
                 {
                     // Handle handles all the click and hover actions based on the context.
                     ItemSlot.Handle(ref Item, _context);
-                    if(Item.type != oldItemType)
-                    {
-                        _parent.ResetProgress();
-                    }
+                    CallItemHandler();
                 }
             }
             // Draw draws the slot itself and Item. Depending on context, the color will change, as will drawing other things like stack counts.
@@ -272,6 +277,36 @@ namespace UnuBattleRodsR.Common.UI
             }
             return false;
         }
+
+        protected virtual void CallItemHandler()
+        {
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            world.ammoRechargers[slot].SetToConsume(Item);
+            return;
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            float oldScale = Main.inventoryScale;
+            Main.inventoryScale = _scale;
+            int oldItemType = Item.type;
+            Rectangle rectangle = GetDimensions().ToRectangle();
+
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+            {
+                Main.LocalPlayer.mouseInterface = true;
+                if (this.ValidItem(Main.mouseItem) || Main.mouseItem == null || Main.mouseItem.IsAir)
+                {
+                    // Handle handles all the click and hover actions based on the context.
+                    ItemSlot.Handle(ref Item, _context);
+                    CallItemHandler();
+                }
+            }
+            // Draw draws the slot itself and Item. Depending on context, the color will change, as will drawing other things like stack counts.
+            ItemSlot.Draw(spriteBatch, ref Item, _context, rectangle.TopLeft());
+            Main.inventoryScale = oldScale;
+        }
+
     }
 
 
@@ -285,6 +320,34 @@ namespace UnuBattleRodsR.Common.UI
         protected override bool ValidItem(Item item)
         {
             return false;
+        }
+        protected virtual void CallItemHandler()
+        {
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            world.ammoRechargers[slot].SetRecharged(Item);
+            return;
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            float oldScale = Main.inventoryScale;
+            Main.inventoryScale = _scale;
+            int oldItemType = Item.type;
+            Rectangle rectangle = GetDimensions().ToRectangle();
+
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+            {
+                Main.LocalPlayer.mouseInterface = true;
+                if (this.ValidItem(Main.mouseItem) || Main.mouseItem == null || Main.mouseItem.IsAir)
+                {
+                    // Handle handles all the click and hover actions based on the context.
+                    ItemSlot.Handle(ref Item, _context);
+                    CallItemHandler();
+                }
+            }
+            // Draw draws the slot itself and Item. Depending on context, the color will change, as will drawing other things like stack counts.
+            ItemSlot.Draw(spriteBatch, ref Item, _context, rectangle.TopLeft());
+            Main.inventoryScale = oldScale;
         }
 
     }

@@ -77,6 +77,7 @@ namespace UnuBattleRodsR.Items.Armors.PostMoonLord
                 "Native 1% Mana Syphon and Life Steal";
             player.statManaMax2 += 200;
             player.statLifeMax2 += 200;
+            player.noFallDmg = true;
             FishPlayer pl = player.GetModPlayer<FishPlayer>();
             pl.fractaliteArmorEffect = true;
             pl.projectileDestroyPercentage += 2500;

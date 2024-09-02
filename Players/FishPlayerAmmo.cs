@@ -715,5 +715,7 @@ namespace UnuBattleRodsR.Players
             }
         }
         #endregion
+
+        public int AmmoRecharger = -1;
     }
 }

@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Prefixes;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 {
+
     public abstract class PistolTurret : BaseTurret
     {
         public override int DurationInTicks => 18000;
@@ -51,10 +53,191 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         }
     }
 
+    public class EmptyPistolTurretV1: BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+        public override void AddRecipes()
+        {
+            Recipe rec = CreateRecipe(1);
+            rec.AddRecipeGroup(RecipeGroupID.IronBar, 15);
+            rec.AddTile(TileID.WorkBenches);
+            rec.Register();
+        }
+    }
+
     public class PistolTurretV1 : PistolTurret
     {
-        
+        public override int RealProjectileID => ProjectileID.Bullet;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
 
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MusketBall, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.EndlessMusketPouch, 0);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+    public class PistolTurretV1Silver : PistolTurretV1
+    {
+        public override int RealProjectileID => ProjectileID.SilverBullet;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.SilverBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.TungstenBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV1Meteor : PistolTurretV1
+    {
+        public override int RealProjectileID => ProjectileID.MeteorShot;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MeteorShot, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV1Crystal : PistolTurretV1
+    {
+        public override int RealProjectileID => ProjectileID.CrystalBullet;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrystalBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV1Chlorophyte : PistolTurretV1
+    {
+        public override int RealProjectileID => ProjectileID.ChlorophyteBullet;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.ChlorophyteBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV1Luminite : PistolTurretV1
+    {
+        public override int RealProjectileID => ProjectileID.MoonlordBullet;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV1>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MoonlordBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+
+    public class EmptyPistolTurretV2 : BaseEmptyTurret
+    {
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -69,9 +252,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void AddRecipes()
         {
             Recipe rec = CreateRecipe(1);
-            rec.AddRecipeGroup(RecipeGroupID.IronBar, 15);
-            rec.AddIngredient(ItemID.MusketBall, 100);
-            rec.AddTile(TileID.WorkBenches);
+            rec.AddIngredient(ItemID.MeteoriteBar, 10);
+            rec.AddIngredient(ItemID.Wire, 20);
+            rec.AddTile(TileID.Hellforge);
             rec.Register();
         }
     }
@@ -80,6 +263,41 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     {
         public override int Level => 2;
         public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
+        public override int RealProjectileID => ProjectileID.Bullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MusketBall, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.EndlessMusketPouch, 0);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+    public class PistolTurretV2Silver : PistolTurretV2
+    {
+
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
+        public override int RealProjectileID => ProjectileID.SilverBullet;
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -93,21 +311,133 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.MeteoriteBar, 10);
-            rec.AddIngredient(ItemID.Wire, 20);
-            rec.AddIngredient(ItemID.MeteorShot, 100);
-            rec.AddTile(TileID.Hellforge);
-            rec.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.SilverBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.TungstenBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
         }
     }
 
-    public class PistolTurretV3 : PistolTurret
+    public class PistolTurretV2Meteor : PistolTurretV2
     {
-        public override int Level => 3;
-        public override int DurationInTicks => 36000;
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
+        public override int RealProjectileID => ProjectileID.MeteorShot;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MeteorShot, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV2Crystal : PistolTurretV2
+    {
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
+        public override int RealProjectileID => ProjectileID.CrystalBullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrystalBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV2Chlorophyte : PistolTurretV2
+    {
+
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
         public override int RealProjectileID => ProjectileID.ChlorophyteBullet;
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.ChlorophyteBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV2Luminite : PistolTurretV2
+    {
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV2>();
+        public override int RealProjectileID => ProjectileID.MoonlordBullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MoonlordBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+
+    public class EmptyPistolTurretV3 : BaseEmptyTurret
+    {
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -124,9 +454,184 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             Recipe rec = CreateRecipe(1);
             rec.AddIngredient(ItemID.ChlorophyteBar, 15);
             rec.AddIngredient(ItemID.Wire, 20);
-            rec.AddIngredient(ItemID.ChlorophyteBullet, 100);
             rec.AddTile(TileID.MythrilAnvil);
             rec.Register();
+        }
+    }
+
+    public class PistolTurretV3 : PistolTurret
+    {
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.Bullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 20, 0, 0);
+        }
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MusketBall, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.EndlessMusketPouch, 0);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+
+    }
+    public class PistolTurretV3Silver : PistolTurretV3
+    {
+
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.SilverBullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.SilverBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.TungstenBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV3Meteor : PistolTurretV3
+    {
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.MeteorShot;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MeteorShot, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV3Crystal : PistolTurretV3
+    {
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.CrystalBullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrystalBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV3Chlorophyte : PistolTurretV3
+    {
+
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.ChlorophyteBullet;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.ChlorophyteBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class PistolTurretV3Luminite : PistolTurretV3
+    {
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyPistolTurretV3>();
+        public override int RealProjectileID => ProjectileID.MoonlordBullet;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 99;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.MoonlordBullet, 100);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
         }
     }
 }

@@ -225,7 +225,7 @@ namespace UnuBattleRodsR.Players
 
         public override void PreUpdate()
         {
-            if (!Main.dedServ) {
+            if (Main.netMode != NetmodeID.Server) {
                 if ((IsBattlerodHeld || IsBattlerodOnHotbar) && Main.playerInventory && Player.chest == -1)
                 {
                     if (IsBattlerodHeld)
@@ -254,6 +254,21 @@ namespace UnuBattleRodsR.Players
                     }
                     ammoUI.SetState(null);
                 }
+                if (AmmoRecharger >= 0 && Main.playerInventory && ModContent.GetInstance<FishWorld>().ammoRechargers[AmmoRecharger] != null)
+                {
+                    UserInterface AmmoRecharger2 = ModContent.GetInstance<AmmoUISystem>().AmmoRecharger;
+                    if (AmmoRecharger2.CurrentState == null)
+                    {
+                        AmmoRecharger2.SetState(new AmmoRechargerUI());
+                    }
+                }
+                else
+                {
+                    AmmoRecharger = -1;
+                    UserInterface AmmoRecharger2 = ModContent.GetInstance<AmmoUISystem>().AmmoRecharger;
+                    AmmoRecharger2.SetState(null);
+                }
+
             }
             base.PreUpdate();
         }

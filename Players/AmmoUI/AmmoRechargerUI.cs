@@ -29,7 +29,62 @@ namespace UnuBattleRodsR.Players.AmmoUI
 
         public override void OnInitialize()
         {
-            progressBar = new UIProgressBar();
+            FishPlayer fp = Main.LocalPlayer.GetModPlayer<FishPlayer>();
+            FishWorld world = ModContent.GetInstance<FishWorld>(); 
+            background = new TexturedDraggableUIPanel();
+            background.Left.Set(Main.screenWidth/2-50,0);
+            background.Top.Set(Main.screenHeight/2 -100, 0);
+            background.Width.Set(120,0f);
+            background.Height.Set(120, 0f);
+            progressBar = new UIProgressBar() {
+                Top = new StyleDimension(2,0),
+                Left = new StyleDimension(5, 0f),
+                Width = new StyleDimension(90,0), 
+                Height = new StyleDimension(10, 0)
+            };
+            progressText = new UIText("None!", 1f)
+            {
+                Top = new StyleDimension(2, 0),
+                Left = new StyleDimension(5, 0f),
+                Width = new StyleDimension(90, 0),
+                Height = new StyleDimension(10, 0)
+            };
+            background.Append(progressBar);
+            background.Append(progressText);
+            progressBar.SetProgress(0);
+            turret = new RechargingTurretSlot(ref world.ammoRechargers[fp.AmmoRecharger].toRecharge, fp.AmmoRecharger, this)
+            {
+                Top = new StyleDimension(18, 0),
+                Left = new StyleDimension(5, 0),
+            };
+            ammo = new RechargingTurretInputSlot(ref world.ammoRechargers[fp.AmmoRecharger].toConsume, fp.AmmoRecharger, turret)
+            {
+                Top = new StyleDimension(18,0),
+                Left = new StyleDimension(turret.Width.Pixels + 10,0),
+            }; 
+            recharged = new RechargedTurretSlot(ref world.ammoRechargers[fp.AmmoRecharger].recharged, fp.AmmoRecharger)
+            {
+                Top = new StyleDimension(20+ turret.Height.Pixels ,0),
+                Left = new StyleDimension(turret.Width.Pixels / 2 + 3.5f, 0),
+                
+            }; ;
+            background.Append(turret);
+            background.Append(ammo);
+            background.Append(recharged);
+            Append(background);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            FishPlayer fp = Main.LocalPlayer.GetModPlayer<FishPlayer>();
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            if (world.ammoRechargers[fp.AmmoRecharger] == null)
+                return;
+            if (world.ammoRechargers[fp.AmmoRecharger].currentRecipe == null)
+                progressText.SetText("None!");
+            else
+                progressText.SetText(world.ammoRechargers[fp.AmmoRecharger].Progress.ToString("P"));
+
         }
 
         public virtual void ResetProgress()

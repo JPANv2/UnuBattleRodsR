@@ -2243,34 +2243,34 @@ Mods: {
 			}
 
 			PistolTurretV1: {
-				DisplayName: Pistol Turret
+				DisplayName: Pistol Turret (Musket)
 				Tooltip:
 					'''
 					Allows any bobber to shoot bullets when idle.
 					Shoots every 1.5 seconds:
-					- A (meteorite) bullet
+					- A bullet
 					Maximum 5 minutes duration
 					'''
 			}
 
 			PistolTurretV2: {
-				DisplayName: Pistol Turret v2
+				DisplayName: Pistol Turret v2 (Musket)
 				Tooltip:
 					'''
 					Allows any bobber to shoot bullets when idle.
 					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
-					- A meteorite bullet
+					- A musket bullet
 					Maximum 7 minutes duration
 					'''
 			}
 
 			PistolTurretV3: {
-				DisplayName: Pistol Turret v3
+				DisplayName: Pistol Turret v3 (Musket)
 				Tooltip:
 					'''
 					Allows any bobber to shoot bullets when idle.
 					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
-					- A chlorophyte bullet
+					- A musket bullet
 					Maximum 10 minutes duration
 					'''
 			}
@@ -2358,6 +2358,213 @@ Mods: {
 
 			UnusaciesBattlerod: {
 				DisplayName: Unusacies Battlerod
+				Tooltip: ""
+			}
+
+			EmptyPistolTurretV1: {
+				DisplayName: Empty Pistol Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires 100 of Musket Ball, Silver/Tungsten Bullet, Meteor Shot, Crystal Bullet, Chlorophyte Bullet or Luminite bullet to recharge
+					'''
+			}
+
+			EmptyPistolTurretV2: {
+				DisplayName: Empty Pistol Turret V2
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires 100 of Musket Ball, Silver/Tungsten Bullet, Meteor Shot, Crystal Bullet, Chlorophyte Bullet or Luminite bullet to recharge
+					'''
+			}
+
+			EmptyPistolTurretV3: {
+				DisplayName: Empty Pistol Turret V3
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires 100 of Musket Ball, Silver/Tungsten Bullet, Meteor Shot, Crystal Bullet, Chlorophyte Bullet or Luminite bullet to recharge
+					'''
+			}
+
+			PistolTurretV1Chlorophyte: {
+				DisplayName: Pistol Turret (Chlorophyte)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 1.5 seconds:
+					- A chlorophyte bullet
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV1Crystal: {
+				DisplayName: Pistol Turret (Crystal)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 1.5 seconds:
+					- A crystal bullet
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV1Luminite: {
+				DisplayName: Pistol Turret (Luminite)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 1.5 seconds:
+					- A luminite bullet
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV1Meteor: {
+				DisplayName: Pistol Turret (Meteor)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 1.5 seconds:
+					- A meteor shot
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV1Silver: {
+				DisplayName: Pistol Turret (Silver)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 1.5 seconds:
+					- A silver bullet
+					Maximum 5 minutes duration
+					'''
+			}
+
+			PistolTurretV2Chlorophyte: {
+				DisplayName: Pistol Turret v2 (Chlorophyte)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A chlorophyte bullet
+					Maximum 7 minutes duration
+					'''
+			}
+
+			PistolTurretV2Crystal: {
+				DisplayName: Pistol Turret v2 (Crystal)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A crystal bullet
+					Maximum 7 minutes duration
+					'''
+			}
+
+			PistolTurretV2Luminite: {
+				DisplayName: Pistol Turret v2 (Luminite)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A luminite bullet
+					Maximum 7 minutes duration
+					'''
+			}
+
+			PistolTurretV2Meteor: {
+				DisplayName: Pistol Turret v2 (Meteor)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A meteor shot
+					Maximum 7 minutes duration
+					'''
+			}
+
+			PistolTurretV2Silver: {
+				DisplayName: Pistol Turret v2 (Silver)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a spreader every 1.5 seconds that, when exhausted, spawns:
+					- A silver bullet
+					Maximum 7 minutes duration
+					'''
+			}
+
+			PistolTurretV3Chlorophyte: {
+				DisplayName: Pistol Turret v3 (Chlorophyte)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A chlorophyte bullet
+					Maximum 10 minutes duration
+					'''
+			}
+
+			PistolTurretV3Crystal: {
+				DisplayName: Pistol Turret v3 (Crystal)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A crystal bullet
+					Maximum 10 minutes duration
+					'''
+			}
+
+			PistolTurretV3Luminite: {
+				DisplayName: Pistol Turret v3 (Luminite)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A luminite bullet
+					Maximum 10 minutes duration
+					'''
+			}
+
+			PistolTurretV3Meteor: {
+				DisplayName: Pistol Turret v3 (Meteor)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A meteor shot
+					Maximum 10 minutes duration
+					'''
+			}
+
+			PistolTurretV3Silver: {
+				DisplayName: Pistol Turret v3 (Silver)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots a Lv 2 spreader that every 1.5 seconds that, when exhausted, spawns:
+					- A silver bullet
+					Maximum 10 minutes duration
+					'''
+			}
+
+			Recharger: {
+				DisplayName: Recharger
+				Tooltip: ""
+			}
+
+			Hellcharger: {
+				DisplayName: Hellcharger
+				Tooltip: ""
+			}
+
+			LunarRecharger: {
+				DisplayName: Lunar Recharger
 				Tooltip: ""
 			}
 		}

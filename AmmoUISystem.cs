@@ -8,17 +8,19 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using UnuBattleRodsR.Players;
+using UnuBattleRodsR.Players.AmmoUI;
 
 namespace UnuBattleRodsR
 {
     public class AmmoUISystem : ModSystem
     {
         public UserInterface AmmoUI;
+        public UserInterface AmmoRecharger;
 
         public override void Load()
         {
             AmmoUI = new UserInterface();
-
+            AmmoRecharger = new UserInterface();
             base.Load();
         }
 
@@ -26,6 +28,8 @@ namespace UnuBattleRodsR
         {
             if(AmmoUI?.CurrentState != null)
                 AmmoUI?.Update(gameTime);
+            if (AmmoRecharger?.CurrentState != null)
+                AmmoRecharger?.Update(gameTime);
 
         }
 
@@ -45,6 +49,29 @@ namespace UnuBattleRodsR
                             AmmoUI.Update(gt);
                             if (AmmoUI?.CurrentState != null)
                             AmmoUI.Draw(Main.spriteBatch, gt);
+                        }
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+                layers.Insert(invIndex, new LegacyGameInterfaceLayer(
+                    "UnusBattlerodsR: Ammo Recharger",
+                    delegate {
+                        FishPlayer cur = Main.LocalPlayer.GetModPlayer<FishPlayer>();
+                        if (cur.AmmoRecharger >= 0)
+                        {
+                            if(AmmoRecharger.CurrentState == null)
+                            {
+                                AmmoRecharger.SetState(new AmmoRechargerUI());
+                            }
+                            GameTime gt = new GameTime();
+                            AmmoRecharger.Update(gt);
+                            if (AmmoRecharger?.CurrentState != null)
+                                AmmoRecharger.Draw(Main.spriteBatch, gt);
+                        }
+                        else
+                        {
+                            AmmoRecharger.SetState(null);
                         }
                         return true;
                     },

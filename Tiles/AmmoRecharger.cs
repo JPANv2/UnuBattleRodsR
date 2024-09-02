@@ -6,6 +6,10 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using Terraria.ObjectData;
+using System.Linq;
+using UnuBattleRodsR.Tiles.Rechargers;
+using UnuBattleRodsR.Items.Rechargers;
 
 namespace UnuBattleRodsR.Tiles
 {
@@ -20,9 +24,9 @@ namespace UnuBattleRodsR.Tiles
 
         long passedTime = 0;
 
-        public Item toRecharge;
-        public Item toConsume;
-        public Item recharged;
+        public Item toRecharge = new Item();
+        public Item toConsume = new Item();
+        public Item recharged = new Item();
 
         public RechargeRecipe currentRecipe = null;
 
@@ -136,6 +140,8 @@ namespace UnuBattleRodsR.Tiles
         {
             get
             {
+                if (toRecharge == null || toRecharge.type == ItemID.None)
+                    return false;
                 if (currentRecipe != null)
                 {
                     if (currentRecipe.ItemsValidForRecipe(toRecharge, toConsume, recharged))
@@ -203,7 +209,7 @@ namespace UnuBattleRodsR.Tiles
                         {
                             toConsume.stack -= currentRecipe.ConsumedItemAmount;
                         }
-                        recharged = new Item();
+                        //recharged = new Item();
                         recharged.SetDefaults(currentRecipe.RechargedType);
                         recharged.stack = currentRecipe.RechargedAmount;
                         toRecharge.stack -= currentRecipe.RechargingAmount;
@@ -233,18 +239,60 @@ namespace UnuBattleRodsR.Tiles
             }
         }
 
+        protected static Point16 toStoredCoordinates(int i, int j)
+        {
+            return new Point16((i >> 1) * 2, (j >> 1) * 2);
+        }
+
+        public static int FindEmptySlot(int x, int y, int type = 21, int style = 0, int direction = 1, int alternate = 0)
+        {
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            Point16 baseCoords = new Point16(x, y);
+            int num = -1;
+            for (int i = 0; i < 100; i++)
+            {
+                AmmoRecharger ar = world.ammoRechargers[i];
+                if (ar != null)
+                {
+                    if (ar.X == baseCoords.X && ar.Y == baseCoords.Y)
+                        return -1;
+                }
+                else if (num == -1)
+                {
+                    num = i;
+                }
+            }
+
+            return num;
+        }
+
+        public static int AfterPlacement_Hook(int x, int y, int type, int style = 0, int direction = 1, int alternate = 0)
+        {
+            Point16 baseCoords = new Point16(Main.tile[x,y].TileFrameX != 0 ? x - 1 : x, Main.tile[x, y].TileFrameY % ModContent.GetModTile(type).AnimationFrameHeight != 0 ? y - 1 : y);
+            int num = FindEmptySlot(baseCoords.X, baseCoords.Y);
+            if (num == -1)
+                return -1;
+
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            world.ammoRechargers[num] = new AmmoRecharger();
+            BaseRecharger br = ModContent.GetModTile(type).GetItemDrops(x, y).First().ModItem as BaseRecharger;
+            world.ammoRechargers[num].CreateNewOnPosition(num, baseCoords.X, baseCoords.Y, br.TicksPerUpdate);
+            return num;
+        }
+
         public virtual TagCompound Save()
         {
             TagCompound ans = new TagCompound();
-            ans.Add("updates", ticksPerUpdate);
-            ans.Add("ticks", passedTime);
-            if(toRecharge != null && toRecharge.type != ItemID.None)
-                ans.Add("recharge", toRecharge);
+            ans["updates"] = ticksPerUpdate;
+            ans["ticks"] = passedTime;
+            ans["x"] = X;
+            ans["y"] = Y;
+            if (toRecharge != null && toRecharge.type != ItemID.None)
+                ans["recharge"] = toRecharge;
             if (toConsume != null && toConsume.type != ItemID.None)
-                ans.Add("ammo", toConsume);
+                ans["ammo"] = toConsume;
             if (recharged != null && recharged.type != ItemID.None)
-                ans.Add("recharged", recharged);
-
+                ans["recharged"] = recharged;
             return ans;
         }
 
@@ -252,6 +300,10 @@ namespace UnuBattleRodsR.Tiles
         {
             ticksPerUpdate = tag.Get<int>("updates");
             passedTime = tag.Get<long>("ticks");
+            if(tag.ContainsKey("x"))
+                X = tag.Get<int> ("x");
+            if (tag.ContainsKey("y"))
+                Y = tag.Get<int>("y");
             if (tag.ContainsKey("recharge"))
             {
                 toRecharge = tag.Get<Item>("recharge");

@@ -158,6 +158,7 @@ namespace UnuBattleRodsR
                 if(ammoRechargers[(int)read] == null)
                     ammoRechargers[(int)read] = new AmmoRecharger();
                 ammoRechargers[((int)read)].Load(TagIO.Read(reader));
+                ammoRechargers[((int)read)].slot = read;
                 read = reader.ReadByte();
             }
         }

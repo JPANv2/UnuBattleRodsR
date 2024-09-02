@@ -63,6 +63,9 @@
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV3.png" />
     <None Remove="Items\Potions\FishingDamagePotion.png" />
     <None Remove="Items\Potions\TensionOil.png" />
+    <None Remove="Items\Rechargers\Hellcharger.png" />
+    <None Remove="Items\Rechargers\LunarRecharger.png" />
+    <None Remove="Items\Rechargers\Recharger.png" />
     <None Remove="Items\Rods\PostMoonLord\UnusaciesBattlerod.png" />
     <None Remove="Players\RodTensionInfoDisplay.png" />
     <None Remove="Projectiles\Bees\BoneeBee.png" />
@@ -103,6 +106,9 @@
     <None Remove="Projectiles\Turrets\Laser\Charge7.png" />
     <None Remove="Projectiles\Turrets\Laser\Charge8.png" />
     <None Remove="Projectiles\Turrets\Laser\Charge9.png" />
+    <None Remove="Tiles\Rechargers\HellchargerTile.png" />
+    <None Remove="Tiles\Rechargers\LunarRechargerTile.png" />
+    <None Remove="Tiles\Rechargers\RechargerTile.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Consumables\Discardables\PostMoonLord\" />

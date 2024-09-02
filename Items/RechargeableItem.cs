@@ -47,7 +47,7 @@ namespace UnuBattleRodsR.Items
                 valid3 = true;
             else
             {
-                valid3 = resultSlot.type == RechargedType && resultSlot.maxStack < resultSlot.stack + RechargedAmount;
+                valid3 = resultSlot.type == RechargedType && resultSlot.maxStack >= resultSlot.stack + RechargedAmount;
             }
 
             return valid1 && valid2 && valid3;
