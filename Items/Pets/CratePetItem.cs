@@ -21,7 +21,7 @@ namespace UnuBattleRodsR.Items.Pets
 
         public override void SetDefaults()
         {
-            Item.CloneDefaults(ItemID.CrimsonHeart);
+            Item.CloneDefaults(ItemID.DD2PetGato);
             Item.shoot = Mod.Find<ModProjectile>("CratePetProjectile").Type;
             Item.buffType = Mod.Find<ModBuff>("CratePetBuff").Type;
         }

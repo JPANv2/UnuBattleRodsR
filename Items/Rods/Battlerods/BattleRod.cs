@@ -68,6 +68,9 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            owner = source.Player.whoAmI;
+            if (Main.netMode == NetmodeID.Server)
+                return false;
             FishPlayer p = player.GetModPlayer<FishPlayer>();
             int lures = NumberOfBobbers;
 

@@ -11,7 +11,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
     public class NebulaBobber : Bobber
     {
         public override bool IsCrowdControl => true;
-        public override bool TurretOnly => true;
+        public override bool TurretOnly => false;
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -35,17 +35,23 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
         public override void doCrowdControl()
         {
             Lighting.AddLight(Projectile.Center, 0.9f, 0.3f, 0.7f);
-            bobCounter++;
-            if (bobCounter >= 8)
-            {
-                spawnNebulas(Main.player[Projectile.owner], Projectile);
-                bobCounter = 0;
-            }
+            spawnNebulas(Main.player[Projectile.owner], Projectile);
         }
 
         private void spawnNebulas(Player player, Entity npc)
         {
             int itm = 3453 + Main.rand.Next(3);
+            int cnt = 0;
+            for(int k = 0; k < Main.item.Length; k++)
+            {
+                if(Main.item[k].type == itm)
+                {
+                    cnt++;
+                }
+            }
+            if (cnt > 10)
+                return;
+
             double angle = Main.rand.NextDouble() * Math.PI * 2;
             Vector2 newPos = new Vector2(npc.Center.X, npc.Center.Y);
             int size = npc.width > npc.height ? npc.width : npc.height;

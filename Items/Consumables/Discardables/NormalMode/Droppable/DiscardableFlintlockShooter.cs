@@ -19,11 +19,12 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
             itm.SetDefaults(ItemID.FlintlockPistol);
 
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = itm.width;
             Item.height = itm.height;
             Item.value = itm.value;
             Item.rare = itm.rare;
+            Item.ammo = ModContent.ItemType<ExplosiveBobbers>();
             Item.maxStack = 999;
         }
 
@@ -55,19 +56,17 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.FlintlockPistol, 1);
-            rec.AddIngredient(ItemID.MusketBall, 1);
-            rec.Register();
+            RechargeRecipe rr  = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableFlintlockShooterUnloaded>());
+            rr.Consumes(ItemID.MusketBall, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
 
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableFlintlockShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.MusketBall, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.FlintlockPistol, 1);
-            recReverse.AddIngredient<DiscardableFlintlockShooterLoaded>();
-            recReverse.Register();
+            rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableFlintlockShooterUnloaded>());
+            rr.Consumes(ItemID.EndlessMusketPouch, 0);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 
@@ -87,19 +86,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.FlintlockPistol, 1);
-            rec.AddIngredient(ItemID.MeteorShot, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableFlintlockShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.MeteorShot, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.FlintlockPistol, 1);
-            recReverse.AddIngredient<DiscardableFlintlockShooterMeteor>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableFlintlockShooterUnloaded>());
+            rr.Consumes(ItemID.MeteorShot, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
     public class DiscardableFlintlockShooterCrystal : BaseDiscardableWithDrop
@@ -118,19 +109,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.FlintlockPistol, 1);
-            rec.AddIngredient(ItemID.CrystalBullet, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableFlintlockShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.CrystalBullet, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.FlintlockPistol, 1);
-            recReverse.AddIngredient<DiscardableFlintlockShooterCrystal>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableFlintlockShooterUnloaded>());
+            rr.Consumes(ItemID.CrystalBullet, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 
@@ -150,19 +133,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.FlintlockPistol, 1);
-            rec.AddIngredient(ItemID.ChlorophyteBullet, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableFlintlockShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.ChlorophyteBullet, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.FlintlockPistol, 1);
-            recReverse.AddIngredient<DiscardableFlintlockShooterChlorophyte>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableFlintlockShooterUnloaded>());
+            rr.Consumes(ItemID.ChlorophyteBullet, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 }

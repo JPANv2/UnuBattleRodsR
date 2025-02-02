@@ -41,25 +41,29 @@ namespace UnuBattleRodsR
 
         public AmmoRecharger[] ammoRechargers = new AmmoRecharger[100];
 
-        public override void PreUpdateWorld()
+
+        public override void PostUpdatePlayers()
         {
             for (int i = 0; i < ammoRechargers.Length; i++)
             {
-                if(ammoRechargers[i] != null)
+                if (ammoRechargers[i] != null)
                 {
-                    ammoRechargers[i].Update();
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        ammoRechargers[i].Update();
+                    }
+                    else
+                    {
+                        ammoRechargers[i].FakeUpdate();
+                    }
                 }
             }
-            base.PreUpdateWorld();
-        }
 
-        public override void PostUpdateWorld()
-        {
-            if (Main.netMode != 1 && Main.time % 60 == 0)
+            if (Main.netMode != NetmodeID.MultiplayerClient && WormCount < 8)
             {
                 for (int i = 0; i < Main.player.Length; i++)
                 {
-                    if (Main.player[i].active && Main.player[i].GetModPlayer<FishPlayer>().wormSpawner && Main.rand.Next(30) == 1)
+                    if (Main.player[i].active && Main.player[i].GetModPlayer<FishPlayer>().wormSpawner && Main.rand.Next(300) == 1)
                     {
                         bool doneWorm = false;
                         if (Main.player[i].ZoneGlowshroom)
@@ -72,10 +76,85 @@ namespace UnuBattleRodsR
                         }
                         if (!doneWorm)
                         {
-                            NPC.NewNPC(Entity.GetSource_NaturalSpawn(), (int)(Main.player[i].position.X), (int)(Main.player[i].position.Y), Main.rand.Next(100) == 0 ? NPCID.GoldWorm : NPCID.Worm);
+                            NPC.NewNPC(Entity.GetSource_NaturalSpawn(), (int)(Main.player[i].position.X), (int)(Main.player[i].position.Y), Main.rand.Next(100) == 0 ? NPCID.GoldWorm : Main.rand.Next(5) == 0 ? NPCID.EnchantedNightcrawler : NPCID.Worm);
                         }
                     }
                 }
+            }
+            base.PostUpdatePlayers();
+        }
+
+        public override void PostUpdateProjectiles()
+        {
+            Dictionary<int, Dictionary<int,int>> counts = new Dictionary<int, Dictionary<int,int>>();
+            for(int i = 0; i < Main.projectile.Length; i++)
+            {
+                if (Main.projectile[i].active)
+                {
+                    int pl = Main.projectile[i].owner;
+                    if (!counts.ContainsKey(pl)){
+                        counts[pl] = new Dictionary<int, int>();
+                    }
+                    if (!counts[pl].ContainsKey(Main.projectile[i].type))
+                    {
+                        counts[pl][Main.projectile[i].type] = 1;
+                    }
+                    else
+                    {
+                        counts[Main.projectile[i].owner][Main.projectile[i].type]++;
+                    }
+                }
+            }
+            foreach (int pl in counts.Keys)
+            {
+                foreach (int i in counts[pl].Keys)
+                {
+                    if (counts[pl][i] > 64 && ContentSamples.ProjectilesByType[i].ModProjectile != null && ContentSamples.ProjectilesByType[i].ModProjectile.Mod.Name == this.Mod.Name)
+                    {
+                        int j = 0;
+                        while (counts[pl][i] > 64 && j < Main.projectile.Length)
+                        {
+                            if (Main.projectile[j].active && Main.projectile[j].type == i)
+                            {
+                                Main.projectile[j].Kill();
+                                counts[pl][i]--;
+                            }
+                            j++;
+                        }
+                    }
+                }
+            }
+            base.PostUpdateProjectiles();
+        }
+
+        private int WormCount
+        {
+            get
+            {
+                int wormsAlive = 0;
+                for(int i = 0; i < Main.npc.Length; i++)
+                {
+                    if (Main.npc[i].active)
+                    {
+                        if (Main.npc[i].type == NPCID.Worm)
+                        {
+                            wormsAlive++;
+                        }
+                        else if (Main.npc[i].type == NPCID.EnchantedNightcrawler)
+                        {
+                            wormsAlive++;
+                        }
+                        else if (Main.npc[i].type == NPCID.TruffleWorm || Main.npc[i].type == NPCID.TruffleWormDigger)
+                        {
+                            wormsAlive++;
+                        }
+                        else if (Main.npc[i].type == NPCID.GoldWorm)
+                        {
+                            wormsAlive++;
+                        }
+                    }
+                }
+                return wormsAlive;
             }
         }
 
@@ -137,7 +216,7 @@ namespace UnuBattleRodsR
             writer.Write((byte)((downedCooler ? 1 : 0) + (FishyLadySpawned ? 2: 0)));
             for (int i = 0; i < ammoRechargers.Length; i++)
             {
-                if (ammoRechargers[i] != null && ammoRechargers[i].updated)
+                if (ammoRechargers[i] != null /*&& ammoRechargers[i].updated*/)
                 {
                     writer.Write((byte)i);
                     TagIO.Write(ammoRechargers[i].Save(), writer);

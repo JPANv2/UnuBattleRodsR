@@ -7,9 +7,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Buffs\FishingDamageBuff.png" />
+    <None Remove="Buffs\Pets\CharmingWalrusfishBuff.png" />
     <None Remove="Buffs\RodAmmo\ActiveTurretBuff.png" />
     <None Remove="Buffs\TensionOilBuff.png" />
     <None Remove="Dusts\SweatDust.png" />
+    <None Remove="Items\Accessories\Capes\WormWings.png" />
+    <None Remove="Items\Accessories\Capes\WormWings_Wings.png" />
     <None Remove="Items\Accessories\Emblems\FishingEmblem.png" />
     <None Remove="Items\Accessories\Emblems\FishingEmblemSpeed.png" />
     <None Remove="Items\Accessories\Knives\Slash1.png" />
@@ -54,13 +57,56 @@
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterCrystal.png" />
     <None Remove="Items\Consumables\Discardables\NormalMode\Droppable\DiscardableFlintlockShooterMeteor.png" />
     <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV1Blaze.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV2Blaze.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\BeetleTurretV3Blaze.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\ElectromissileTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyBeetleTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyBeetleTurretV2.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyBeetleTurretV3.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyElectromissileTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyLandmineTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\EmptyTyphoonTurret.png" />
     <None Remove="Items\Consumables\Turrets\HardMode\LandmineTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\ResonanceTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\SpiderTurret.png" />
+    <None Remove="Items\Consumables\Turrets\HardMode\TyphoonTurret.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV1Bonee.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV1FireBee.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV2Bonee.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV2FireBee.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV3Bonee.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\BeeTurretV3FireBee.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\DoubleLaserTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyBeeTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyBeeTurretV2.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyBeeTurretV3.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyDoubleLaserTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyFlamerTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyLaserTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptyNailTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptySpikeballTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptySpikeballTurretV2.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\EmptySpikeballTurretV3.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\FlamerTurret.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\LaserTurret.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\NailTurret.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV1.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV2.png" />
     <None Remove="Items\Consumables\Turrets\NormalMode\PistolTurretV3.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV1.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV1Trap.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV2.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV2Trap.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV3.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\SpikeballTurretV3Trap.png" />
+    <None Remove="Items\Consumables\Turrets\NormalMode\TrueNailTurret.png" />
+    <None Remove="Items\Consumables\Turrets\PostMoonLord\EmptyNavalArtillery.png" />
+    <None Remove="Items\Consumables\Turrets\PostMoonLord\EmptyResonanceTurret.png" />
+    <None Remove="Items\Consumables\Turrets\PostMoonLord\NavalArtillery.png" />
+    <None Remove="Items\Consumables\Turrets\PostMoonLord\ResonanceTurret.png" />
+    <None Remove="Items\Pets\SuspiciousLookingFishSteak.png" />
     <None Remove="Items\Potions\FishingDamagePotion.png" />
     <None Remove="Items\Potions\TensionOil.png" />
     <None Remove="Items\Rechargers\Hellcharger.png" />
@@ -69,11 +115,13 @@
     <None Remove="Items\Rods\PostMoonLord\UnusaciesBattlerod.png" />
     <None Remove="Players\RodTensionInfoDisplay.png" />
     <None Remove="Projectiles\Bees\BoneeBee.png" />
+    <None Remove="Projectiles\Bees\Brunee.png" />
     <None Remove="Projectiles\Bees\ChainsawBee.png" />
     <None Remove="Projectiles\Bobbers\HardMode\BlazeBeetleBobber.png" />
     <None Remove="Projectiles\Bobbers\PostMoonLord\BlazeBeetleBobber.png" />
     <None Remove="Projectiles\Bobbers\PostMoonLord\UnusaciesBobber0.png" />
     <None Remove="Projectiles\Bobbers\PostMoonLord\UnusaciesBobber1.png" />
+    <None Remove="Projectiles\Pets\CharmingWalrusfishProjectile.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Projectiles\Turrets\Laser\Beam1.png" />
@@ -106,6 +154,7 @@
     <None Remove="Projectiles\Turrets\Laser\Charge7.png" />
     <None Remove="Projectiles\Turrets\Laser\Charge8.png" />
     <None Remove="Projectiles\Turrets\Laser\Charge9.png" />
+    <None Remove="Projectiles\Turrets\TurretSpreader - Copy.png" />
     <None Remove="Tiles\Rechargers\HellchargerTile.png" />
     <None Remove="Tiles\Rechargers\LunarRechargerTile.png" />
     <None Remove="Tiles\Rechargers\RechargerTile.png" />
@@ -113,6 +162,5 @@
   <ItemGroup>
     <Folder Include="Items\Consumables\Discardables\PostMoonLord\" />
     <Folder Include="Items\Consumables\Options\" />
-    <Folder Include="Items\Consumables\Turrets\PostMoonLord\" />
   </ItemGroup>
 </Project>

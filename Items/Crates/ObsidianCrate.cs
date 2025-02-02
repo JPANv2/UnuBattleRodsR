@@ -46,7 +46,7 @@ namespace UnuBattleRodsR.Items.Crates
                 }
             }
 
-            switch (Main.rand.Next(16))
+            switch (Main.rand.Next(17))
             {
                 case 0:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ObsidianBathtub);
@@ -92,6 +92,9 @@ namespace UnuBattleRodsR.Items.Crates
                     break;
                 case 14:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ObsidianSofa);
+                    break;
+                case 15:
+                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.ToiletObsidian);
                     break;
                 default:
                     player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ObsidianTable);

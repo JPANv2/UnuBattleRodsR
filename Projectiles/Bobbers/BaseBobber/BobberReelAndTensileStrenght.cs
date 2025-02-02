@@ -114,7 +114,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
         {
             if (shooter != null)
             {
-                currentTension -= lastSize * currentReelSpeed * 5;
+                currentTension -= lastSize * (shooter.ReelingSpeedMax-currentReelSpeed);
                 currentReelSpeed -= shooter.ReelingAcceleration;
                 if (currentTension <= 0f)
                 {

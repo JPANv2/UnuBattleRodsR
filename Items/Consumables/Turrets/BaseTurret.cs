@@ -26,7 +26,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -108,13 +108,18 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         public virtual int Level => 1;
 
         /// <summary>
+        /// If, when shooting the projectile, it should create an invisible Repeater projectile that will spawn the real projectile over the course of time. If so, needs to override the CreateRepeater function with the projectile data.
+        /// </summary>
+        public virtual bool Repeater => false;
+
+        /// <summary>
         /// The item this turret produces after consumed. For Rechargeable turrets. 0 = no item
         /// </summary>
         public virtual int EmptyTurretType => 0;
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -133,12 +138,22 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         /// <returns></returns>
         public virtual bool ShootProjectile(ActiveTurret turretData, Projectile parent)
         {
-            if(Level == 1)
-            {
-                return ShootRealProjectile(turretData, parent);
-            }
             parent.TryGetOwner(out Player p);
             FishPlayer fp = p.GetModPlayer<FishPlayer>();
+            if (fp.HeldBattlerod == null)
+                return false;
+
+            if(Level == 1)
+            {
+                if (Repeater)
+                {
+                    return CreateRepeaterProjectile(turretData, parent);
+                }
+                else
+                {
+                    return ShootRealProjectile(turretData, parent);
+                }
+            }
             int proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, new Vector2(5,-5), ModContent.ProjectileType<TurretSpreader>(), 0, 0, p.whoAmI);
             if (proj >= 0)
             {
@@ -170,6 +185,12 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
             }
             return false;
         }
+
+        public virtual bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        {
+            return false;
+        }
+
         public static void AddIgnoreToProjectile(Projectile parent, Projectile spawned)
         {
             if (parent.ModProjectile is Bobber)

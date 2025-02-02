@@ -157,7 +157,19 @@ namespace UnuBattleRodsR.NPCs
                 }
             }
         }
-
+        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
+        {
+            if (Main.player[projectile.owner].GetModPlayer<FishPlayer>().wormSpawner &&
+                (npc.type == NPCID.Worm ||
+                npc.type == NPCID.EnchantedNightcrawler ||
+                npc.type == NPCID.TruffleWorm ||
+                npc.type == NPCID.TruffleWormDigger ||
+                npc.type == NPCID.GoldWorm)
+            )
+                return false;
+         
+            return base.CanBeHitByProjectile(npc, projectile);
+        }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             if (projectile.ModProjectile != null && (projectile.ModProjectile is Bobber))
@@ -229,6 +241,10 @@ namespace UnuBattleRodsR.NPCs
 
         public override void OnKill(NPC npc)
         {
+            if(npc.lifeMax > 1000000)
+            {
+                Item.NewItem(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, Mod.Find<ModItem>("HeartOfMillions").Type, npc.lifeMax/1000000);
+            }
             if(npc.type == NPCID.DD2Betsy)
             {
                 Item.NewItem(npc.GetSource_FromThis(), npc.Center, Vector2.Zero, Mod.Find<ModItem>("BetsyScales").Type, Main.rand.Next(3,7));

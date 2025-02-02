@@ -25,55 +25,56 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
-
-            if(Main.rand.Next(25) == 0)
+            if (NPC.downedMoonlord)
             {
-                switch (Main.rand.Next(9))
+                if (Main.rand.Next(25) == 0)
                 {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Meowmere);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Terrarian);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.StarWrath);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.LastPrism);
-                        break;
-                    case 4:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.LunarFlareBook);
-                        break;
-                    case 5:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SDMG);
-                        break;
-                    case 6:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.FireworksLauncher);
-                        break;
-                    case 7:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MoonlordTurretStaff);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.RainbowCrystalStaff);
-                        break;
+                    switch (Main.rand.Next(9))
+                    {
+                        case 0:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Meowmere);
+                            break;
+                        case 1:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Terrarian);
+                            break;
+                        case 2:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.StarWrath);
+                            break;
+                        case 3:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LastPrism);
+                            break;
+                        case 4:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LunarFlareBook);
+                            break;
+                        case 5:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SDMG);
+                            break;
+                        case 6:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.FireworksLauncher);
+                            break;
+                        case 7:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordTurretStaff);
+                            break;
+                        default:
+                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.RainbowCrystalStaff);
+                            break;
+                    }
                 }
+
+                if (Main.rand.Next(3) == 0)
+                {
+                    if (Main.rand.Next(2) == 0)
+                    {
+                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordBullet, Main.rand.Next(10, 51));
+                    }
+                    else
+                    {
+                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordArrow, Main.rand.Next(10, 51));
+                    }
+                }
+
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LunarOre, Main.rand.Next(4, 25));
             }
-
-            if (Main.rand.Next(3) == 0)
-            {
-                if(Main.rand.Next(2) == 0)
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MoonlordBullet, Main.rand.Next(10, 51));
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MoonlordArrow, Main.rand.Next(10, 51));
-                }
-            }
-
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.LunarOre, Main.rand.Next(4, 25));
-
             List<int> possibleFragments = new List<int>();
             possibleFragments.Add(ItemID.FragmentSolar);
             possibleFragments.Add(ItemID.FragmentNebula);

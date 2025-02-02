@@ -33,7 +33,7 @@ namespace UnuBattleRodsR.Items.Accessories.Wires
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.HighTestFishingLine, 1);
             recipe.AddIngredient(Mod, "EnergyAmalgamate", 5);
-            recipe.AddIngredient(Mod, "FractaliteBar", 5);
+            recipe.AddIngredient(Mod, "HeartOfMillions", 1);
             recipe.AddIngredient(ItemID.LifeCrystal, 5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();

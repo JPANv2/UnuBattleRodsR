@@ -30,7 +30,7 @@ namespace UnuBattleRodsR.Projectiles.Discardables
             Entity target = npcIndex < 0 ? null : (npcIndex < Main.npc.Length ? (Entity)Main.npc[npcIndex] : (npcIndex - Main.npc.Length < Main.player.Length ? (Entity)Main.player[npcIndex - Main.npc.Length] : null));
             if(Projectile.timeLeft % 30 == 3)
             {
-                int proj = Projectile.NewProjectile(target.GetSource_FromThis(),target != null ? target.Bottom : Projectile.Center, Vector2.Zero, ProjectileID.MolotovFire, trueDamage*5, 0, Projectile.owner);
+                int proj = Projectile.NewProjectile(target.GetSource_FromThis(),target != null ? target.Bottom : Projectile.Center, Vector2.Zero, ProjectileID.MolotovFire, trueDamage/5, 0, Projectile.owner);
                 if(proj >= 0 && proj < Main.projectile.Length)
                 {
 

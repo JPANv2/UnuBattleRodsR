@@ -31,20 +31,27 @@ namespace UnuBattleRodsR.Items.Crates
             {
                 List<int> possibleBrokens = new List<int>();
                 possibleBrokens.Add(ItemID.BrokenHeroSword);
-           /*     if (UnuBattleRodsR.thoriumPresent)
+                /*     if (UnuBattleRodsR.thoriumPresent)
+                     {
+                         int bhf = UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroFragment");
+                         possibleBrokens.Add(bhf);
+                         possibleBrokens.Add(bhf);
+                         possibleBrokens.Add(bhf);
+                     }
+                     if (ModLoader.GetMod("ExpandedSentries") != null)
+                     {
+                         int bhs = UnuBattleRodsR.getItemTypeFromTag("ExpandedSentries:BrokenSentryParts");
+                         possibleBrokens.Add(bhs);
+                         possibleBrokens.Add(bhs);
+                     }*/
+                if (Main.rand.NextBool(8))
                 {
-                    int bhf = UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroFragment");
-                    possibleBrokens.Add(bhf);
-                    possibleBrokens.Add(bhf);
-                    possibleBrokens.Add(bhf);
+                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TerraToilet, 1);
                 }
-                if (ModLoader.GetMod("ExpandedSentries") != null)
+                else
                 {
-                    int bhs = UnuBattleRodsR.getItemTypeFromTag("ExpandedSentries:BrokenSentryParts");
-                    possibleBrokens.Add(bhs);
-                    possibleBrokens.Add(bhs);
-                }*/
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),possibleBrokens[Main.rand.Next(possibleBrokens.Count)], 1);                
+                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), possibleBrokens[Main.rand.Next(possibleBrokens.Count)], 1);
+                }
             }
             
             base.RightClick(player);

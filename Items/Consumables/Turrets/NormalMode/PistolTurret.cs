@@ -45,10 +45,10 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             }
 
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), spawnPos, speed*5f, RealProjectileID, trueDamage, 3f, parent.owner);
-            if (proj >= 0)
+            /*if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
-            }
+            }*/
             return true;
         }
     }
@@ -58,7 +58,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -81,7 +81,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -111,7 +111,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -142,7 +142,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -167,7 +167,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -192,7 +192,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -217,7 +217,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -241,7 +241,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -268,7 +268,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -301,7 +301,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -334,7 +334,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -361,7 +361,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -390,7 +390,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -417,7 +417,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -441,7 +441,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -468,7 +468,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -501,7 +501,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -534,7 +534,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -561,7 +561,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -590,7 +590,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -617,7 +617,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;

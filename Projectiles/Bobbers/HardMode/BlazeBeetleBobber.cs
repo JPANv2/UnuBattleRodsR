@@ -64,7 +64,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnBeetles(Player player, Entity npc)
         {
-            int max = Main.rand.Next(6, 12);
+            int max = Main.rand.Next(2, 6);
             for (int i = 0; i < max; i++)
             {
                 int proj = ModContent.ProjectileType<BlazeBeetleProjectile>();

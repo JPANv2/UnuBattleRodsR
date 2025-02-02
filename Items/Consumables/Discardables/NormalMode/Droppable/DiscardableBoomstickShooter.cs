@@ -23,6 +23,7 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
             Item.height = itm.height;
             Item.value = itm.value;
             Item.rare = itm.rare;
+            Item.ammo = ModContent.ItemType<ExplosiveBobbers>();
             Item.maxStack = 999;
         }
 
@@ -54,19 +55,17 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.Boomstick, 1);
-            rec.AddIngredient(ItemID.MusketBall, 1);
-            rec.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableBoomstickShooterUnloaded>());
+            rr.Consumes(ItemID.MusketBall, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
 
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableBoomstickShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.MusketBall, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.Boomstick, 1);
-            recReverse.AddIngredient<DiscardableBoomstickShooterLoaded>();
-            recReverse.Register();
+            rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableBoomstickShooterUnloaded>());
+            rr.Consumes(ItemID.EndlessMusketPouch, 0);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 
@@ -86,19 +85,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.Boomstick, 1);
-            rec.AddIngredient(ItemID.MeteorShot, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableBoomstickShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.MeteorShot, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.Boomstick, 1);
-            recReverse.AddIngredient<DiscardableBoomstickShooterMeteor>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableBoomstickShooterUnloaded>());
+            rr.Consumes(ItemID.MeteorShot, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
     public class DiscardableBoomstickShooterCrystal : BaseDiscardableWithDrop
@@ -117,19 +108,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.Boomstick, 1);
-            rec.AddIngredient(ItemID.CrystalBullet, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableBoomstickShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.CrystalBullet, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.Boomstick, 1);
-            recReverse.AddIngredient<DiscardableBoomstickShooterCrystal>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableBoomstickShooterUnloaded>());
+            rr.Consumes(ItemID.CrystalBullet, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 
@@ -149,19 +132,11 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.NormalMode.Droppable
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.Boomstick, 1);
-            rec.AddIngredient(ItemID.ChlorophyteBullet, 1);
-            rec.Register();
-
-            Recipe rec2 = CreateRecipe(1);
-            rec2.AddIngredient<DiscardableBoomstickShooterUnloaded>(1);
-            rec2.AddIngredient(ItemID.ChlorophyteBullet, 1);
-            rec2.Register();
-
-            Recipe recReverse = Recipe.Create(ItemID.Boomstick, 1);
-            recReverse.AddIngredient<DiscardableBoomstickShooterChlorophyte>();
-            recReverse.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(ModContent.ItemType<DiscardableBoomstickShooterUnloaded>());
+            rr.Consumes(ItemID.ChlorophyteBullet, 1);
+            rr.WithDurationInTicks(60);
+            rr.Register();
         }
     }
 }

@@ -1,6 +1,7 @@
 Mods: {
 	UnuBattleRodsR: {
 		Currencies.FishSteaks: Fish Steaks
+		Crate.Unable: The Cratest Crate refuses to Open...
 
 		Tooltips: {
 			FishingDamage: "{0} Fishing Damage"
@@ -84,6 +85,9 @@ Mods: {
 			TerraCrate.MapEntry: Terra Crate
 			TreasureCrate.MapEntry: Treasure Crate
 			WingCrate.MapEntry: Wing Crate
+			FruitCrate.MapEntry: Fruit Crate
+			LihzahrdCrate.MapEntry: Lihzahrd Crate
+			TheCratestCrate.MapEntry: The Cratest Crate
 		}
 
 		NPCs: {
@@ -216,6 +220,11 @@ Mods: {
 			ActiveTurretBuff: {
 				DisplayName: Active Turret Buff
 				Description: Active:
+			}
+
+			CharmingWalrusfishBuff: {
+				DisplayName: Charming Walrusfish Buff
+				Description: Mods.UnuBattleRodsR.Buffs.CharmingWalrusfishBuff.Description
 			}
 		}
 
@@ -535,8 +544,8 @@ Mods: {
 					'''
 					Costs 8 mana per second while Reeling
 					Single-Gear Reel
-					Slow Gears: Decreases reeling acceleration by 20%
-					Fast Gears: Increases reeling acceleration by 20%
+					Slow Gears: Decreases reeling acceleration by 25%
+					Fast Gears: Increases reeling acceleration by 25%
 					Provides Over Max Tension and Damage of 20% and decrease of Minimum tension by 20%
 					(Old)Increases bobber damage by 2% each second
 					'''
@@ -548,8 +557,8 @@ Mods: {
 					'''
 					Costs 24 mana per second while Reeling
 					Quad-Gear Reel
-					Slow Gears: Decreases reeling acceleration by 20%/40%/60%/80%
-					Fast Gears: Increases reeling acceleration by 20%/40%/60%/80%
+					Slow Gears: Decreases reeling acceleration by 25%/50%/75%/99%
+					Fast Gears: Increases reeling acceleration by 25%/50%/75%/99%
 					Provides Over Max Tension and Damage of 3x and decrease of Minimum tension by 60%
 					(Old)Increases bobber damage by 12% each second
 					'''
@@ -596,8 +605,8 @@ Mods: {
 					'''
 					Costs 16 mana per second while Reeling
 					Triple-Gear Reel
-					Slow Gears: Decreases reeling acceleration by 20%/40%/60%
-					Fast Gears: Increases reeling acceleration by 20%/40%/60%
+					Slow Gears: Decreases reeling acceleration by 25%/50%/75%
+					Fast Gears: Increases reeling acceleration by 25%/50%/75%
 					Provides Over Max Tension and Damage of 150% and decrease of Minimum tension by 40%
 					(Old)Increases bobber damage by 7% each second
 					'''
@@ -2123,8 +2132,8 @@ Mods: {
 				Tooltip:
 					'''
 					Triple-Gear Reel
-					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%
-					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%
+					Slow Gears: Decreases reeling acceleration and max speed by 20%/40%/60%
+					Fast Gears: Increases reeling acceleration and max speed by 20%/50%/60%
 					Getting there in tech!
 					'''
 			}
@@ -2134,8 +2143,8 @@ Mods: {
 				Tooltip:
 					'''
 					Quad-Gear Reel
-					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%/60%
-					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%/60%
+					Slow Gears: Decreases reeling acceleration and max speed by 20%/40%/60%/80%
+					Fast Gears: Increases reeling acceleration and max speed by 20%/40%/60%/80%
 					(Almost) Total speed control!
 					'''
 			}
@@ -2145,8 +2154,8 @@ Mods: {
 				Tooltip:
 					'''
 					Qunituple-Gear Reel
-					Slow Gears: Decreases reeling acceleration and max speed by 15%/30%/45%/60%/75%
-					Fast Gears: Increases reeling acceleration and max speed by 15%/30%/45%/60%/75%
+					Slow Gears: Decreases reeling acceleration and max speed by 20%/40%/60%/80%/99%
+					Fast Gears: Increases reeling acceleration and max speed by 20%/40%/60%/80%/99%
 					Also increases Maximum Tension by 15%/60%/135%/240%/375%!
 					'''
 			}
@@ -2156,8 +2165,8 @@ Mods: {
 				Tooltip:
 					'''
 					Double-Gear Reel
-					Slow Gears: Decreases reeling acceleration by 15%/30%
-					Fast Gears: Increases reeling acceleration by 15%/30%
+					Slow Gears: Decreases reeling acceleration by 20%/40%
+					Fast Gears: Increases reeling acceleration by 20%/40%
 					Not that complicated, reely
 					'''
 			}
@@ -2167,8 +2176,8 @@ Mods: {
 				Tooltip:
 					'''
 					Single-Gear Reel
-					Slow Gear: Decreases reeling acceleration by 15%
-					Fast Gear: Increases reeling acceleration by 15%
+					Slow Gear: Decreases reeling acceleration by 20%
+					Fast Gear: Increases reeling acceleration by 20%
 					Baby Steps...
 					'''
 			}
@@ -2214,7 +2223,7 @@ Mods: {
 
 			DiscardableFlintlockShooterUnloaded: {
 				DisplayName: Flintlock Bobber (Unloaded)
-				Tooltip: Load it with a bullet to use it as a discardable bobber again!
+				Tooltip: Load it with a bullet at the recharger to use it as a discardable bobber again!
 			}
 
 			DiscardableBoomstickShooterChlorophyte: {
@@ -2239,7 +2248,7 @@ Mods: {
 
 			DiscardableBoomstickShooterUnloaded: {
 				DisplayName: Boomstick Bobber (Unloaded)
-				Tooltip: Load it with a bullet to use it as a discardable bobber again!
+				Tooltip: Load it with a bullet on the recharger to use it as a discardable bobber again!
 			}
 
 			PistolTurretV1: {
@@ -2312,9 +2321,9 @@ Mods: {
 				DisplayName: Beetle Turret
 				Tooltip:
 					'''
-					Allows any bobber to shoot bees when idle.
+					Allows any bobber to shoot beetles when idle.
 					Shoots every second:
-					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
+					- Either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
 					Maximum 5 minutes duration
 					'''
 			}
@@ -2323,7 +2332,7 @@ Mods: {
 				DisplayName: Beetle Turret v2
 				Tooltip:
 					'''
-					Allows any bobber to shoot bees when idle.
+					Allows any bobber to shoot beethles when idle.
 					Shoots a spreader every second that, when exhausted, spawns:
 					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
 					Maximum 7 minutes duration
@@ -2334,7 +2343,7 @@ Mods: {
 				DisplayName: Beetle Turret v3
 				Tooltip:
 					'''
-					Allows any bobber to shoot bees when idle.
+					Allows any bobber to shoot beetles when idle.
 					Shoots a Lv 2 spreader every second that, when exhausted, spawns:
 					- either a Beetle straight to the target with 125% damage, or 4 Beetles with 75% damage
 					Maximum 10 minutes duration
@@ -2343,22 +2352,34 @@ Mods: {
 
 			LaserTurret: {
 				DisplayName: Laser Turret
-				Tooltip: ""
+				Tooltip:
+					'''
+					Allows any bobber to shoot a Laser on one horizontal direction.
+					Maximum 5 minutes duration
+					'''
 			}
 
 			DoubleLaserTurret: {
 				DisplayName: Double Laser Turret
-				Tooltip: ""
+				Tooltip:
+					'''
+					Allows any bobber to shoot a Laser on both horizontal directions.
+					Maximum 10 minutes duration
+					'''
 			}
 
 			LandmineTurret: {
 				DisplayName: Landmine Turret
-				Tooltip: ""
+				Tooltip:
+					'''
+					Allows any bobber to shoot proximity mines.
+					Maximum 5 minutes duration
+					'''
 			}
 
 			UnusaciesBattlerod: {
 				DisplayName: Unusacies Battlerod
-				Tooltip: ""
+				Tooltip: Roll Credits!
 			}
 
 			EmptyPistolTurretV1: {
@@ -2555,17 +2576,524 @@ Mods: {
 
 			Recharger: {
 				DisplayName: Recharger
-				Tooltip: ""
+				Tooltip:
+					'''
+					Place in world to be able to recharge turrets
+					Most turrets consume an item, and recharge in a minute.
+					Slowest speed!
+					'''
 			}
 
 			Hellcharger: {
 				DisplayName: Hellcharger
-				Tooltip: ""
+				Tooltip:
+					'''
+					Place in world to be able to recharge turrets
+					Most turrets consume an item, and recharge in half a minute.
+					Medium speed!
+					'''
 			}
 
 			LunarRecharger: {
 				DisplayName: Lunar Recharger
-				Tooltip: ""
+				Tooltip:
+					'''
+					Place in world to be able to recharge turrets
+					Most turrets consume an item, and recharge in 15 seconds!
+					Fastest speed!
+					'''
+			}
+
+			EmptySpiderTurret: {
+				DisplayName: Empty Spider Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires a Queen Spider Staff to recharge, but does not consume it.
+					'''
+			}
+
+			SpiderTurret: {
+				DisplayName: Spider Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot when idle.
+					Shoots a spreader that every 1.5 seconds that, when exhausted, spawns:
+					- Spiders!
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeetleTurretV1Blaze: {
+				DisplayName: Beetle Turret (Blaze)
+				Tooltip:
+					'''
+					Allows any bobber to shoot beetles when idle.
+					Shoots every second:
+					- Either a Blaze Beetle straight to the target with 125% damage, or 4 Blaze Beetles with 75% damage
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeetleTurretV2Blaze: {
+				DisplayName: Beetle Turret v2 (Blaze)
+				Tooltip:
+					'''
+					Allows any bobber to shoot beetles when idle.
+					Shoots a spreader every second that, when exhausted, spawns:
+					- Either a Blaze Beetle straight to the target with 125% damage, or 4 Blaze Beetles with 75% damage
+					Maximum 10 minutes duration
+					'''
+			}
+
+			BeetleTurretV3Blaze: {
+				DisplayName: Beetle Turret v3 (Blaze)
+				Tooltip:
+					'''
+					Allows any bobber to shoot beetles when idle.
+					Shoots a Lv 2 spreader every second that, when exhausted, spawns:
+					- Either a Blaze Beetle straight to the target with 125% damage, or 4 Blaze Beetles with 75% damage
+					Maximum 10 minutes duration
+					'''
+			}
+
+			EmptyBeetleTurretV1: {
+				DisplayName: Empty Beetle Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Beetle Husks (consumed) or a Blaze/Beetle Battlerod (not consumed) to recharge.
+					'''
+			}
+
+			EmptyBeetleTurretV2: {
+				DisplayName: Empty Beetle Turret v2
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Beetle Husks (consumed) or a Blaze/Beetle Battlerod (not consumed) to recharge.
+					'''
+			}
+
+			EmptyBeetleTurretV3: {
+				DisplayName: Empty Beetle Turret v3
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Beetle Husks (consumed) or a Blaze/Beetle Battlerod (not consumed) to recharge.
+					'''
+			}
+
+			EmptyDoubleLaserTurret: {
+				DisplayName: Empty Double Laser Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Reloads slowly at the recharger, but requires nothing to recharge.
+					'''
+			}
+
+			EmptyFlamerTurret: {
+				DisplayName: Empty Flamer Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Gel to recharge.
+					'''
+			}
+
+			EmptyLaserTurret: {
+				DisplayName: Empty Laser Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Reloads slowly at the recharger, but requires nothing to recharge.
+					'''
+			}
+
+			FlamerTurret: {
+				DisplayName: Flamer Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot flames when idle.
+					Shoots every 2 seconds:
+					- 5 bursts of flame
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeeTurretV1Bonee: {
+				DisplayName: Bee Turret (Bonee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots every 2 seconds:
+					- either a Bonee Bee straight to the target, or 2 Bonee Bees with 75% damage
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeeTurretV1FireBee: {
+				DisplayName: Bee Turret (Fire Bee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots every 2 seconds:
+					- either a Fire Bee straight to the target, or 2 Fire Bees with 75% damage
+					Maximum 5 minutes duration
+					'''
+			}
+
+			BeeTurretV2Bonee: {
+				DisplayName: Bee Turret v2 (Bonee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a spreader every 2 seconds that, when exhausted, spawns:
+					- either a Bonee Bee straight to the target, or 2 Bonee Bees with 75% damage
+					Maximum 7 minutes duration
+					'''
+			}
+
+			BeeTurretV2FireBee: {
+				DisplayName: Bee Turret v2 (Fire Bee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a spreader every 2 seconds that, when exhausted, spawns:
+					- either a Fire Bee straight to the target, or 2 Fire Bees with 75% damage
+					Maximum 7 minutes duration
+					'''
+			}
+
+			BeeTurretV3Bonee: {
+				DisplayName: Bee Turret v3 (Bonee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a Lv2 spreader every 2 seconds that, when exhausted, spawns:
+					- either a Bonee Bee straight to the target, or 2 Bonee Bees with 75% damage
+					Maximum 10 minutes duration
+					'''
+			}
+
+			BeeTurretV3FireBee: {
+				DisplayName: Bee Turret v3 (Fire Bee)
+				Tooltip:
+					'''
+					Allows any bobber to shoot bees when idle.
+					Shoots a Lv2 spreader every 2 seconds that, when exhausted, spawns:
+					- either a Fire Bee straight to the target, or 2 Fire Bees with 75% damage
+					Maximum 10 minutes duration
+					'''
+			}
+
+			EmptyBeeTurretV1: {
+				DisplayName: Empty Bee Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Honey Blocks, Crisp Honey Blocks or Bones to Recharge.
+					'''
+			}
+
+			EmptyBeeTurretV2: {
+				DisplayName: Empty Bee Turret v2
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Honey Blocks, Crisp Honey Blocks or Bones to Recharge.
+					'''
+			}
+
+			EmptyBeeTurretV3: {
+				DisplayName: Empty Bee Turret v3
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Honey Blocks, Crisp Honey Blocks or Bones to Recharge.
+					'''
+			}
+
+			EmptyNailTurret: {
+				DisplayName: Empty Nail Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Tungsten/Silver bars to recharge.
+					Try with Nails in Hardmode for better results!
+					'''
+			}
+
+			EmptySpikeballTurretV1: {
+				DisplayName: Empty Spike Ball Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Spiky Balls to Recharge.
+					Recharge with a Spiky Ball Trap for added fun!
+					'''
+			}
+
+			EmptySpikeballTurretV2: {
+				DisplayName: Empty Spike Ball Turret v2
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Spiky Balls to Recharge.
+					Recharge with a Spiky Ball Trap for added fun!
+					'''
+			}
+
+			EmptySpikeballTurretV3: {
+				DisplayName: Empty Spike Ball Turret V3
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Spiky Balls to Recharge.
+					Recharge with a Spiky Ball Trap for added fun!
+					'''
+			}
+
+			NailTurret: {
+				DisplayName: Nail Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot nails when idle.
+					Shoots every 2 seconds:
+					- A set of explosive Nails!
+					Maximum 5 minutes duration
+					'''
+			}
+
+			SpikeballTurretV1: {
+				DisplayName: Spike Ball Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots a spreader every 2 seconds that shoots:
+					- A spiky ball!
+					Maximum 5 minutes duration
+					'''
+			}
+
+			SpikeballTurretV1Trap: {
+				DisplayName: Spike Ball Turret (Trap)
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots a spreader every 2 seconds that shoots:
+					- A Lizhard spiky ball!
+					Maximum 5 minutes duration
+					Not a good idea to use this...
+					'''
+			}
+
+			SpikeballTurretV2: {
+				DisplayName: Spike Ball Turret v2
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots Lv2 a spreader every 2 seconds that shoots:
+					- A spiky ball!
+					Maximum 7 minutes duration					
+					'''
+			}
+
+			SpikeballTurretV2Trap: {
+				DisplayName: Spikeball Turret v2 (Trap)
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots Lv2 a spreader every 2 seconds that shoots:
+					- A Lizhard spiky ball!
+					Maximum 7 minutes duration
+					Not a good idea to use this...
+					'''
+			}
+
+			SpikeballTurretV3: {
+				DisplayName: Spike Ball Turret v3
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots Lv3 a spreader every 2 seconds that shoots:
+					- A spiky ball!
+					Maximum 10 minutes duration
+					'''
+			}
+
+			SpikeballTurretV3Trap: {
+				DisplayName: Spike Ball Turret v3 (Trap)
+				Tooltip:
+					'''
+					Allows any bobber to shoot spiky balls when idle.
+					Shoots Lv3 a spreader every 2 seconds that shoots:
+					- A Lizhard spiky ball!
+					Maximum 10 minutes duration
+					Not a good idea to use this...
+					'''
+			}
+
+			TrueNailTurret: {
+				DisplayName: True Nail Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot nails when idle.
+					Shoots every 2 seconds:
+					- A set of much stronger explosive Nails!
+					Maximum 5 minutes duration
+					'''
+			}
+
+			ElectromissileTurret: {
+				DisplayName: Electromissile Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot rockets when idle.
+					Shoots every 2 seconds:
+					- An electrosphere rocket.
+					Maximum 10 minutes duration
+					'''
+			}
+
+			EmptyElectromissileTurret: {
+				DisplayName: Empty Electromissile Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Rockets I to recharge.
+					'''
+			}
+
+			EmptyLandmineTurret: {
+				DisplayName: Empty Landmine Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Landmines to recharge.
+					'''
+			}
+
+			EmptyTyphoonTurret: {
+				DisplayName: Empty Typhoon Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Mana Crystals or Greater Mana Potions to recharge.
+					'''
+			}
+
+			TyphoonTurret: {
+				DisplayName: Typhoon Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot when idle.
+					Shoots every 2 seconds:
+					- A set of Razorblade Typhoons!
+					Maximum 10 minutes duration
+					'''
+			}
+
+			EmptyNavalArtillery: {
+				DisplayName: Empty Naval Artillery
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires High Velocity or Explosive bullets to recharge.
+					'''
+			}
+
+			EmptyResonanceTurret: {
+				DisplayName: Empty Resonance Turret
+				Tooltip:
+					'''
+					A depleted turret, that must be recharged at a recharger
+					Requires Mana Crystals or Greater Mana Potions to recharge.
+					'''
+			}
+
+			NavalArtillery: {
+				DisplayName: Naval Artillery
+				Tooltip:
+					'''
+					Allows any bobber to shoot bullets when idle.
+					Shoots every 2 seconds:
+					- A chain of high powered, High Velocity bullets.
+					Maximum 10 minutes duration
+					'''
+			}
+
+			ResonanceTurret: {
+				DisplayName: Resonance Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot when idle.
+					Shoots every 2 seconds:
+					- A chain of high powered ressonance waves.
+					Maximum 10 minutes duration
+					'''
+			}
+
+			WormWings: {
+				DisplayName: Worm Wings
+				Tooltip:
+					'''
+					Wings made of Worms!
+					Spawns Worms as you walk.
+					Truffle worms do not flee from you
+					Small bonus the more worms are near you!
+					Bonus varies with type of worm.
+					'''
+			}
+
+			SuspiciousLookingFishSteak: {
+				DisplayName: Suspicious Looking Fish Steak
+				Tooltip: Summons a pet Charming Walrusfish
+			}
+
+			WireTransfer: {
+				DisplayName: Wire Transfer
+				Tooltip: Limits damage to 399 at the cost of 99 copper per hit.
+			}
+
+			WireTransferGold: {
+				DisplayName: Wire Transfer Gold
+				Tooltip: Limits damage to 99 at the cost of 99 gold per hit.
+			}
+
+			WireTransferPlatinum: {
+				DisplayName: Wire Transfer Platinum
+				Tooltip: Limits damage to 9 at the cost of 1 platinum per hit. Reduces costs of previous wire transfers by 99%
+			}
+
+			WireTransferSilver: {
+				DisplayName: Wire Transfer Silver
+				Tooltip: Limits damage to 199 at the cost of 99 silver per hit.
+			}
+
+			FruitCrate: {
+				DisplayName: Fruit Crate
+				Tooltip: Right-click to open
+			}
+
+			LihzahrdCrate: {
+				DisplayName: Lihzahrd Crate
+				Tooltip: Right-click to open
+			}
+
+			TheCratestCrate: {
+				DisplayName: The Cratest Crate
+				Tooltip:
+					'''
+					Right-click to open
+					Really the Cratest!
+					'''
+			}
+
+			HeartOfMillions: {
+				DisplayName: Heart Of Millions
+				Tooltip: Proof of defeating an enemy with over 1 Million health! 1 Per Million.
 			}
 		}
 
@@ -2691,6 +3219,9 @@ Mods: {
 			TurretSpreader.DisplayName: Turret Spreader
 			TurretLaser.DisplayName: Turret Laser
 			UnusaciesBobber.DisplayName: Unusacies Bobber
+			TurretRepeater.DisplayName: Turret Repeater
+			Brunee.DisplayName: Brunee
+			CharmingWalrusfishProjectile.DisplayName: Charming Walrusfish Projectile
 		}
 
 		Configs: {
@@ -2809,7 +3340,7 @@ Mods: {
 			}
 
 			UnuDificultyConfig: {
-				DisplayName: Unu Dificulty Config
+				DisplayName: Unu Difficulty Config
 
 				difficulty: {
 					Label: Balance

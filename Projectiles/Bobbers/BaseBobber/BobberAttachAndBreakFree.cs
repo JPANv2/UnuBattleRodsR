@@ -20,7 +20,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
         {
             get
             {
-                if (shooter.OwnerFishPlayer.destroyBobber)  //This takes priority
+                if (shooter == null || shooter.OwnerFishPlayer == null || shooter.OwnerFishPlayer.destroyBobber)  //This takes priority
                     return false;
 
                 if (ModContent.GetInstance<UnuServerConfig>().dontFallOnFloor) return false;
@@ -172,6 +172,10 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
              )
                 return false;
             if (!npc.friendly && !attatchesToEnemies)
+            {
+                return false;
+            }
+            if (NPCID.Sets.CountsAsCritter[npc.type] && Main.player[Projectile.owner].dontHurtCritters || Main.player[Projectile.owner].dontHurtNature)
             {
                 return false;
             }
@@ -337,6 +341,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
 
         public void breakFree()
         {
+            if (Main.netMode == NetmodeID.MultiplayerClient && Projectile.owner != Main.LocalPlayer.whoAmI)
+                return;
             // Main.NewText("Break free. Break;");
 
             Entity e = getStuckEntity();

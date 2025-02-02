@@ -9,9 +9,33 @@ using Terraria.ID;
 using static UnuBattleRodsR.Players.FishPlayer;
 using UnuBattleRodsR.Players;
 using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 {
+
+    public class EmptyLandmineTurret : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Pink;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe rec = CreateRecipe(1);
+            rec.AddRecipeGroup("UnuBattleRodsR:HMTier3Bars", 15);
+            rec.AddTile(TileID.MythrilAnvil);
+            rec.Register();
+        }
+    }
+
     public class LandmineTurret: BaseTurret
     {
         public override int DurationInTicks => 18000;
@@ -25,6 +49,8 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int RealProjectileID => ProjectileID.ProximityMineI;
         public override int Level => 2;
+
+        public override int EmptyTurretType => ModContent.ItemType<EmptyLandmineTurret>();
 
         public override bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
@@ -43,7 +69,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;
@@ -53,11 +79,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddRecipeGroup("UnuBattleRodsR:HMTier3Bars", 15);
-            rec.AddIngredient(ItemID.LandMine, 20);
-            rec.AddTile(TileID.MythrilAnvil);
-            rec.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(Type, 1);
+            rr.Consumes(ItemID.LandMine, 20);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
         }
     }
 }

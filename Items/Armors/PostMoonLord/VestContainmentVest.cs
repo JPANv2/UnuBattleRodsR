@@ -57,6 +57,7 @@ namespace UnuBattleRodsR.Items.Armors.PostMoonLord
             recipe.AddIngredient<HardTriadVest>();
             recipe.AddIngredient<LifeforceVest>();
             recipe.AddIngredient<FractaliteVest>();
+            recipe.AddIngredient<HeartOfMillions>();
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
         }

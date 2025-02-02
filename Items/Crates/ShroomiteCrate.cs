@@ -26,7 +26,20 @@ namespace UnuBattleRodsR.Items.Crates
         {
 
             player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ShroomiteBar, Main.rand.Next(3, 10));
-            
+            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Mushroom, Main.rand.Next(1, 4));
+            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GlowingMushroom, Main.rand.Next(1, 4));
+            if (Main.rand.NextBool(5))
+            {
+                switch (Main.rand.Next(2))
+                {
+                    case 0:
+                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GreenMushroom, Main.rand.Next(1, 4));
+                        break;
+                    default:
+                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TealMushroom, Main.rand.Next(1, 4));
+                        break;
+                }
+            }
             base.RightClick(player);
         }
     }

@@ -21,7 +21,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        return 200;
+                        return 250;
                     default:
                     case Difficulties.Battlerods:
                         return 700;

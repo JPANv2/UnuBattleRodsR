@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using UnuBattleRodsR.Buffs.Minion;
+using UnuBattleRodsR.Common;
 
 namespace UnuBattleRodsR.Players
 {
@@ -105,6 +106,38 @@ namespace UnuBattleRodsR.Players
                 }
                 Player.lifeRegenTime = 0;
                 Player.lifeRegen -= 64;
+            }
+        }
+
+        public void CalculateWormBuffs()
+        {
+            for (int i = 0; i < Main.npc.Length; i++)
+            {
+                if (Main.npc[i].active && Vector2.DistanceSquared(Main.npc[i].Center, Player.Center) <= 16384)
+                {
+                    if(Main.npc[i].type == NPCID.Worm)
+                    {
+                        Player.GetDamage(DamageClass.Generic) += 0.01f;
+                    }
+                    else if (Main.npc[i].type == NPCID.EnchantedNightcrawler)
+                    {
+                        Player.statDefense *= 1.01f;
+                    }
+                    else if (Main.npc[i].type == NPCID.TruffleWorm || Main.npc[i].type == NPCID.TruffleWormDigger)
+                    {
+                        Player.GetDamage(DamageClass.Generic) += 0.1f;
+                    }
+                    else if (Main.npc[i].type == NPCID.GoldWorm)
+                    {
+                        Player.statDefense *= 1.1f;
+                        if (wormRegen % 60 == 0)
+                        {
+                            Player.statLife += 1;
+                            wormRegen = 0;
+                        }
+                        wormRegen++;
+                    }
+                }
             }
         }
     }

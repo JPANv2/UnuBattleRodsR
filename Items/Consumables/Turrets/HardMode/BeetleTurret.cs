@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Items.Rods.HardMode;
 using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Prefixes;
 using UnuBattleRodsR.Projectiles.Bees;
@@ -95,14 +96,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         }
     }
 
-    public class BeetleTurretV1 : BeetleTurret
+    public class EmptyBeetleTurretV1 : BaseEmptyTurret
     {
-        
+
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -114,20 +115,76 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         {
             Recipe rec = CreateRecipe(1);
             rec.AddIngredient(ItemID.ChlorophyteBar, 5);
-            rec.AddIngredient(ItemID.BeetleHusk, 15);
+            //rec.AddIngredient(ItemID.BeetleHusk, 15);
             rec.AddTile(TileID.LihzahrdFurnace);
             rec.Register();
         }
     }
 
-    public class BeetleTurretV2 : BeetleTurret
+    public class BeetleTurretV1 : BeetleTurret
     {
-        public override int Level => 2;
-        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV1>();
+        
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.BeetleHusk, 15);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            RechargeRecipe rr2 = RechargeRecipe.Create(this.Type, 1);
+            rr2.Recharges(EmptyTurretType, 1);
+            rr2.Consumes(ModContent.ItemType<BeetleBattlerod>(), 0);
+            rr2.WithDurationInTicks(7200);
+            rr2.Register();
+        }
+    }
+
+    public class BeetleTurretV1Blaze : BeetleTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV1>();
+        public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ModContent.ItemType<BlazeBeetleBattlerod>(), 0);
+            rr.WithDurationInTicks(7200);
+            rr.Register();
+        
+        }
+    }
+
+    public class EmptyBeetleTurretV2 : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -139,22 +196,77 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         {
             Recipe rec = CreateRecipe(1);
             rec.AddIngredient(ItemID.LihzahrdBrick, 10);
-            rec.AddIngredient(ItemID.Wire, 20);
-            rec.AddIngredient(ItemID.BeetleHusk, 15);
             rec.AddTile(TileID.LihzahrdFurnace);
             rec.Register();
         }
     }
 
-    public class BeetleTurretV3 : BeetleTurret
+    public class BeetleTurretV2 : BeetleTurret
     {
-        public override int Level => 3;
-        public override int DurationInTicks => 36000;
-
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV2>();
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.BeetleHusk, 15);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            RechargeRecipe rr2 = RechargeRecipe.Create(this.Type, 1);
+            rr2.Recharges(EmptyTurretType, 1);
+            rr2.Consumes(ModContent.ItemType<BeetleBattlerod>(), 0);
+            rr2.WithDurationInTicks(7200);
+            rr2.Register();
+        }
+    }
+
+    public class BeetleTurretV2Blaze : BeetleTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV2>();
+        public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ModContent.ItemType<BlazeBeetleBattlerod>(), 0);
+            rr.WithDurationInTicks(7200);
+            rr.Register();
+
+        }
+    }
+
+    public class EmptyBeetleTurretV3 : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Red;
@@ -168,9 +280,68 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             rec.AddIngredient(ItemID.LunarBar, 15);
             rec.AddIngredient(ItemID.LihzahrdBrick, 10);
             rec.AddIngredient(ItemID.Wire, 20);
-            rec.AddIngredient(ItemID.BeetleHusk, 15);
             rec.AddTile(TileID.LunarCraftingStation);
             rec.Register();
+        }
+    }
+
+    public class BeetleTurretV3 : BeetleTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV3>();
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.BeetleHusk, 15);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            RechargeRecipe rr2 = RechargeRecipe.Create(this.Type, 1);
+            rr2.Recharges(EmptyTurretType, 1);
+            rr2.Consumes(ModContent.ItemType<BeetleBattlerod>(), 0);
+            rr2.WithDurationInTicks(7200);
+            rr2.Register();
+        }
+    }
+
+    public class BeetleTurretV3Blaze : BeetleTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV3>();
+        public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ModContent.ItemType<BlazeBeetleBattlerod>(), 0);
+            rr.WithDurationInTicks(7200);
+            rr.Register();
+
         }
     }
 }

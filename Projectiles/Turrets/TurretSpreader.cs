@@ -56,9 +56,23 @@ namespace UnuBattleRodsR.Projectiles.Turrets
         {
             level--;
             this.AIType = 0;
+            Projectile.TryGetOwner(out Player p);
+            FishPlayer fp = p.GetModPlayer<FishPlayer>();
+            if (fp.HeldBattlerod == null)
+            {
+                Projectile.Kill();
+                return false;
+            }
             if (level <= 1  && turret != null)
             {
-                turret.baseTurret.ShootRealProjectile(turret, Projectile);
+                if (turret.baseTurret.Repeater)
+                {
+                    turret.baseTurret.CreateRepeaterProjectile(turret, Projectile);
+                }
+                else
+                {
+                    turret.baseTurret.ShootRealProjectile(turret, Projectile);
+                }
                 Projectile.Kill();
             }
             else

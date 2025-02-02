@@ -94,6 +94,10 @@ namespace UnuBattleRodsR.Items.Crates
             {
                 player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Vertebrae, Main.rand.Next(10, 31));
             }
+            if (Main.rand.Next(3) == 0)
+            {
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.ViciousMushroom, Main.rand.Next(2, 9));
+            }
             base.RightClick(player);
         }
     }

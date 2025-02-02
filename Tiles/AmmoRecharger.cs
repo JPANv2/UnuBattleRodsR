@@ -10,6 +10,7 @@ using Terraria.ObjectData;
 using System.Linq;
 using UnuBattleRodsR.Tiles.Rechargers;
 using UnuBattleRodsR.Items.Rechargers;
+using System.Threading.Channels;
 
 namespace UnuBattleRodsR.Tiles
 {
@@ -22,7 +23,7 @@ namespace UnuBattleRodsR.Tiles
 
         public int ticksPerUpdate = 1;
 
-        long passedTime = 0;
+        public long passedTime = 0;
 
         public Item toRecharge = new Item();
         public Item toConsume = new Item();
@@ -30,59 +31,99 @@ namespace UnuBattleRodsR.Tiles
 
         public RechargeRecipe currentRecipe = null;
 
-        public bool updated;
+        public bool updated = false;
 
 
-        public void SetToRecharge(Item toRecharge)
+        public void SetToRecharge(ref Item toRecharge, int who = -1)
         {
-            this.toRecharge = toRecharge;
-            if (Main.netMode != NetmodeID.SinglePlayer)
+            SetToRecharge(toRecharge.type, toRecharge.stack, who);
+        }
+
+        public void SetToRecharge(int type, int stack, int who = -1)
+        {
+            bool changes = false;
+            if (this.toRecharge.type != type)
+            {
+                this.toRecharge = new Item();
+                this.toRecharge.SetDefaults(type);
+                changes = true;
+            }
+            if (this.toRecharge.stack != stack)
+            {
+                this.toRecharge.stack = stack;
+                changes = true;
+            }
+            if (changes && (Main.netMode == NetmodeID.Server || (Main.netMode == NetmodeID.MultiplayerClient && who == -1)))
             {
                 ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.UpdateAmmoRecharger);
-                pk.Write((short)Main.LocalPlayer.whoAmI);
+                pk.Write((short)(who == -1 && Main.netMode == NetmodeID.MultiplayerClient ? Main.LocalPlayer.whoAmI : who));
                 pk.Write((byte)this.slot);
                 pk.Write((byte)0);
 
-                TagCompound itmTC = new TagCompound();
-                itmTC.Add("i", toRecharge);
-                TagIO.Write(itmTC, pk);
+                ItemIO.Send(toRecharge, pk, true, true);
                 pk.Send();
             }
         }
-        public void SetToConsume(Item toConsume)
+        public void SetToConsume(ref Item toConsume, int who = -1)
         {
-            this.toConsume = toConsume;
-
-            if (Main.netMode != NetmodeID.SinglePlayer)
+            SetToConsume(toConsume.type, toConsume.stack, who);
+        }
+        public void SetToConsume(int type, int stack, int who = -1)
+        {
+            bool changes = false;
+            if (this.toConsume.type != type)
+            {
+                this.toConsume = new Item();
+                this.toConsume.SetDefaults(type);
+                changes = true;
+            }
+            if (this.toConsume.stack != stack)
+            {
+                this.toConsume.stack = stack;
+                changes = true;
+            }
+            if (changes && (Main.netMode == NetmodeID.Server || (Main.netMode == NetmodeID.MultiplayerClient && who == -1)))
             {
                 ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.UpdateAmmoRecharger);
-                pk.Write((short)Main.LocalPlayer.whoAmI);
+                pk.Write((short)(who == -1 && Main.netMode == NetmodeID.MultiplayerClient ? Main.LocalPlayer.whoAmI : who));
                 pk.Write((byte)this.slot);
                 pk.Write((byte)1);
 
-                TagCompound itmTC = new TagCompound();
-                itmTC.Add("i", toConsume);
-                TagIO.Write(itmTC, pk);
+                ItemIO.Send(toConsume, pk, true, true);
                 pk.Send();
             }
         }
 
-        public void SetRecharged(Item recharged)
+        public void SetRecharged(ref Item recharged, int who = -1)
         {
-            this.recharged = recharged;
-            if (Main.netMode != NetmodeID.SinglePlayer)
+            SetRecharged(recharged.type, recharged.stack, who);
+        }
+
+        public void SetRecharged(int type, int stack, int who = -1)
+        {
+            bool changes = false;
+            if (this.recharged.type != type)
+            {
+                this.recharged = new Item();
+                this.recharged.SetDefaults(type);
+                changes = true;
+            }
+            if (this.recharged.stack != stack)
+            {
+                this.recharged.stack = stack;
+                changes = true;
+            }
+            if (changes && (Main.netMode == NetmodeID.Server || (Main.netMode == NetmodeID.MultiplayerClient && who == -1)))
             {
                 ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.UpdateAmmoRecharger);
-                pk.Write((short)Main.LocalPlayer.whoAmI);
+                pk.Write((short)(who == -1 && Main.netMode == NetmodeID.MultiplayerClient ? Main.LocalPlayer.whoAmI : who));
                 pk.Write((byte)this.slot);
                 pk.Write((byte)2);
 
-                TagCompound itmTC = new TagCompound();
-                itmTC.Add("i", recharged);
-                TagIO.Write(itmTC, pk);
+                ItemIO.Send(recharged, pk,true,true);
                 pk.Send();
             }
         }
@@ -108,6 +149,7 @@ namespace UnuBattleRodsR.Tiles
 
         public void OnDelete()
         {
+           
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (toRecharge != null && toRecharge.type != ItemID.None)
@@ -141,13 +183,19 @@ namespace UnuBattleRodsR.Tiles
             get
             {
                 if (toRecharge == null || toRecharge.type == ItemID.None)
+                {
+                    currentRecipe = null;
                     return false;
+                }
                 if (currentRecipe != null)
                 {
                     if (currentRecipe.ItemsValidForRecipe(toRecharge, toConsume, recharged))
                     {
                         return true;
                     }
+                    currentRecipe = null;
+                    passedTime = 0;
+                    return false;
                 }
 
                 UnuBattleRodsR mod = ModContent.GetInstance<UnuBattleRodsR>();
@@ -157,10 +205,6 @@ namespace UnuBattleRodsR.Tiles
                     {
                         if (rr.ItemsValidForRecipe(toRecharge, toConsume, recharged))
                         {
-                            if (currentRecipe != rr)
-                            {
-                                passedTime = 0;
-                            }
                             currentRecipe = rr;
                             return true;
                         }
@@ -172,14 +216,15 @@ namespace UnuBattleRodsR.Tiles
             }
         }
 
-        public virtual float Progress {  get
+        public virtual float Progress {  
+            get
             {
                 if (!DoesRechargeableItemHaveValidRecipe)
                     return 0f;
                 if (currentRecipe.timeInTicks == 0)
                     return 1f;
 
-                    return Math.Clamp(1f - ((currentRecipe.timeInTicks - passedTime) / (1f * currentRecipe.timeInTicks)), 0, 1);
+                    return Math.Clamp(ProgressInTicks*1f / currentRecipe.timeInTicks, 0, 1);
 
             }
         }
@@ -191,14 +236,35 @@ namespace UnuBattleRodsR.Tiles
                     return 0;
                 if (currentRecipe.timeInTicks == 0)
                     return 1;
-                return Math.Clamp(currentRecipe.timeInTicks - (int)passedTime, 0, currentRecipe.timeInTicks);
+                return Math.Clamp((int)passedTime, 0, currentRecipe.timeInTicks);
             }
         }
-        public virtual void Update()
+
+        public object NetMessages { get; private set; }
+
+        public virtual void FakeUpdate()
         {
             if (DoesRechargeableItemHaveValidRecipe)
             {
-                updated = true;
+                passedTime += ticksPerUpdate;
+                if(passedTime >= currentRecipe.timeInTicks)
+                {
+                    updated = false;
+                    ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
+                    pk.Write((byte)UnuBattleRodsR.Message.GetAmmoRechargerFromServer);
+                    pk.Write((short)Main.LocalPlayer.whoAmI);
+                    pk.Write((byte)slot);
+                    pk.Send();
+                }
+            }
+        }
+
+        public virtual void Update()
+        {
+            bool changes = false;
+            if (DoesRechargeableItemHaveValidRecipe)
+            {
+                
                 passedTime += ticksPerUpdate;
 
                 while (passedTime >= currentRecipe.timeInTicks && DoesRechargeableItemHaveValidRecipe)
@@ -214,6 +280,7 @@ namespace UnuBattleRodsR.Tiles
                         recharged.stack = currentRecipe.RechargedAmount;
                         toRecharge.stack -= currentRecipe.RechargingAmount;
                         passedTime -= currentRecipe.timeInTicks;
+                        changes = true;
                     }
                     else if (recharged.type == currentRecipe.RechargedType)
                     {
@@ -223,19 +290,21 @@ namespace UnuBattleRodsR.Tiles
                         }
                         recharged.stack += currentRecipe.RechargedAmount;
                         toRecharge.stack -= currentRecipe.RechargingAmount;
+                        passedTime -= currentRecipe.timeInTicks;
+                        changes = true;
                     }
                     if (toRecharge.stack <= 0)
                     {
                         toRecharge.SetDefaults(ItemID.None);
                         toRecharge.stack = 0;
                         passedTime = 0;
+                        changes = true;
                     }
-
                 }
-            }
-            else
-            {
-                updated = false;
+                if (changes && Main.netMode == NetmodeID.Server)
+                {
+                    UnuBattleRodsR.SendAmmoRecharger(slot, -1);
+                }
             }
         }
 

@@ -37,7 +37,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
         {
             Lighting.AddLight(Projectile.Center, 0.0f, 0.5f, 1.0f);
             if(!hasSpheres())
-                spawnSpheres(Main.player[Projectile.owner], Main.player[Projectile.owner]);
+                spawnSpheres(Main.player[Projectile.owner], Projectile);
   
         }
 

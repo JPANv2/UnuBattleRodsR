@@ -38,11 +38,11 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
         {
                 
             bobCounter++;
-            if (bobCounter % 3 == 0)
+            if (bobCounter % 6 == 0)
             {
                 spawnProj(Main.player[Projectile.owner], Projectile);
             }
-            if (bobCounter >= 9)
+            if (bobCounter >= 12)
             {
                 spawnSlimes(Main.player[Projectile.owner], Projectile);
                 bobCounter = 0;

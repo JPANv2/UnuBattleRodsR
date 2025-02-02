@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Projectiles.Bees;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 
 namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
@@ -38,11 +39,32 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
             {
                 bobCounter = 0;
                 textureToDisplay = (textureToDisplay + 1) & 2;
-                shootBullets(Main.player[Projectile.owner], isStuck() ? getStuckEntity() : Projectile);
+                spawnBeetles(Main.player[Projectile.owner], isStuck() ? getStuckEntity() : Projectile);
+            }
+        }
+        private void spawnBeetles(Player player, Entity npc)
+        {
+            int max = Main.rand.Next(6, 12);
+            for (int i = 0; i < max; i++)
+            {
+                int proj = ModContent.ProjectileType<Brunee>();
+                float kb = 5.0f;
+                int dmg = (int)(Projectile.damage/2);
+
+                double angle = Main.rand.NextDouble() * Math.PI * 2;
+                Vector2 newPos = new Vector2(npc.Center.X, npc.Center.Y);
+                int size = npc.width > npc.height ? npc.width : npc.height;
+                newPos.X += (float)(Math.Cos(angle) * size);
+                newPos.Y += (float)(Math.Sin(angle) * size);
+                int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), newPos, new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 5, proj, dmg, kb);
+                if (p >= 0 && p < Main.projectile.Length)
+                {
+                    Main.projectile[p].owner = player.whoAmI;
+                }
             }
         }
 
-        private void shootBullets(Player player, Entity npc)
+        /*private void shootBullets(Player player, Entity npc)
         {
             
             int max = 1;
@@ -83,6 +105,6 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
                     Main.projectile[p].friendly = true;
                 }
             }
-        }
+        }*/
     }
 }

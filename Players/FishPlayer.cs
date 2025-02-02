@@ -22,6 +22,7 @@ using Terraria.UI;
 using UnuBattleRodsR.Players.AmmoUI;
 using Terraria.ModLoader.IO;
 using UnuBattleRodsR.Buffs.RodAmmo;
+using System.IO;
 
 namespace UnuBattleRodsR.Players
 {
@@ -109,6 +110,8 @@ namespace UnuBattleRodsR.Players
         public bool lifeforceArmorEffect = false;
         public bool fractaliteArmorEffect = false;
         public bool wormSpawner = false;
+        public bool buffedByWorms = false;
+        public int wormRegen = 0;
 
         public bool TurretMode = false;
         public int maxBobbersPerEnemy = -1;
@@ -128,6 +131,8 @@ namespace UnuBattleRodsR.Players
         public bool targetedBobberMagnetic = false;
 
         public int timeSinceSweat = 0;
+
+        public int wiretransfer = 0;
         public override void ResetEffects()
         {
             kitVisistedItems.Clear();
@@ -172,8 +177,9 @@ namespace UnuBattleRodsR.Players
             lifeforceArmorEffect = false;
             fractaliteArmorEffect = false;
             wormSpawner = false;
+            buffedByWorms = false;
 
-           
+
             maxBobbersPerEnemy = -1;
             smartBobberDistribution = false;
             smartBobberRange = 64;
@@ -218,9 +224,22 @@ namespace UnuBattleRodsR.Players
                 }
             }
 
-           
+            wiretransfer = 0;
 
             base.ResetEffects();
+        }
+
+        public override bool CanHitNPC(NPC target)
+        {
+            if (wormSpawner &&
+                (target.type == NPCID.Worm ||
+                target.type == NPCID.EnchantedNightcrawler ||
+                target.type == NPCID.TruffleWorm ||
+                target.type == NPCID.TruffleWormDigger ||
+                target.type == NPCID.GoldWorm)
+            )
+                return false;
+            return base.CanHitNPC(target);
         }
 
         public override void PreUpdate()
@@ -335,8 +354,90 @@ namespace UnuBattleRodsR.Players
         {
             manaShieldDamageReduction(info);
         }
+        int usedWireTransfer = 0;
         public override void ModifyHurt(ref HurtModifiers modifiers)
         {
+            usedWireTransfer = 0;
+            switch (wiretransfer)
+            {
+                case 4:
+                    if (Player.CanAfford(1000000))
+                    {
+                        Player.PayCurrency(1000000);
+                        modifiers.SetMaxDamage(9);
+                        usedWireTransfer = 8;
+                    }
+                    else
+                    if (Player.CanAfford(10000))
+                    {
+                        Player.PayCurrency(10000);
+                        modifiers.SetMaxDamage(99);
+                        usedWireTransfer = 7;
+                    }
+                    else
+                    if (Player.CanAfford(100))
+                    {
+                        Player.PayCurrency(100);
+                        modifiers.SetMaxDamage(199);
+                        usedWireTransfer = 6;
+                    }
+                    else
+                    if (Player.CanAfford(1))
+                    {
+                        Player.PayCurrency(1);
+                        modifiers.SetMaxDamage(399);
+                        usedWireTransfer = 5;
+                    }
+                    break;
+                case 3:
+                    if (Player.CanAfford(990000))
+                    {
+                        Player.PayCurrency(990000);
+                        modifiers.SetMaxDamage(99);
+                        usedWireTransfer = 3;
+                    }
+                    else
+                    if (Player.CanAfford(9900))
+                    {
+                        Player.PayCurrency(9900);
+                        modifiers.SetMaxDamage(199);
+                        usedWireTransfer = 2;
+                    }
+                    else
+                    if (Player.CanAfford(99))
+                    {
+                        Player.PayCurrency(99);
+                        modifiers.SetMaxDamage(399);
+                        usedWireTransfer = 1;
+                    }
+                    break;
+                case 2:
+                    if (Player.CanAfford(9900))
+                    {
+                        Player.PayCurrency(9900);
+                        modifiers.SetMaxDamage(199);
+                        usedWireTransfer = 2;
+                    }
+                    else
+                    if (Player.CanAfford(99))
+                    {
+                        Player.PayCurrency(99);
+                        modifiers.SetMaxDamage(399);
+                        usedWireTransfer = 1;
+                    }
+                    break;
+                case 1:
+                    if (Player.CanAfford(99))
+                    {
+                        Player.PayCurrency(99);
+                        modifiers.SetMaxDamage(399);
+                        usedWireTransfer = 1;
+                    }
+                    break;
+                case 0:
+                default:
+                    break;
+            }
             if (modifiers.PvP)
             {
                 if (isSealed > 0)
@@ -348,6 +449,25 @@ namespace UnuBattleRodsR.Players
 
         public override void PostHurt(HurtInfo info)
         {
+            if(usedWireTransfer > 0)
+            {
+                if(usedWireTransfer == 8 && info.Damage < 9)
+                {
+                    Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource),ItemID.PlatinumCoin, 1);
+                }else if(info.Damage < 99 && (usedWireTransfer == 7 || usedWireTransfer == 3)){
+                    Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource), ItemID.GoldCoin, usedWireTransfer == 3 ? 99:1);
+                }
+                else if (info.Damage < 199 && (usedWireTransfer == 6 || usedWireTransfer == 2))
+                {
+                    Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource), ItemID.SilverCoin, usedWireTransfer == 2 ? 99 : 1);
+                }
+                else if (info.Damage < 399 && (usedWireTransfer == 5 || usedWireTransfer == 1))
+                {
+                    Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource), ItemID.CopperCoin, usedWireTransfer == 1 ? 99 : 1);
+                }
+                usedWireTransfer = 0;
+            }
+
             if (linkDamage)
             {
                 activateLinkDamage(info.Damage, false);
@@ -532,6 +652,11 @@ namespace UnuBattleRodsR.Players
                     activeTurrets.Clear();
                 }
             }
+
+            if (buffedByWorms)
+            {
+                CalculateWormBuffs();
+            }
         }
 
         public Vector2 newSpeed = Vector2.Zero;
@@ -638,11 +763,28 @@ namespace UnuBattleRodsR.Players
         SoundStyle gear4 = new SoundStyle("UnuBattleRodsR/Items/Accessories/Reels/Gear4");
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
+            bool send = false;
             if(Player.HeldItem != null && Player.HeldItem.ModItem as BattleRod != null)
             {
                 if (triggersSet.Left && triggersSet.Right)
                 {
                     Player.velocity.X = 0;
+                    /*if (Player.velocity.Y != 0 && Player.gravDir == 1f)
+                    {
+                        Dust.NewDust(Player.Center, 1, 1, 31, 2, 0, 0, default, 1);
+                        Dust.NewDust(Player.Center, 1, 1, 31, -2, 0, 0, default, 1);
+                        Player.velocity.Y += 55f;
+                        Player.maxFallSpeed *= 2.2f;
+
+                    }
+
+                    if (Player.velocity.Y != 0 && Player.gravDir == -1f)
+                    {
+                        Dust.NewDust(Player.Center, 1, 1, 31, 2, 0, 0, default, 1);
+                        Dust.NewDust(Player.Center, 1, 1, 31, -2, 0, 0, default, 1);
+                        Player.velocity.Y -= 55f;
+                        Player.maxFallSpeed *= 2.2f;
+                    }*/
                     IncreaseTension = true;
                 }
                 else
@@ -660,6 +802,7 @@ namespace UnuBattleRodsR.Players
                 if (TurretMode)
                 {
                     explodeTurretOnCommand = true;
+                    send = true;
                 }
                 else
                 {
@@ -687,6 +830,7 @@ namespace UnuBattleRodsR.Players
                     else
                         v.Text = "Fast Gear " + currentReelGear;
                     PopupText.NewText(v, Player.Top + new Vector2(0, -16));
+                    send = true;
                 }
                 if(oldGear < currentReelGear)
                 {
@@ -719,11 +863,34 @@ namespace UnuBattleRodsR.Players
                     v.Text = "Sticky!";
                     PopupText.NewText(v, Player.Top + new Vector2(0, -16));
                 }
+                send = true;
+            }
+
+            if (send && Main.netMode != NetmodeID.SinglePlayer)
+            {
+                int who = Player.whoAmI;
+                sbyte gear = (sbyte)currentReelGear;
+                byte turretMode = (byte)(TurretMode ? 1 : 0);
+                turretMode += (byte)(explodeTurretOnCommand ? 2 : 0);
+                ModPacket pk = Mod.GetPacket();
+                pk.Write((byte)UnuBattleRodsR.Message.SyncPlayerKeyPresses);
+                pk.Write((short)who);
+                pk.Write((sbyte)gear);
+                pk.Write(turretMode);
+                pk.Send();
             }
         }
 
         public override void SaveData(TagCompound tag)
         {
+            if(fishedCrates.Count > 0)
+            {
+                TagCompound fishCrates = new TagCompound();
+                foreach (string s in fishedCrates.Keys)
+                    fishCrates[s] = fishedCrates[s];
+                tag["fishedCrates"] = fishCrates;
+            }
+
             for(int i = 0; i < DedicatedBaits.Length; i++)
             {
                 if (DedicatedBaits[i] != null && !DedicatedBaits[i].IsAir)
@@ -748,6 +915,16 @@ namespace UnuBattleRodsR.Players
 
         public override void LoadData(TagCompound tag)
         {
+            fishedCrates.Clear();
+            if (tag.ContainsKey("fishedCrates"))
+            {
+                TagCompound fishCrates = tag.GetCompound("fishedCrates");
+                foreach(string s in fishedCrates.Keys)
+                {
+                    fishedCrates[s] = fishCrates.GetInt(s);
+                }
+            }
+
             for (int i = 0; i < DedicatedBaits.Length; i++)
             {
                 if (tag.ContainsKey("baits" + i))

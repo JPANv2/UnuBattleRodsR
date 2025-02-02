@@ -17,9 +17,9 @@ namespace UnuBattleRodsR.Players.AmmoUI
 {
     public class UIStateBaitAmmo : UIState
     {
-        private VanillaItemSlotWrapper[] baitSlots;
-        private VanillaItemSlotWrapper[] discardableSlots;
-        private VanillaItemSlotWrapper[] turretSlots;
+        private VanillaItemSlotWrapper[] baitSlots = new VanillaItemSlotWrapper[10];
+        private VanillaItemSlotWrapper[] discardableSlots = new VanillaItemSlotWrapper[10];
+        private VanillaItemSlotWrapper[] turretSlots = new VanillaItemSlotWrapper[10];
 
         public BattleRod selectedBattlerod;
         public override void OnInitialize()
@@ -66,7 +66,10 @@ namespace UnuBattleRodsR.Players.AmmoUI
 
         public override void OnDeactivate()
         {
-            syncSlots(Main.player[Main.myPlayer].GetModPlayer<FishPlayer>());
+            if(Main.player[Main.myPlayer] != null)
+            {
+                syncSlots(Main.player[Main.myPlayer].GetModPlayer<FishPlayer>());
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -93,17 +96,44 @@ namespace UnuBattleRodsR.Players.AmmoUI
 
         private void syncSlots(FishPlayer cur)
         {
-            for(int i = 0; i < baitSlots.Length; i++)
+            if (cur == null)
             {
-                cur.DedicatedBaits[i] = baitSlots[i].Item;
+                return;
+            }
+            for (int i = 0; i < baitSlots.Length; i++)
+            {
+                if (baitSlots[i] != null)
+                {
+                    cur.DedicatedBaits[i] = baitSlots[i].Item;
+                }
+                else
+                {
+                    cur.DedicatedBaits[i] = new Item();
+                }
+                
             }
             for (int i = 0; i < discardableSlots.Length; i++)
             {
-                cur.DedicatedDiscardables[i] = discardableSlots[i].Item;
+                if (discardableSlots[i] != null)
+                {
+                    cur.DedicatedDiscardables[i] = discardableSlots[i].Item;
+                }
+                else
+                {
+                    cur.DedicatedDiscardables[i] = new Item();
+                }
+                
             }
             for (int i = 0; i < turretSlots.Length; i++)
             {
-                cur.DedicatedTurrets[i] = turretSlots[i].Item;
+                if (turretSlots[i] != null)
+                {
+                    cur.DedicatedTurrets[i] = turretSlots[i].Item;
+                }
+                else
+                {
+                    cur.DedicatedTurrets[i] = new Item();
+                }
             }
         }
 

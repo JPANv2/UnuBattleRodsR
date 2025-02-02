@@ -55,7 +55,7 @@ namespace UnuBattleRodsR.Items.Accessories.Reels
                 p.tensionSweetspotMinModifier = p.tensionSweetspotMinModifier.CombineWith(new StatModifier(0.4f, 1, 0, 0));
 
 
-                p.reelAccelerationModifier = p.reelAccelerationModifier.CombineWith(new StatModifier(1 + p.currentReelGear * 0.20f, 1, 0, 0));
+                p.reelAccelerationModifier = p.reelAccelerationModifier.CombineWith(new StatModifier(1 + (float)(Math.Clamp(p.currentReelGear * 0.25f, -0.99, 0.99)), 1, 0, 0));
 
                 p.tensionSweetspotOverMaxModifier = p.tensionSweetspotOverMaxModifier.CombineWith(new StatModifier(3f, 1, 0, 0));
                 p.tensionDamageOverMaxModifier = p.tensionSweetspotOverMaxModifier.CombineWith(new StatModifier(3f, 1, 0, 0));

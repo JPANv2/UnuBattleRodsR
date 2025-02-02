@@ -19,6 +19,8 @@ using UnuBattleRodsR.Items.Rods.HardMode;
 using UnuBattleRodsR.Items.Consumables.Baits.BuffBaits;
 using UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits;
 using UnuBattleRodsR.Items.Consumables.Baits.SummonBaits;
+using UnuBattleRodsR.Items.Pets;
+using UnuBattleRodsR.Items.Accessories.Hooks;
 
 namespace UnuBattleRodsR.Players
 {
@@ -28,6 +30,8 @@ namespace UnuBattleRodsR.Players
         public bool fishSlicer = false;
         public bool sellGate = false;
         public int fishedAmount = 0; //OBSOLETE
+
+        public Dictionary<string,int> fishedCrates = new Dictionary<string,int>();
         public void resetFishingModifiers()
         {
             maxCrate = false;
@@ -76,6 +80,12 @@ namespace UnuBattleRodsR.Players
             {
                 if (ModContent.GetInstance<FishSteakRecipesConfig>().fishRecipes.ContainsKey(new Terraria.ModLoader.Config.ItemDefinition(fish.type)))
                 {
+                    if (Main.rand.NextBool(50))
+                    {
+                        fish.SetDefaults(ModContent.ItemType<SuspiciousLookingFishSteak>());
+                        fish.stack = 1;
+                        return;
+                    }
                     int tot = ModContent.GetInstance<FishSteakRecipesConfig>().fishRecipes[new Terraria.ModLoader.Config.ItemDefinition(fish.type)] * fish.stack;
                     fish.SetDefaults(ModContent.ItemType<FishSteaks>());
                     fish.stack = tot;
@@ -90,7 +100,7 @@ namespace UnuBattleRodsR.Players
         {
             if (attempt.rolledEnemySpawn > 0)
                 return;
-
+            
             if (attempt.playerFishingConditions.Bait.type == ModContent.ItemType<IceyWorm>() && Player.ZoneBeach)
             {
                 attempt.rolledItemDrop = -1;
@@ -107,8 +117,16 @@ namespace UnuBattleRodsR.Players
 
             if (canReplaceFish(itemDrop))
             {
-
-
+                if (NPC.downedGoblins && Main.rand.NextBool(512))
+                {
+                    itemDrop = ItemID.TinkerersWorkshop;
+                    return;
+                }
+                if (NPC.downedGoblins && Main.rand.NextBool(512))
+                {
+                    itemDrop = ItemID.RocketBoots;
+                }
+                
                 if (Player.position.Y >= Main.maxTilesY * 0.91f && attempt.inLava && Main.rand.NextBool(6))
                 {
                     itemDrop = Mod.Find<ModItem>("CrustyStar").Type;
@@ -119,12 +137,18 @@ namespace UnuBattleRodsR.Players
                     itemDrop = Mod.Find<ModItem>("HoneyStar").Type;
                     return;
                 }
-
-
-                if (Player.ZoneBeach && !attempt.inLava && !attempt.inHoney && Main.rand.NextBool(9))
+                if (Player.ZoneBeach && !attempt.inLava && !attempt.inHoney)
                 {
-                    itemDrop = Mod.Find<ModItem>("SeaweedStar").Type;
-                    return;
+                    if (Main.rand.NextBool(16))
+                    {
+                        itemDrop = ModContent.ItemType<RustyHook>();
+                        return;
+                    }
+                    else if (Main.rand.NextBool(8))
+                    {
+                        itemDrop = Mod.Find<ModItem>("SeaweedStar").Type;
+                        return;
+                    }
                 }
 
                 List<int> possibleCrate = new List<int>();
@@ -132,12 +156,14 @@ namespace UnuBattleRodsR.Players
                 if ((maxCrate && Main.rand.NextBool(25) || Main.rand.NextBool(50)) && NPC.downedMoonlord && Player.ZoneSkyHeight)
                 {
                     itemDrop = ModContent.ItemType<WingCrate>();
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
 
-                if ((maxCrate && Main.rand.NextBool(40))|| Main.rand.NextBool(80) && Main.hardMode)
+                if ((maxCrate && Main.rand.NextBool(40)|| Main.rand.NextBool(80)) && Main.hardMode)
                 {
                     itemDrop = ModContent.ItemType<AnkhCrate>();
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
 
@@ -147,6 +173,7 @@ namespace UnuBattleRodsR.Players
                     if (possibleCrate.Count > 0)
                     {
                         itemDrop = possibleCrate[Main.rand.Next(possibleCrate.Count)];
+                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                         return;
                     }
                 }
@@ -156,7 +183,12 @@ namespace UnuBattleRodsR.Players
                     possibleCrate.AddRange(replaceWithRodCrate(attempt.playerFishingConditions.Pole, attempt.inLava ? 1 : attempt.inHoney ? 2 : 0));
                     if (possibleCrate.Count > 0)
                     {
-                        itemDrop = possibleCrate[Main.rand.Next(possibleCrate.Count)];
+                        if (attempt.playerFishingConditions.Pole.type == Mod.Find<ModItem>("RodContainmentUnit").Type && Main.rand.NextBool(2))
+                            itemDrop = ModContent.ItemType<TheCratestCrate>();
+                        else
+                            itemDrop = possibleCrate[Main.rand.Next(possibleCrate.Count)];
+
+                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                         return;
                     }
                 }
@@ -164,35 +196,41 @@ namespace UnuBattleRodsR.Players
                 if (Player.ZonePeaceCandle && ((maxCrate && Main.rand.NextBool(10)) || Main.rand.NextBool(25)))
                 {
                     itemDrop = ModContent.ItemType<CritterCrate>();
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
 
                 if ((maxCrate && Main.rand.NextBool(6)) || (!Main.hardMode && Main.rand.NextBool(32)) || (Main.rand.NextBool(64)))
                 {
                     itemDrop = Mod.Find<ModItem>("MimicCrate").Type;
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
                 if (Main.hardMode && (Player.ZoneCorrupt || Player.ZoneCrimson || Player.ZoneHallow) && ((maxCrate && Main.rand.NextBool(3)) || Main.rand.NextBool(12)))
                 {
                     itemDrop = Mod.Find<ModItem>("SoulCrate").Type;
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
                 if (((maxCrate && Main.rand.NextBool(3)) || Main.rand.NextBool(6)) && FishWorld.graniteTiles > 75)
                 {
                     itemDrop = Mod.Find<ModItem>("GraniteCrate").Type;
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
 
                 }
                 if (((maxCrate && Main.rand.NextBool(3))|| Main.rand.NextBool(6)) && FishWorld.marbleTiles > 75)
                 {
                     itemDrop = Mod.Find<ModItem>("MarbleCrate").Type;
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
                 if (maxCrate && Main.rand.NextBool(3))
                 {
                     if (Main.rand.NextBool(30))
                     {
-                        itemDrop = ItemID.GoldenCrate;
+                        itemDrop = Main.hardMode ? ItemID.GoldenCrateHard : ItemID.GoldenCrate;
+                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                         return;
                     }
                     if (Main.rand.NextBool(10))
@@ -200,16 +238,25 @@ namespace UnuBattleRodsR.Players
                         if (Main.rand.NextBool(2))
                         {
                             itemDrop = Main.hardMode ? ItemID.IronCrateHard : ItemID.IronCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.ZoneDungeon)
                         {
                             itemDrop = Main.hardMode ? ItemID.DungeonFishingCrateHard : ItemID.DungeonFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
+                            return;
+                        }
+                        if (Player.ZoneLihzhardTemple)
+                        {
+                            itemDrop = ModContent.ItemType<LihzahrdCrate>();
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.Center.Y < Main.worldSurface * 0.5)
                         {
                             itemDrop = Main.hardMode ? ItemID.FloatingIslandFishingCrateHard : ItemID.FloatingIslandFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.ZoneHallow)
@@ -222,12 +269,15 @@ namespace UnuBattleRodsR.Players
                                     {
                                         case 0:
                                             itemDrop = Main.hardMode ? ItemID.HallowedFishingCrateHard : ItemID.HallowedFishingCrate;
+                                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                             return;
                                         case 1:
                                             itemDrop = Main.hardMode ? ItemID.CorruptFishingCrateHard : ItemID.CorruptFishingCrate;
+                                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                             return;
                                         default:
                                             itemDrop = Main.hardMode ? ItemID.CrimsonFishingCrateHard : ItemID.CrimsonFishingCrate;
+                                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                             return;
                                     }
                                 }
@@ -235,9 +285,11 @@ namespace UnuBattleRodsR.Players
                                 {
                                     case 0:
                                         itemDrop = Main.hardMode ? ItemID.HallowedFishingCrateHard : ItemID.HallowedFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                     default:
                                         itemDrop = Main.hardMode ? ItemID.CrimsonFishingCrateHard : ItemID.CrimsonFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                 }
                             }
@@ -247,13 +299,16 @@ namespace UnuBattleRodsR.Players
                                 {
                                     case 0:
                                         itemDrop = Main.hardMode ? ItemID.HallowedFishingCrateHard : ItemID.HallowedFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                     default:
                                         itemDrop = Main.hardMode ? ItemID.CorruptFishingCrateHard : ItemID.CorruptFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                 }
                             }
                             itemDrop = Main.hardMode ? ItemID.HallowedFishingCrateHard : ItemID.HallowedFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.ZoneCrimson)
@@ -264,30 +319,49 @@ namespace UnuBattleRodsR.Players
                                 {
                                     case 0:
                                         itemDrop = Main.hardMode ? ItemID.CrimsonFishingCrateHard : ItemID.CrimsonFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                     default:
                                         itemDrop = Main.hardMode ? ItemID.CorruptFishingCrateHard : ItemID.CorruptFishingCrate;
+                                        AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                                         return;
                                 }
                             }
                             itemDrop = Main.hardMode ? ItemID.CrimsonFishingCrateHard : ItemID.CrimsonFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.ZoneCorrupt)
                         {
                             itemDrop = Main.hardMode ? ItemID.CorruptFishingCrateHard : ItemID.CorruptFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                         if (Player.ZoneJungle)
                         {
                             itemDrop = Main.hardMode ? ItemID.JungleFishingCrateHard : ItemID.JungleFishingCrate;
+                            AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                             return;
                         }
                     }
                     itemDrop = Main.hardMode ? ItemID.WoodenCrateHard : ItemID.WoodenCrate;
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
 
                 }
+            }
+        }
+
+        public void AddFishedCrate(Item crate, int amount)
+        {
+            string name = crate.ModItem == null ? ("" + crate.type) : crate.ModItem.FullName;
+            if (!fishedCrates.ContainsKey(name))
+            {
+                fishedCrates[name] = amount;
+            }
+            else
+            {
+                fishedCrates[name] += amount;
             }
         }
 
@@ -588,6 +662,10 @@ namespace UnuBattleRodsR.Players
             if (rodContainment || fishingRod.type == Mod.Find<ModItem>("SpookyBattlerod").Type)
             {
                 ans.Add(Mod.Find<ModItem>("SpookyCrate").Type);
+            }
+            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("WoodenBattlerod").Type)
+            {
+                ans.Add(Mod.Find<ModItem>("FruitCrate").Type);
             }
 
             return ans;

@@ -11,8 +11,32 @@ using Terraria.ModLoader;
 using UnuBattleRodsR.Projectiles.Turrets.Laser;
 using Microsoft.Xna.Framework;
 
-namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
+namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 {
+    public class EmptyLaserTurret : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Pink;
+            Item.maxStack = 999;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe rec = CreateRecipe(1);
+            rec.AddRecipeGroup("UnuBattleRodsR:HMTier3Bars", 10);
+            rec.AddIngredient(ItemID.Wire, 10);
+            rec.AddIngredient(ItemID.SpaceGun, 1);
+            rec.AddTile(TileID.MythrilAnvil);
+            rec.Register();
+        }
+    }
+
     public class LaserTurret : BaseTurret
     {
         public override int DurationInTicks => 18000;
@@ -28,10 +52,12 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int RealProjectileID => ModContent.ProjectileType<TurretLaser>();
         public override int Level => 1;
 
+        public override int EmptyTurretType => ModContent.ItemType<EmptyLaserTurret>();
+
         public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
-            int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber *0.1f / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
+            int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber * 0.1f / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
             Vector2 speed = Vector2.UnitX * fp.Player.direction;
             Bobber b = parent.ModProjectile as Bobber;
             Vector2 spawnPos = parent.Center;
@@ -52,16 +78,43 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
             Item.rare = ItemRarityID.Pink;
+            Item.maxStack = 999;
             Item.value = Item.sellPrice(0, 1, 0, 0);
         }
 
         public override void AddRecipes()
         {
+            RechargeRecipe rr = RechargeRecipe.Create(Type, 1);
+            rr.ConsumesNothing();
+            rr.Recharges(EmptyTurretType, 1);
+            rr.WithDurationInTicks(7200);
+            rr.Register();
+        }
+    }
+
+    public class EmptyDoubleLaserTurret : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.maxStack = 999;
+            Item.rare = ItemRarityID.Yellow;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
             Recipe rec = CreateRecipe(1);
-            rec.AddRecipeGroup("UnuBattleRodsR:HMTier3Bars", 10);
+            rec.AddIngredient(ItemID.MartianConduitPlating, 25);
             rec.AddIngredient(ItemID.Wire, 10);
-            rec.AddIngredient(ItemID.SpaceGun, 1);
+            rec.AddIngredient(ItemID.LaserMachinegun, 1);
             rec.AddTile(TileID.MythrilAnvil);
             rec.Register();
         }
@@ -81,6 +134,8 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
         public override int RealProjectileID => ModContent.ProjectileType<TurretLaser>();
         public override int Level => 1;
+
+        public override int EmptyTurretType => ModContent.ItemType<EmptyDoubleLaserTurret>();
 
         public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
@@ -115,18 +170,21 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.maxStack = 999;
             Item.rare = ItemRarityID.Yellow;
             Item.value = Item.sellPrice(0, 5, 0, 0);
         }
 
         public override void AddRecipes()
         {
-            Recipe rec = CreateRecipe(1);
-            rec.AddIngredient(ItemID.MartianConduitPlating, 25);
-            rec.AddIngredient(ItemID.Wire, 10);
-            rec.AddIngredient(ItemID.LaserMachinegun, 1);
-            rec.AddTile(TileID.MythrilAnvil);
-            rec.Register();
+            RechargeRecipe rr = RechargeRecipe.Create(Type, 1);
+            rr.ConsumesNothing();
+            rr.Recharges(EmptyTurretType, 1);
+            rr.WithDurationInTicks(14400);
+            rr.Register();
         }
     }
 }

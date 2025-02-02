@@ -44,7 +44,7 @@ namespace UnuBattleRodsR.Items.Accessories.Knives
             baseDamage = 80;
             baseKnockback = 6.0f;
             radius = 32.0f;
-            cooldown = 60;
+            cooldown = 90;
             buffID = ModContent.BuffType<Solarfire>();
         }
 

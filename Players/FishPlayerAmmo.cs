@@ -594,14 +594,25 @@ namespace UnuBattleRodsR.Players
             List<(Item, int)> turrets = TotalTurrets;
             for (int i = 0; i < NumberOfTurrets && i < turrets.Count; i++)
             {
-                BaseTurret bp = turrets[i].Item1.ModItem as BaseTurret;
-                bool consumed = false;
-                if (bp != null && GetActiveTurretByBase(bp) == null)
+                if (turrets[i].Item1.stack > 0)
                 {
-                    bool? consumeBait = PlayerLoader.CanConsumeBait(Player, turrets[i].Item2 < 1000 ? Player.inventory[turrets[i].Item2] : DedicatedTurrets[turrets[i].Item2 - 1000]);
-                    if (consumeBait == null || !consumeBait.HasValue)
+                    BaseTurret bp = turrets[i].Item1.ModItem as BaseTurret;
+                    bool consumed = false;
+                    if (bp != null && GetActiveTurretByBase(bp) == null)
                     {
-                        if (PlayerLoader.CanConsumeAmmo(Player, turrets[i].Item1, turrets[i].Item2 < 1000 ? Player.inventory[turrets[i].Item2] : DedicatedTurrets[turrets[i].Item2 - 1000]))
+                        bool? consumeBait = PlayerLoader.CanConsumeBait(Player, turrets[i].Item2 < 1000 ? Player.inventory[turrets[i].Item2] : DedicatedTurrets[turrets[i].Item2 - 1000]);
+                        if (consumeBait == null || !consumeBait.HasValue)
+                        {
+                            if (PlayerLoader.CanConsumeAmmo(Player, turrets[i].Item1, turrets[i].Item2 < 1000 ? Player.inventory[turrets[i].Item2] : DedicatedTurrets[turrets[i].Item2 - 1000]))
+                            {
+                                if (turrets[i].Item2 < 1000)
+                                    Player.inventory[turrets[i].Item2].stack--;
+                                else
+                                    DedicatedTurrets[turrets[i].Item2 - 1000].stack--;
+                                consumed = true;
+                            }
+                        }
+                        else if (consumeBait.Value)
                         {
                             if (turrets[i].Item2 < 1000)
                                 Player.inventory[turrets[i].Item2].stack--;
@@ -609,32 +620,24 @@ namespace UnuBattleRodsR.Players
                                 DedicatedTurrets[turrets[i].Item2 - 1000].stack--;
                             consumed = true;
                         }
-                    }
-                    else if (consumeBait.Value)
-                    {
-                        if (turrets[i].Item2 < 1000)
-                            Player.inventory[turrets[i].Item2].stack--;
                         else
-                            DedicatedTurrets[turrets[i].Item2 - 1000].stack--;
-                        consumed = true;
-                    }
-                    else
-                    {
+                        {
 
-                    }
-                    this.activeTurrets.Add(new ActiveTurret()
-                    {
-                        baseTurret = bp,
-                        costAmmo = consumed,
-                        byBob = bp.UsesBobCycles,
-                        duration = bp.DurationInTicks,
-                        cycle = new Dictionary<int, int>(),
-                        timer = new Dictionary<int, int>()
-                    });
-                    maxDur = Math.Max(bp.DurationInTicks, maxDur);
-                    if (consumed && bp.EmptyTurretType != 0)
-                    {
-                        Player.QuickSpawnItem(Player.GetSource_ItemUse(bp.Item), bp.EmptyTurretType, 1);
+                        }
+                        this.activeTurrets.Add(new ActiveTurret()
+                        {
+                            baseTurret = bp,
+                            costAmmo = consumed,
+                            byBob = bp.UsesBobCycles,
+                            duration = bp.DurationInTicks,
+                            cycle = new Dictionary<int, int>(),
+                            timer = new Dictionary<int, int>()
+                        });
+                        maxDur = Math.Max(bp.DurationInTicks, maxDur);
+                        if (consumed && bp.EmptyTurretType != 0)
+                        {
+                            Player.QuickSpawnItem(Player.GetSource_ItemUse(bp.Item), bp.EmptyTurretType, 1);
+                        }
                     }
                 }
             }

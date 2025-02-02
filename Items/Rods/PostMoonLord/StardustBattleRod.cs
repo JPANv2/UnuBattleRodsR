@@ -20,6 +20,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
+                        return 180;
                     default:
                     case Difficulties.Battlerods:
                         return 500;
@@ -35,7 +36,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => true;
         public override float BaseReelingSpeed => 0.25f;
-        public override float BaseReelingSpeedMax => 16f;
+        public override float BaseReelingSpeedMax => 6f;
         public override float BaseReelingAcceleration => 1 / 16f;
         public override float BaseSizeUntilDragged => float.MaxValue;
         public override float BaseMinTensionDamageMultiplier => 1.0f;
@@ -69,8 +70,8 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe(1);
-            recipe.AddIngredient(ItemID.LunarBar, 10);
-            recipe.AddIngredient(ItemID.FragmentStardust, 8);
+            //recipe.AddIngredient(ItemID.LunarBar, 10);
+            recipe.AddIngredient(ItemID.FragmentStardust, 10);
             recipe.AddIngredient(ItemID.Cobweb, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

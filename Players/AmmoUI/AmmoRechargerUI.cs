@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using UnuBattleRodsR.Common.UI;
@@ -67,11 +68,21 @@ namespace UnuBattleRodsR.Players.AmmoUI
                 Top = new StyleDimension(20+ turret.Height.Pixels ,0),
                 Left = new StyleDimension(turret.Width.Pixels / 2 + 3.5f, 0),
                 
-            }; ;
+            };
             background.Append(turret);
             background.Append(ammo);
             background.Append(recharged);
             Append(background);
+            if(Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                world.ammoRechargers[fp.AmmoRecharger].updated = false;
+                ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
+                pk.Write((byte)UnuBattleRodsR.Message.GetAmmoRechargerFromServer);
+                pk.Write((short)Main.LocalPlayer.whoAmI);
+                pk.Write((byte)fp.AmmoRecharger);
+                pk.Send();
+
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -80,6 +91,10 @@ namespace UnuBattleRodsR.Players.AmmoUI
             FishWorld world = ModContent.GetInstance<FishWorld>();
             if (world.ammoRechargers[fp.AmmoRecharger] == null)
                 return;
+            if (!world.ammoRechargers[fp.AmmoRecharger].updated)
+            {
+                progressText.SetText("Syncing!");
+            }
             if (world.ammoRechargers[fp.AmmoRecharger].currentRecipe == null)
                 progressText.SetText("None!");
             else

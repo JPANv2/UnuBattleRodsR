@@ -84,7 +84,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
 
         public override bool PreAI()
         {
-            this.shooter = Main.player[Projectile.owner].HeldItem.ModItem as BattleRod;
+            if(this.shooter == null)
+                this.shooter = Main.player[Projectile.owner].HeldItem.ModItem as BattleRod;
+
             FishPlayer fp = Main.player[Projectile.owner].GetModPlayer<FishPlayer>();
             if (fp.sinkBobber)
             {

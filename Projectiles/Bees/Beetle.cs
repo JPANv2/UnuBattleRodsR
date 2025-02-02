@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Buffs.RodAmmo;
+using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.NPCs;
 using UnuBattleRodsR.Players;
 
@@ -22,9 +23,13 @@ namespace UnuBattleRodsR.Projectiles.Bees
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (target.boss)
+            if (!target.boss)
             {
-                modifiers.SourceDamage.Scale(0.5f);
+                BattleRod br = Main.player[Projectile.owner].HeldItem.ModItem as BattleRod;
+                if (br != null)
+                {
+                    modifiers.SourceDamage.Base += (br.CurrentDamageNoBobbers - Projectile.damage);
+                }
             }
         }
 

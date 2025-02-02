@@ -7,19 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using UnuBattleRodsR.Players;
+using UnuBattleRodsR.Projectiles.Turrets;
 using static UnuBattleRodsR.Players.FishPlayer;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets
 {
     public class MachinegunTurretV2 : BaseTurret
     {
-        public override int BobTime => 60;
+        public override int BobTime => 120;
         public override bool AttachedShooting => true;
 
         public override bool DettachedShooting => true;
 
-        public override int Level => 2;
+        public override int Level => 1;
+
+        public override bool Repeater => true;
+
+        public override int RealProjectileID => ProjectileID.Flames; 
 
         public override void SetDefaults()
         {
@@ -42,17 +48,30 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
             spd.Normalize();
             spd = spd * 5;
 
-            int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), (parent.Center + spd), spd, ProjectileID.Bullet, trueDamage, 3f, parent.owner);
+            int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), (parent.Center + spd), spd, RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }
-            proj = Projectile.NewProjectile(parent.GetSource_FromThis(), new Vector2(parent.Center.X - spd.X,parent.Center.Y + spd.Y), new Vector2(-spd.X, spd.Y), ProjectileID.Bullet, trueDamage, 3f, parent.owner);
+            proj = Projectile.NewProjectile(parent.GetSource_FromThis(), new Vector2(parent.Center.X - spd.X,parent.Center.Y + spd.Y), new Vector2(-spd.X, spd.Y), RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }
             return true;
+        }
+
+        public override bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        {
+            int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), (parent.Center), Vector2.Zero, ModContent.ProjectileType<TurretRepeater>(), 0, 0f, parent.owner);
+            if (proj >= 0)
+            {
+                AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 5, 5);
+                Main.projectile[proj].timeLeft = 3;
+                return true;
+            }
+            return false;
         }
     }
 }

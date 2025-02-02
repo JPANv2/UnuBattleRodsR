@@ -17,6 +17,7 @@ namespace UnuBattleRodsR.Players
         //public float reelSpeed = 0.0f;
         public StatModifier reelSpeedModifier;
         public StatModifier reelAccelerationModifier;
+        public StatModifier prevReelAccelerationModifier;
         public StatModifier reelSpeedMaxModifier;
         public StatModifier tensionModifier;
         public StatModifier tensionSweetspotMinModifier;
@@ -50,6 +51,8 @@ namespace UnuBattleRodsR.Players
               sweetspotMult = 0.0f;
               minTensionMult = 0.0f;*/
             reelSpeedModifier = new StatModifier(1, 1, 0, 0);
+            if (reelAccelerationModifier != null)
+                prevReelAccelerationModifier = reelAccelerationModifier;
             reelAccelerationModifier = new StatModifier(1, 1, 0, 0);
             reelSpeedMaxModifier = new StatModifier(1, 1, 0, 0);
             tensionModifier = new StatModifier(1,1,0,0);

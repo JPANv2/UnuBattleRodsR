@@ -56,10 +56,10 @@ namespace UnuBattleRodsR.NPCs
             if (NPC.downedMoonlord)
             {
 
-                base.NPC.lifeMax = 640000;
+                base.NPC.lifeMax = 3000000;
                 base.NPC.damage = 400;
                 base.NPC.defense = 85;
-                coolerBreakBobber = 64;
+                coolerBreakBobber = 100;
                 coolerCurrentBreakBobber = coolerBreakBobber - 1;
             }else if (Main.hardMode)
             {

@@ -53,7 +53,7 @@ namespace UnuBattleRodsR.Items
             return valid1 && valid2 && valid3;
         }
 
-        public bool RequiresConsumable => ConsumedItemType != 0 && ConsumedItemAmount > 0;
+        public bool RequiresConsumable => ConsumedItemType != 0;
 
         public static RechargeRecipe Create(int rechargedType, int rechargedStack = 1)
         {

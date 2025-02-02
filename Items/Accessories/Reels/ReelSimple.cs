@@ -44,7 +44,8 @@ namespace UnuBattleRodsR.Items.Accessories.Reels
         {
             UpdateGears(player);
             FishPlayer p = player.GetModPlayer<FishPlayer>();
-            p.reelSpeedModifier = p.reelSpeedModifier.CombineWith(new StatModifier(1 + p.currentReelGear * 0.15f, 1, 0, 0));
+            p.reelAccelerationModifier = p.reelAccelerationModifier.CombineWith(new StatModifier(1 + p.currentReelGear * 0.20f, 1, 0, 0));
+            p.reelSpeedMaxModifier = p.reelSpeedMaxModifier.CombineWith(new StatModifier(1 + p.currentReelGear * 0.20f, 1, 0, 0));
         }
     }
 }

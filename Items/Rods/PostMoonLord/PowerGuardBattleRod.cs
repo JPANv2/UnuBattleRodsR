@@ -22,7 +22,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        return 656;
+                        return 300;
                     default:
                     case Difficulties.Battlerods:
                         return 900;
@@ -33,6 +33,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override int BaseNumberOfBobbers => 4;
         public override int BaseNumberOfBaits => 1;
         public override int BaseNumberOfDiscardables => 2;
+        public override int BaseNumberOfTurrets => 3;
         public override bool IsCrowdControlRod => false;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => false;

@@ -24,7 +24,7 @@ namespace UnuBattleRodsR.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetDamage<FishingDamage>() += 0.25f;
+            player.GetDamage<FishingDamage>() += 0.125f;
         }
     }
 }

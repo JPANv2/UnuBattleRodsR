@@ -39,10 +39,10 @@ namespace UnuBattleRodsR.Items.Accessories.Knives
             base.SetDefaults();
             base.Item.rare = 10;
             base.Item.value = Item.sellPrice(0, 8, 0, 0);
-            baseDamage = 120;
+            baseDamage = 100;
             baseKnockback = 9.0f;
             radius = 64.0f;
-            cooldown = 30;
+            cooldown = 60;
             buffID = ModContent.BuffType<Frostfire>();
         }
 

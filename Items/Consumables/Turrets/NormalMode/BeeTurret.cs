@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Prefixes;
+using UnuBattleRodsR.Projectiles.Bees;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
@@ -91,14 +93,12 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         }
     }
 
-    public class BeeTurretV1 : BeeTurret
+    public class EmptyBeeTurretV1 : BaseEmptyTurret
     {
-        
-
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -116,14 +116,93 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         }
     }
 
-    public class BeeTurretV2 : BeeTurret
+    public class BeeTurretV1 : BeeTurret
     {
-        public override int Level => 2;
-        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.HoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV1Bonee : BeeTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
+        public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.Bone, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.FossilOre, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV1FireBee : BeeTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
+        public override int RealProjectileID => ModContent.ProjectileType<FireBee>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 1, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrispyHoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class EmptyBeeTurretV2 : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -142,15 +221,99 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         }
     }
 
-    public class BeeTurretV3 : BeeTurret
+    public class BeeTurretV2 : BeeTurret
     {
-        public override int Level => 3;
-        public override int DurationInTicks => 36000;
-
+        public override int Level => 2;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
+        public override int DurationInTicks => 25200;
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 99;
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.HoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV2Bonee : BeeTurret
+    {
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
+        public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.Bone, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.FossilOre, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV2FireBee : BeeTurret
+    {
+        public override int Level => 2;
+        public override int DurationInTicks => 25200;
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
+        public override int RealProjectileID => ModContent.ProjectileType<FireBee>();
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 5, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrispyHoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+
+    public class EmptyBeeTurretV3 : BaseEmptyTurret
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -169,4 +332,95 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             rec.Register();
         }
     }
+
+    public class BeeTurretV3 : BeeTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV3>();
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 20, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.HoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV3Bonee : BeeTurret
+    {
+        
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV3>();
+        public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 20, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.Bone, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+
+            rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.FossilOre, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+
+    public class BeeTurretV3FireBee : BeeTurret
+    {
+        public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV3>();
+        public override int RealProjectileID => ModContent.ProjectileType<FireBee>();
+        public override int Level => 3;
+        public override int DurationInTicks => 36000;
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.ResearchUnlockCount = 20;
+            Item.width = 16;
+            Item.height = 16;
+            Item.rare = ItemRarityID.Yellow;
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(0, 20, 0, 0);
+        }
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ItemID.CrispyHoneyBlock, 20);
+            rr.WithDurationInTicks(3600);
+            rr.Register();
+        }
+    }
+   
 }
