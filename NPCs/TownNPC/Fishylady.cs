@@ -5,6 +5,7 @@ using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Items.Accessories.Other;
 
 namespace UnuBattleRodsR.NPCs.TownNPC
 {
@@ -118,13 +119,29 @@ namespace UnuBattleRodsR.NPCs.TownNPC
         public override void AddShops()
         {
             NPCShop shop = new NPCShop(ModContent.NPCType<Fishylady>(), "Fishing Shop");
-            shop.Add(
+            /*shop.Add(
                 new NPCShop.Entry(
                     new Item(Mod.Find<ModItem>("Buddylure").Type) { shopCustomPrice = 100, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
+                );*/
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<BaitBox>()) { shopCustomPrice = 100, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<FishGlue>()) { shopCustomPrice = 100, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<TurretTrigger>()) { shopCustomPrice = 100, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
                 );
             shop.Add(
                   new NPCShop.Entry(
                       new Item(Mod.Find<ModItem>("BaitDisperser").Type) { shopCustomPrice = 80, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
+                  );
+            shop.Add(
+                  new NPCShop.Entry(
+                      new Item(Mod.Find<ModItem>("TurretDisperser").Type) { shopCustomPrice = 80, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
                   );
             shop.Add(
                  new NPCShop.Entry(

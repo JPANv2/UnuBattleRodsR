@@ -28,6 +28,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override int BaseNumberOfBobbers => 3;
         public override int BaseNumberOfBaits => 1;
         public override int BaseNumberOfDiscardables => 1;
+        public override int BaseNumberOfTurrets => 2;
         public override bool IsCrowdControlRod => true;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => true;

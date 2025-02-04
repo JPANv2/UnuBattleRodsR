@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria;
 using Terraria.ID;
 using UnuBattleRodsR.Players;
+using UnuBattleRodsR.Items.Materials;
 
 namespace UnuBattleRodsR.Items.Accessories.Other
 {
@@ -47,6 +48,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             Recipe recipe = CreateRecipe(1);
             recipe.AddIngredient(Mod, "RetractableFasterFishingKit");
+            recipe.AddIngredient<LesserEnergyAmalgamate>(5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
             recipe = CreateRecipe(1);
@@ -196,6 +198,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             Recipe recipe = CreateRecipe(1);
             recipe.AddIngredient(Mod, "RetractableFasterFishingKit");
+            recipe.AddIngredient<LesserEnergyAmalgamate>(5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
             recipe = CreateRecipe(1);
@@ -245,6 +248,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             Recipe recipe = CreateRecipe(1);
             recipe.AddIngredient(Mod, "RetractableFasterFishingKit");
+            recipe.AddIngredient<LesserEnergyAmalgamate>(5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
             recipe = CreateRecipe(1);
@@ -293,6 +297,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             Recipe recipe = CreateRecipe(1);
             recipe.AddIngredient(Mod, "RetractableFasterFishingKit");
+            recipe.AddIngredient<LesserEnergyAmalgamate>(5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
             recipe = CreateRecipe(1);
@@ -342,6 +347,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         {
             Recipe recipe = CreateRecipe(1);
             recipe.AddIngredient(Mod, "RetractableFasterFishingKit");
+            recipe.AddIngredient<LesserEnergyAmalgamate>(5);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
             recipe = CreateRecipe(1);

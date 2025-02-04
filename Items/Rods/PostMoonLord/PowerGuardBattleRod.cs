@@ -32,9 +32,9 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         }
         public override int BobSpeedInTicks => 40;
         public override int BaseNumberOfBobbers => 4;
-        public override int BaseNumberOfBaits => 1;
+        public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 2;
-        public override int BaseNumberOfTurrets => 3;
+        public override int BaseNumberOfTurrets => 4;
         public override bool IsCrowdControlRod => false;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => false;
@@ -91,8 +91,8 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         protected override void DoUpdateInventoryIfHeld(Player player)
         {
            
-                if (player.thorns < 3.0f)
-                    player.thorns = 3.0f;
+                if (player.thorns < 5.0f)
+                    player.thorns = 5.0f;
                 player.cactusThorns = true;
                 FishPlayer fp = player.GetModPlayer<FishPlayer>();
                 fp.smartBobberDistribution = true;

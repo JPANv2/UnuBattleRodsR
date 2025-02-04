@@ -30,7 +30,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             }
         }
         public override int BobSpeedInTicks => 20;
-        public override int BaseNumberOfBobbers => 7;
+        public override int BaseNumberOfBobbers => 6;
         public override int BaseNumberOfBaits => 1;
         public override int BaseNumberOfDiscardables => 1;
         public override bool IsCrowdControlRod => true;

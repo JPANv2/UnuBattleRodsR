@@ -27,7 +27,7 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
 
         public override int BobSpeedInTicks => 140;
         public override int BaseNumberOfBobbers => 1;
-        public override int BaseNumberOfBaits => 1;
+        public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 1;
         public override bool IsCrowdControlRod => false;
         public override bool IsCrowdControlOnlyInTurretMode => false;

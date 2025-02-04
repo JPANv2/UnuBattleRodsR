@@ -10,11 +10,13 @@ using UnuBattleRodsR.Players;
 
 namespace UnuBattleRodsR.Items.Accessories.Other
 {
-    public class FishGlue: ModItem
+    public class FishSlicer: ModItem
     {
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
+            // DisplayName.SetDefault("Fish Slicer");
+            // Tooltip.SetDefault("Turns all caught fish into Fish Steaks (if they can be converted).");
             Item.ResearchUnlockCount = 1;
         }
 
@@ -34,7 +36,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<FishPlayer>().addedDiscardables += 1;
+            player.GetModPlayer<FishPlayer>().fishSlicer = true;
         }
     }
 }

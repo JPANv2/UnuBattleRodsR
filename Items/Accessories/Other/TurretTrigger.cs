@@ -10,7 +10,7 @@ using UnuBattleRodsR.Players;
 
 namespace UnuBattleRodsR.Items.Accessories.Other
 {
-    public class FishGlue: ModItem
+    public class TurretTrigger: ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +34,7 @@ namespace UnuBattleRodsR.Items.Accessories.Other
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<FishPlayer>().addedDiscardables += 1;
+            player.GetModPlayer<FishPlayer>().addedTurrets += 1;
         }
     }
 }

@@ -33,6 +33,8 @@ Mods: {
 			Baits: Uses {0} equipped baits at once
 			NoDiscardables: Cannot use discardable bobbers
 			Discardables: Uses {0} discardable bobbers at once
+			NoTurrets: Cannot use turrets
+			Turrets: Uses {0} turrets at once
 		}
 
 		TownNPCMood: {
@@ -1657,11 +1659,7 @@ Mods: {
 
 			BetsyBattlerod: {
 				DisplayName: Betsy Battlerod
-				Tooltip:
-					'''
-					Inflicts Betsy's Curse debuff(on npcs)
-					Allows 2 different powered baits at once
-					'''
+				Tooltip: Inflicts Betsy's Curse debuff(on npcs)
 			}
 
 			BlazeBeetleBattlerod: {
@@ -1691,7 +1689,6 @@ Mods: {
 					The Power of Dragons!
 					Inflicts Betsy's Curse debuff(on npcs).
 					Releases bubbles.
-					Allows 2 different powered baits at once
 					'''
 			}
 
@@ -1801,7 +1798,7 @@ Mods: {
 
 			SpookyBattlerod: {
 				DisplayName: Spooky Battlerod
-				Tooltip: Shoots bats
+				Tooltip: Shoots bait-spreading bats
 			}
 
 			TerraBattlerod: {
@@ -1820,7 +1817,12 @@ Mods: {
 
 			TurtleBattlerod: {
 				DisplayName: Turtle Battlerod
-				Tooltip: Reflects all damage when attached
+				Tooltip:
+					'''
+					Reflects all damage when attached
+					Slight bait dispersal
+					Turrets spread bait
+					'''
 			}
 
 			BeeBattlerod: {
@@ -1911,7 +1913,11 @@ Mods: {
 
 			MeteorBattlerod: {
 				DisplayName: Meteor Battlerod
-				Tooltip: Sets enemies on fire!
+				Tooltip:
+					'''
+					Sets enemies on fire!
+					Slight Bait Dispersal.
+					'''
 			}
 
 			PlatinumBattlerod: {
@@ -3094,6 +3100,30 @@ Mods: {
 			HeartOfMillions: {
 				DisplayName: Heart Of Millions
 				Tooltip: Proof of defeating an enemy with over 1 Million health! 1 Per Million.
+			}
+
+			BaitBox: {
+				DisplayName: Bait Box
+				Tooltip: Adds one extra bait slot to your battlerod
+			}
+
+			FishGlue: {
+				DisplayName: Fish Glue
+				Tooltip: Adds one extra discardable bobber slot to your battlerod
+			}
+
+			TurretDisperser: {
+				DisplayName: Turret Disperser
+				Tooltip:
+					'''
+					Allows your turret projectiles to inflict bait debuffs on hit.
+					Will also disperse bait around them if you have a bait disperser equipped
+					'''
+			}
+
+			TurretTrigger: {
+				DisplayName: Turret Trigger
+				Tooltip: Adds one extra turret slot to your battlerod
 			}
 		}
 

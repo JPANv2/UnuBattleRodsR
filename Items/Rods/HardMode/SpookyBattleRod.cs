@@ -5,6 +5,7 @@ using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.NormalMode;
+using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 namespace UnuBattleRodsR.Items.Rods.HardMode
 {
@@ -28,7 +29,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
 
         public override int BobSpeedInTicks => 120;
         public override int BaseNumberOfBobbers => 1;
-        public override int BaseNumberOfBaits => 1;
+        public override int BaseNumberOfBaits => 4;
         public override int BaseNumberOfDiscardables => 1;
         public override bool IsCrowdControlRod => true;
         public override bool IsCrowdControlOnlyInTurretMode => false;
@@ -53,6 +54,17 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Spooky Battle Rod");
             // Tooltip.SetDefault("Shoots bats.");
+        }
+
+        protected override void DoUpdateInventoryIfHeld(Player player)
+        {
+            FishPlayer fishPlayer = player.GetModPlayer<FishPlayer>();
+            if (fishPlayer.baitDispersalRange < 96)
+            {
+                fishPlayer.baitDispersalRange = 96;
+            }
+            fishPlayer.applyBaitsOnTurretContact = true;
+            fishPlayer.spreadBaitsOnTurret = true;
         }
 
         public override void SetDefaults()

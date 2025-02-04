@@ -38,7 +38,7 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override float BaseReelingAcceleration => 32 / 60f;
         public override float BaseSizeUntilDragged => 2.5f;
         public override float BaseMinTensionDamageMultiplier => 1.0f;
-        public override float BaseMaxTensionDamageMultiplier => 2.0f;
+        public override float BaseMaxTensionDamageMultiplier => 3.0f;
         public override float BaseIdealTensileStrenghtMin => 1100f;
         public override float BaseIdealTensileStrenghtMax => 15000f;
         public override float BaseTensileStrenghtMax => 20000.0f;

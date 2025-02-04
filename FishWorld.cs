@@ -605,6 +605,24 @@ namespace UnuBattleRodsR
             });
             FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
             {
+                key = "Rod Slot Upgrades",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<BaitBox>(),
+                    ModContent.ItemType<FishGlue>(),
+                    ModContent.ItemType<TurretTrigger>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
+                key = "Turret Bait Disperser",
+                accessoryTypes = new List<int>
+                {
+                    ModContent.ItemType<TurretDisperser>()
+                }
+            });
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
+            {
                 key = "Lures",
                 accessoryTypes = new List<int>
                 {

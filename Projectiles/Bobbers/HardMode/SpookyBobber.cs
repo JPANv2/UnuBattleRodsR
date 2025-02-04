@@ -55,6 +55,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
                     if (p >= 0 && p < Main.projectile.Length)
                     {
                         Main.projectile[p].owner = player.whoAmI;
+                        Main.projectile[p].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = true;
+                        Main.projectile[p].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
                     }
                 }
             }

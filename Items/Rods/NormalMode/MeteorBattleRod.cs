@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
+using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Projectiles.Bobbers.NormalMode;
 
 namespace UnuBattleRodsR.Items.Rods.NormalMode
@@ -18,7 +19,6 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
                 {
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
-                        //Needs Balancing
                         return 76;
                     default:
                     case Difficulties.Battlerods:
@@ -54,6 +54,15 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Meteor Battle Rod");
             // Tooltip.SetDefault("Sets enemies on fire!");
+        }
+
+        protected override void DoUpdateInventoryIfHeld(Player player)
+        {
+            FishPlayer fishPlayer = player.GetModPlayer<FishPlayer>();
+            if(fishPlayer.baitDispersalRange < 64)
+            {
+                fishPlayer.baitDispersalRange = 64;
+            }
         }
 
         public override void SetDefaults()

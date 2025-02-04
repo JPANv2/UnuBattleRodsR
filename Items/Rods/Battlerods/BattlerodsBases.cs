@@ -485,6 +485,14 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
             {
                 tooltips.Insert(++idx, new TooltipLine(Mod, "Discardables", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Discardables").WithFormatArgs(NumberOfDiscardables).Value));
             }
+            if (NumberOfTurrets == 0)
+            {
+                tooltips.Insert(++idx, new TooltipLine(Mod, "Turrets", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.NoTurrets").Value));
+            }
+            else if (NumberOfTurrets > 1)
+            {
+                tooltips.Insert(++idx, new TooltipLine(Mod, "Turrets", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Turrets").WithFormatArgs(NumberOfTurrets).Value));
+            }
             return idx;
         }
 
@@ -678,9 +686,18 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                 idx = tooltips.FindIndex(x => x.Name == "Prefix_DiscardableAdd");
                 if (idx > 0)
                     tooltips.RemoveAt(idx);
-                if (noOfBaitsAdd != 0)
+                if (noOfDiscardablesAdd != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_DiscardableAdd", noOfDiscardablesAdd > 0 ? "+" + noOfDiscardablesAdd + " simultaneous bait" + (noOfDiscardablesAdd > 1 ? "s" : "") : "-" + -noOfDiscardablesAdd + " simultaneous bait" + (noOfDiscardablesAdd < -1 ? "s" : ""));
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_DiscardableAdd", noOfDiscardablesAdd > 0 ? "+" + noOfDiscardablesAdd + " simultaneous discardable bobbers" : "-" + -noOfDiscardablesAdd + " simultaneous discardable bobbers");
+                    tt.OverrideColor = noOfDiscardablesAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
+                    tooltips.Add(tt);
+                }
+                idx = tooltips.FindIndex(x => x.Name == "Prefix_TurretsAdd");
+                if (idx > 0)
+                    tooltips.RemoveAt(idx);
+                if (noOfTurretsAdd != 0)
+                {
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_TurretsAdd", noOfTurretsAdd > 0 ? "+" + noOfTurretsAdd + " turret" + (noOfTurretsAdd > 1 ? "s" : "") : "-" + -noOfTurretsAdd + " turret" + (noOfTurretsAdd < -1 ? "s" : ""));
                     tt.OverrideColor = noOfBaitsAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
                     tooltips.Add(tt);
                 }

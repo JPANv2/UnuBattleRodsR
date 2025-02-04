@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
+using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 
 namespace UnuBattleRodsR.Items.Rods.HardMode
@@ -27,9 +28,10 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
             }
         }
         public override int BobSpeedInTicks => 120;
-        public override int BaseNumberOfBobbers => 4;
-        public override int BaseNumberOfBaits => 1;
-        public override int BaseNumberOfDiscardables => 2;
+        public override int BaseNumberOfBobbers => 3;
+        public override int BaseNumberOfBaits => 3;
+        public override int BaseNumberOfDiscardables => 1;       
+        public override int BaseNumberOfTurrets => 3;
         public override bool IsCrowdControlRod => false;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => false;
@@ -66,6 +68,13 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         {
             if (player.thorns < 1.0f)
                 player.thorns = 1.0f;
+            FishPlayer fishPlayer = player.GetModPlayer<FishPlayer>();
+            if (fishPlayer.baitDispersalRange < 64)
+            {
+                fishPlayer.baitDispersalRange = 64;
+            }
+            fishPlayer.applyBaitsOnTurretContact = true;
+            fishPlayer.spreadBaitsOnTurret = true;
         }
     
 
