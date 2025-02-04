@@ -32,32 +32,43 @@ namespace UnuBattleRodsR.Items.Crates
         {
             List<string> crateKeys = new List<string>();
             crateKeys.AddRange(player.GetModPlayer<FishPlayer>().fishedCrates.Keys);
-            if(crateKeys.Count == 0)
+            if(crateKeys.Count == 0 || (crateKeys.Count == 1 && crateKeys[0].Equals(this.FullName)))
             {
                 player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), Type, 1);
                 Main.NewText(Language.GetOrRegister("Mods.UnuBattleRodsR.Crate.Unable").Value, 255, 255, 0);
                 return;
             }
             int tries = 0;
-            while (tries < 10)
+            int provided = 0;
+            while (tries < 10 && provided < 4)
             {
                 string crate = crateKeys[Main.rand.Next(0, crateKeys.Count)];
-                if (Int32.TryParse(crate, out int cid))
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), cid, Main.rand.Next(1, 5));
-                    return;
-                }
-                foreach (Item itm in ContentSamples.ItemsByType.Values)
-                {
-                    if(itm.ModItem != null && itm.ModItem.FullName.Equals(crate))
+                if (!crate.Equals(this.FullName)){
+                    if (Int32.TryParse(crate, out int cid))
                     {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), itm.type, Main.rand.Next(1, 5));
-                        return;
+                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), cid, Main.rand.Next(1, 5));
+                        provided++;
+                    }
+                    else
+                    {
+                        foreach (Item itm in ContentSamples.ItemsByType.Values)
+                        {
+                            if (itm.ModItem != null && itm.ModItem.FullName.Equals(crate))
+                            {
+                                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), itm.type, Main.rand.Next(1, 5));
+                                provided++;
+                                break;
+                            }
+                        }
                     }
                 }
                 tries++;
             }
-            Main.NewText(Language.GetOrRegister("Mods.UnuBattleRodsR.Crate.Unable").Value, 255, 255, 0);
+            if (provided == 0)
+            {
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), Type, 1);
+                Main.NewText(Language.GetOrRegister("Mods.UnuBattleRodsR.Crate.Unable").Value, 255, 255, 0);
+            }
             return;
         }
     }

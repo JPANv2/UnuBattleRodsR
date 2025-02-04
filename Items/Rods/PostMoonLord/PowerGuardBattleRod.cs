@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Materials;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.HardMode;
@@ -50,6 +51,24 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop
+        {
+            get
+            {
+                switch (Main.rand.Next(4))
+                {
+                    case 0:
+                        return ModContent.ItemType<ChlorophyteCrate>();
+                    case 1:
+                        return ModContent.ItemType<LihzahrdCrate>();
+                    case 2:
+                        return ModContent.ItemType<MeteorCrate>();
+                    default:
+                        return ModContent.ItemType<BeeCrate>();
+                }
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

@@ -21,6 +21,7 @@ using UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits;
 using UnuBattleRodsR.Items.Consumables.Baits.SummonBaits;
 using UnuBattleRodsR.Items.Pets;
 using UnuBattleRodsR.Items.Accessories.Hooks;
+using UnuBattleRodsR.Items.Rods.Battlerods;
 
 namespace UnuBattleRodsR.Players
 {
@@ -180,14 +181,10 @@ namespace UnuBattleRodsR.Players
 
                 if ((maxCrate && Main.rand.NextBool(3)) || Main.rand.NextBool(24)|| (attempt.crate && Main.rand.NextBool(12)))
                 {
-                    possibleCrate.AddRange(replaceWithRodCrate(attempt.playerFishingConditions.Pole, attempt.inLava ? 1 : attempt.inHoney ? 2 : 0));
-                    if (possibleCrate.Count > 0)
+                    int poss = replaceWithRodCrate(attempt.playerFishingConditions.Pole, attempt.inLava ? 1 : attempt.inHoney ? 2 : 0);
+                    if (poss > 0)
                     {
-                        if (attempt.playerFishingConditions.Pole.type == Mod.Find<ModItem>("RodContainmentUnit").Type && Main.rand.NextBool(2))
-                            itemDrop = ModContent.ItemType<TheCratestCrate>();
-                        else
-                            itemDrop = possibleCrate[Main.rand.Next(possibleCrate.Count)];
-
+                        itemDrop = poss;
                         AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                         return;
                     }
@@ -605,70 +602,16 @@ namespace UnuBattleRodsR.Players
             return ans;
         }
 
-        public List<int> replaceWithRodCrate(Item fishingRod, int liquid)
+        public int replaceWithRodCrate(Item fishingRod, int liquid)
         {
-            bool rodContainment = fishingRod.type == Mod.Find<ModItem>("RodContainmentUnit").Type;
-            List<int> ans = new List<int>();
-
-            if ((liquid == 2 || liquid == -1) && (rodContainment || fishingRod.type == Mod.Find<ModItem>("BeeBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("BeeteoriteBattlerod").Type))
-            {
-                ans.Add(Mod.Find<ModItem>("BeeCrate").Type);
+            if(fishingRod == null || (fishingRod.ModItem as BattleRod == null)){
+                return 0;
             }
-            if (liquid != 2 && (rodContainment || fishingRod.type == Mod.Find<ModItem>("HellstoneBattlerod").Type))
-            {
-                ans.Add(Mod.Find<ModItem>("ObsidianCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("VortexBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("SolarBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("NebulaBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("StardustBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("FractaliteBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("LuminiteCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("MeteorBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("BeeteoriteBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("MeteorCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("HallowedBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("HardTriadBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("HallowedCrate").Type);
-            }
-
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("CorruptBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("EvilRodOfDarkness").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("CorruptCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("CrimsonBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("EvilRodOfBlood").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("CrimsonCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("LifeforceBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("ShroomiteBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("ShroomiteCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("LifeforceBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("EvilRodOfDarkness").Type || fishingRod.type == Mod.Find<ModItem>("EvilRodOfBlood").Type || fishingRod.type == Mod.Find<ModItem>("SpectreBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("SoulCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("LifeforceBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("ChlorophyteBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("TurtleBattlerod").Type || fishingRod.type == Mod.Find<ModItem>("BeetleBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("ChlorophyteCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("TerraBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("TerraCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("DungeonBattlerod").Type)
-            {
-                ans.Add(ItemID.DungeonFishingCrate);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("SpookyBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("SpookyCrate").Type);
-            }
-            if (rodContainment || fishingRod.type == Mod.Find<ModItem>("WoodenBattlerod").Type)
-            {
-                ans.Add(Mod.Find<ModItem>("FruitCrate").Type);
-            }
-
-            return ans;
+            BattleRod rod = fishingRod.ModItem as BattleRod;
+            int crate = rod.CrateDrop;
+            if (crate == ModContent.ItemType<BeeCrate>() && !(liquid == 2 || liquid == -1))
+                return 0;
+            return crate;
         }
 
         public static bool canReplaceFish(int fishFound)

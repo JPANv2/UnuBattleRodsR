@@ -25,11 +25,20 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
-            if (Main.netMode != NetmodeID.Server)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPC(player.GetSource_ItemUse(Item),(int)player.Center.X,(int)player.Center.Y,ModContent.NPCType<CrateMimic>());
+                NPC.NewNPC(player.GetSource_ItemUse(Item), (int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<CrateMimic>());
             }
-           
+            else
+            {
+                ModPacket req = Mod.GetPacket();
+                req.Write((byte)UnuBattleRodsR.Message.SummonNPC);
+                req.Write((int)ModContent.NPCType<CrateMimic>());
+                req.Write((int)player.Center.X);
+                req.Write((int)player.Center.Y);
+                req.Write((int)Item.type);
+                req.Send();
+            }
         }
     }
 }

@@ -240,7 +240,7 @@ namespace UnuBattleRodsR.Tiles
             }
         }
 
-        public object NetMessages { get; private set; }
+        //public object NetMessages { get; private set; }
 
         public virtual void FakeUpdate()
         {

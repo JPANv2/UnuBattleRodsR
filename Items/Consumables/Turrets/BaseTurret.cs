@@ -15,6 +15,7 @@ using UnuBattleRodsR.Items.Consumables.Discardables.NormalMode;
 using UnuBattleRodsR.Items.Consumables.Turrets.NormalMode;
 using UnuBattleRodsR.Players;
 using UnuBattleRodsR.Projectiles;
+using UnuBattleRodsR.Projectiles.Bobbers;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 using UnuBattleRodsR.Projectiles.Turrets;
 using static UnuBattleRodsR.Players.FishPlayer;
@@ -113,6 +114,15 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         public virtual bool Repeater => false;
 
         /// <summary>
+        /// If, when shooting the projectile, it should spread the baits of the owner. Spreaders also apply this effect.
+        /// </summary>
+        public virtual bool BaitSpreader => false;
+        /// <summary>
+        /// If, when the projectile hits the enemy, it should apply the baits of the owner. propagates through the Repeater, but is not used in the Spreader, only final projectile.
+        /// </summary>
+        public virtual bool BaitOnContact => false;
+
+        /// <summary>
         /// The item this turret produces after consumed. For Rechargeable turrets. 0 = no item
         /// </summary>
         public virtual int EmptyTurretType => 0;
@@ -142,16 +152,49 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
             FishPlayer fp = p.GetModPlayer<FishPlayer>();
             if (fp.HeldBattlerod == null)
                 return false;
-
+            List<int> lProj;
+            bool shotSomething = false;
             if(Level == 1)
             {
                 if (Repeater)
                 {
-                    return CreateRepeaterProjectile(turretData, parent);
+                    lProj = CreateRepeaterProjectile(turretData, parent);
+                    if(lProj.Count > 0)
+                    {
+                        foreach (int proj2 in lProj)
+                        {
+                            if (proj2 > 0)
+                            {
+                                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                                    Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
+                                if ((BaitOnContact || fp.applyBaitsOnTurretContact))
+                                    Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = true;
+                                shotSomething = true;
+                            }
+                        }
+                        return shotSomething;
+                    }
+                    return false;                    
                 }
                 else
                 {
-                    return ShootRealProjectile(turretData, parent);
+                    lProj = ShootRealProjectile(turretData, parent);
+                    if (lProj.Count > 0)
+                    {
+                        foreach (int proj2 in lProj)
+                        {
+                            if (proj2 > 0)
+                            {
+                                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                                    Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
+                                if ((BaitOnContact || fp.applyBaitsOnTurretContact))
+                                    Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = true;
+                                shotSomething = true;
+                            }
+                        }
+                        return shotSomething;
+                    }
+                    return false;
                 }
             }
             int proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, new Vector2(5,-5), ModContent.ProjectileType<TurretSpreader>(), 0, 0, p.whoAmI);
@@ -160,6 +203,8 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).level = (byte)Level;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turretData;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
+                if(fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                    Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
             }
             proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, new Vector2(-5, -5), ModContent.ProjectileType<TurretSpreader>(), 0, 0, p.whoAmI);
             if (proj >= 0)
@@ -167,11 +212,19 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).level = (byte)Level;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turretData;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
+                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                    Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
             }
             return true;
         }
 
-        public virtual bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
+        /// <summary>
+        /// Creates the real projectile that is shot by this turret, when all spreaders end.
+        /// </summary>
+        /// <param name="turretData"></param>
+        /// <param name="parent"></param>
+        /// <returns>The projectile slots if any projectile was created, or empty list if not possible to create any. Can Include -1 for each non-spawnd projectile, or simply not included in this list</returns>
+        public virtual List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
             if (RealProjectileID != 0)
             {
@@ -180,15 +233,20 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 int proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, Vector2.Zero, RealProjectileID, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber), 0, p.whoAmI);
                 if (proj >= 0) {
                     AddIgnoreToProjectile(parent, Main.projectile[proj]);
-                    return true;
+                    return new List<int>() { proj };
                 }
             }
-            return false;
+            return new List<int>();
         }
-
-        public virtual bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        /// <summary>
+        /// Creates a repeat projectile, an invisible projectile that does, by itself, no damage, but spawns the real projectile every X amount of time, using the given rules on ShootRealProjectile.
+        /// </summary>
+        /// <param name="turretData"></param>
+        /// <param name="parent"></param>
+        /// <returns>The projectile slot if created, or -1 if not possible to create</returns>
+        public virtual List<int> CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
         {
-            return false;
+            return new List<int>();
         }
 
         public static void AddIgnoreToProjectile(Projectile parent, Projectile spawned)

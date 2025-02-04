@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.NormalMode;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
@@ -46,6 +47,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseBobberDroppingPercent => 0.25f;
         public override bool BaseAttachesOnRetracting => false;
 
+        public override int CrateDrop => Main.rand.NextBool(4)? ModContent.ItemType<FruitCrate>() : ModContent.ItemType<SpookyCrate>();
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

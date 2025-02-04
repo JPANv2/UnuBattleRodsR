@@ -24,6 +24,11 @@ namespace UnuBattleRodsR.Players
 
         public bool explodeTurretOnCommand = false;
 
+        public int addedBaits = 0;
+        public int addedDiscardables = 0;
+        public int addedTurrets = 0;
+        public int addedOptions = 0;
+
         public int NumberOfBaits
         {
             get
@@ -32,7 +37,19 @@ namespace UnuBattleRodsR.Players
                 {
                     return 0;
                 }
-                return HeldBattlerod.NumberOfBaits;
+                switch (ModContent.GetInstance<UnuDificultyConfig>().ammoMode)
+                {
+                    case AmmoMode.NoAmmo: return 0;
+                    case AmmoMode.Old:
+                        return Math.Min(HeldBattlerod.NumberOfBaits + addedBaits, 4);
+                    case AmmoMode.DedicatedOnly:
+                        return Math.Min(HeldBattlerod.NumberOfBaits + addedBaits, maxDedicatedSlots);
+                    case AmmoMode.AmmoFirst:
+                    case AmmoMode.DedicatedFirst:
+                    default:
+                        return Math.Min(HeldBattlerod.NumberOfBaits + addedBaits, maxDedicatedSlots + 4);
+
+                }
             }
         }
 
@@ -67,7 +84,19 @@ namespace UnuBattleRodsR.Players
                 {
                     return 0;
                 }
-                return HeldBattlerod.NumberOfDiscardables;
+                switch (ModContent.GetInstance<UnuDificultyConfig>().ammoMode)
+                {
+                    case AmmoMode.NoAmmo: return 0;
+                    case AmmoMode.Old:
+                        return Math.Min(HeldBattlerod.NumberOfDiscardables + addedDiscardables, 4);
+                    case AmmoMode.DedicatedOnly:
+                        return Math.Min(HeldBattlerod.NumberOfDiscardables + addedDiscardables, maxDedicatedSlots);
+                    case AmmoMode.AmmoFirst:
+                    case AmmoMode.DedicatedFirst:
+                    default:
+                        return Math.Min(HeldBattlerod.NumberOfDiscardables + addedDiscardables, maxDedicatedSlots + 4);
+
+                }
             }
         }
 
@@ -103,7 +132,19 @@ namespace UnuBattleRodsR.Players
                 {
                     return 0;
                 }
-                return HeldBattlerod.NumberOfTurrets;
+                switch (ModContent.GetInstance<UnuDificultyConfig>().ammoMode)
+                {
+                    case AmmoMode.NoAmmo: return 0;
+                    case AmmoMode.Old:
+                        return Math.Min(HeldBattlerod.NumberOfTurrets + addedTurrets, 4);
+                    case AmmoMode.DedicatedOnly:
+                        return Math.Min(HeldBattlerod.NumberOfTurrets + addedTurrets, maxDedicatedSlots);
+                    case AmmoMode.AmmoFirst:
+                    case AmmoMode.DedicatedFirst:
+                    default:
+                        return Math.Min(HeldBattlerod.NumberOfTurrets + addedTurrets, maxDedicatedSlots + 4);
+
+                }
             }
         }
 
@@ -141,7 +182,19 @@ namespace UnuBattleRodsR.Players
                 {
                     return 0;
                 }
-                return HeldBattlerod.NumberOfOptions;
+                switch (ModContent.GetInstance<UnuDificultyConfig>().ammoMode)
+                {
+                    case AmmoMode.NoAmmo: return 0;
+                    case AmmoMode.Old:
+                        return Math.Min(HeldBattlerod.NumberOfOptions + addedOptions, 4);
+                    case AmmoMode.DedicatedOnly:
+                        return Math.Min(HeldBattlerod.NumberOfOptions + addedOptions, maxDedicatedSlots);
+                    case AmmoMode.AmmoFirst:
+                    case AmmoMode.DedicatedFirst:
+                    default:
+                        return Math.Min(HeldBattlerod.NumberOfOptions + addedOptions, maxDedicatedSlots + 4);
+
+                }
             }
         }
 
@@ -372,6 +425,10 @@ namespace UnuBattleRodsR.Players
         public int baitTimer = 0;
         public List<int> debuffsPresent = new List<int>();
 
+        public bool applyBaitsOnTurretContact = false;
+        public bool spreadBaitsOnTurret = false;
+        public bool applyBaitsOnOptionContact = false;
+        public bool spreadBaitsOnOption = false;
 
         public void forceResetBaits()
         {

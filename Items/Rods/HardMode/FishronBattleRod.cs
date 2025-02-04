@@ -43,6 +43,8 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop => ItemID.OceanCrateHard;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

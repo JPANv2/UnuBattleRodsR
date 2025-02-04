@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Materials;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.HardMode;
@@ -48,6 +49,27 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.0f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop
+        {
+            get
+            {
+                if (Main.rand.NextBool(10))
+                    return ModContent.ItemType<AnkhCrate>();
+
+                switch (Main.rand.Next(4))
+                {
+                    case 0:
+                        return ItemID.HallowedFishingCrateHard;
+                    case 1:
+                        return ItemID.HallowedFishingCrate;
+                    case 2:
+                        return ModContent.ItemType<WingCrate>();
+                    default:
+                        return ModContent.ItemType<CritterCrate>();
+                }
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

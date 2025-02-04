@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Materials;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.NormalMode;
@@ -48,6 +49,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
 
+        public override int CrateDrop => Main.rand.NextBool() ? ItemID.FloatingIslandFishingCrateHard : ModContent.ItemType<CritterCrate>();
 
         public override void SetStaticDefaults()
         {

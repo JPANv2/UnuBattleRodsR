@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 namespace UnuBattleRodsR.Items.Rods.HardMode
@@ -43,6 +44,25 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.20f;
         public override bool BaseAttachesOnRetracting => false;
+
+        public override int CrateDrop
+        {
+            get
+            {
+                if (Main.rand.NextBool(10))
+                    return ModContent.ItemType<WingCrate>();
+
+                switch (Main.rand.Next(3))
+                {
+                    case 0:
+                        return ItemID.HallowedFishingCrateHard;
+                    case 1:
+                        return ItemID.HallowedFishingCrate;
+                    default:
+                        return ModContent.ItemType<CritterCrate>();
+                }
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

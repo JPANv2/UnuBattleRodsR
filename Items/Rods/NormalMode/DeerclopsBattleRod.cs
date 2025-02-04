@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.NormalMode;
 namespace UnuBattleRodsR.Items.Rods.NormalMode
@@ -44,6 +45,8 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override float BaseSyphoningPercent => 0;
         public override float BaseBobberDroppingPercent => 0.20f;
         public override bool BaseAttachesOnRetracting => false;
+
+        public override int CrateDrop => ModContent.ItemType<CritterCrate>();
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

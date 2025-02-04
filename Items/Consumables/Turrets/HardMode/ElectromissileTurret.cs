@@ -64,12 +64,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             Item.value = Item.sellPrice(0, 12, 0, 0);
         }
 
-        public override bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
+            List<int> result = new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             if (!fp.IsBattlerodHeld)
             {
-                return false;
+                return result;
             }
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
             Entity e = findClosestNPC(parent);
@@ -80,17 +81,19 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), parent.Center + spd, spd, RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
+                result.Add(proj);
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }
             proj = Projectile.NewProjectile(parent.GetSource_FromThis(), new Vector2(parent.Center.X - spd.X, parent.Center.Y + spd.Y), new Vector2(-spd.X, spd.Y), RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
+                result.Add(proj);
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }
-            return true;
+            return result;
         }
 
-        public override bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
         {
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), parent.Center, Vector2.Zero, ModContent.ProjectileType<TurretRepeater>(), 0, 0f, parent.owner);
             if (proj >= 0)
@@ -98,9 +101,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 3, 15);
                 Main.projectile[proj].timeLeft = 3;
-                return true;
+                return new List<int>() { proj};
             }
-            return false;
+            return new List<int>();
         }
 
         public override void AddRecipes()

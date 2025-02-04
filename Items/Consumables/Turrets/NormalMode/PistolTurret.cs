@@ -26,9 +26,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override bool DettachedShooting => true;
 
         public override int RealProjectileID => ProjectileID.MeteorShot;
+
+        public override bool BaitOnContact => true;
         public override int Level => 1;
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
@@ -45,11 +47,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             }
 
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), spawnPos, speed*5f, RealProjectileID, trueDamage, 3f, parent.owner);
-            /*if (proj >= 0)
+            if (proj >= 0)
+                return [proj];
+            /*
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }*/
-            return true;
+            return [];
         }
     }
 

@@ -64,12 +64,12 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             Item.value = Item.sellPrice(0, 12, 0, 0);
         }
 
-        public override bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             if (!fp.IsBattlerodHeld)
             {
-                return false;
+                return [];
             }
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber *0.5f/ (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
             Entity e = findClosestNPC(parent);
@@ -81,11 +81,12 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return [proj];
             }
-            return true;
+            return [];
         }
 
-        public override bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
         {
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), parent.Center, Vector2.Zero, ModContent.ProjectileType<TurretRepeater>(), 0, 0f, parent.owner);
             if (proj >= 0)
@@ -93,9 +94,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 3, 25);
                 Main.projectile[proj].timeLeft = 3;
-                return true;
+                return [proj];
             }
-            return false;
+            return [];
         }
 
         public override void AddRecipes()

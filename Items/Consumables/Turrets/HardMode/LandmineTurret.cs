@@ -52,7 +52,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyLandmineTurret>();
 
-        public override bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
 
             parent.TryGetOwner(out Player p);
@@ -61,9 +61,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
-                return true;
+                return new List<int>() { proj };
             }
-            return false;
+            return new List<int>();
         }
 
         public override void SetDefaults()

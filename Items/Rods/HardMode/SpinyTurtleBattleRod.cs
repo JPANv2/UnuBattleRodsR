@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Materials;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Items.Rods.NormalMode;
@@ -48,6 +49,18 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop
+        {
+            get
+            {
+                if (Main.rand.NextBool())
+                {
+                    return ItemID.OasisCrateHard;
+                }
+                return Main.rand.NextBool(2) ? ItemID.JungleFishingCrateHard : ModContent.ItemType<ChlorophyteCrate>();
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

@@ -329,7 +329,8 @@ namespace UnuBattleRodsR.Common.UI
 
         protected override bool ValidItem(Item item)
         {
-            return false;
+            FishWorld world = ModContent.GetInstance<FishWorld>();
+            return item.type == world.ammoRechargers[slot].recharged.type;
         }
         protected virtual void CallItemHandler()
         {

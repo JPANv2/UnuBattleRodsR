@@ -66,12 +66,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
             Item.value = Item.sellPrice(1, 0, 0, 0);
         }
 
-        public override bool ShootRealProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
+            List<int> list = new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             if (!fp.IsBattlerodHeld)
             {
-                return false;
+                return list;
             }
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.CurrentDamageNoBobbers / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
             Entity e = findClosestNPC(parent);
@@ -83,21 +84,24 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                list.Add(proj);
             }
             proj = Projectile.NewProjectile(parent.GetSource_FromThis(), new Vector2(parent.Center.X - spd.X, parent.Center.Y + spd.Y), new Vector2(-spd.X, spd.Y), RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                list.Add(proj); 
             }
             proj = Projectile.NewProjectile(parent.GetSource_FromThis(), parent.Center + spd, Vector2.Zero, ProjectileID.Volcano, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                list.Add(proj);
             }
-            return true;
+            return list;
         }
 
-        public override bool CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
+        public override List<int> CreateRepeaterProjectile(ActiveTurret turretData, Projectile parent)
         {
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), parent.Center, Vector2.Zero, ModContent.ProjectileType<TurretRepeater>(), 0, 0f, parent.owner);
             if (proj >= 0)
@@ -105,9 +109,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 4, 15);
                 Main.projectile[proj].timeLeft = 3;
-                return true;
+                return [proj];
             }
-            return false;
+            return [];
         }
 
         public override void AddRecipes()

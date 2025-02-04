@@ -39,6 +39,7 @@ namespace UnuBattleRodsR
             RemoveAmmoRecharger = 10,
             GetAmmoRechargerFromServer = 11,
             SyncPlayerKeyPresses = 12,
+            SummonNPC = 13,
             /*
             BobProjectilePosition = 0,
             MimicSpawn = 1,
@@ -98,6 +99,9 @@ namespace UnuBattleRodsR
                     case Message.SyncPlayerKeyPresses:
                         result = SyncPlayerKeyPresses(reader, whoAmI);
                         break;
+                    case Message.SummonNPC:
+                        result = SummonNPC(reader, whoAmI);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -125,6 +129,7 @@ namespace UnuBattleRodsR
                 pl.currentReelGear = gear;
                 pl.TurretMode = (turretMode & 1) == 1;
                 pl.explodeTurretOnCommand = (turretMode &2 ) == 2;
+                pl.IncreaseTension = (turretMode & 4) == 4;
                 if (Main.netMode == NetmodeID.Server)
                 {
                     ModPacket pk = GetPacket();
@@ -379,11 +384,11 @@ namespace UnuBattleRodsR
                 ticksPerUpdate = ticks
             };
 
-            if (Main.netMode != NetmodeID.SinglePlayer )
+            if (Main.netMode != NetmodeID.SinglePlayer)
             {
-                if (Main.netMode == NetmodeID.MultiplayerClient && who == Main.myPlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    return true;
+                        return true;
                 }
                 ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.CreateAmmoRecharger);
@@ -415,7 +420,7 @@ namespace UnuBattleRodsR
             }
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
-                if (Main.netMode == NetmodeID.MultiplayerClient && who == Main.myPlayer)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     return true;
                 }
@@ -438,7 +443,7 @@ namespace UnuBattleRodsR
                 int X = reader.ReadInt32();
                 int Y = reader.ReadInt32();
                 int ticks = reader.ReadInt32();
-                int updated = reader.ReadInt32();
+                long updated = reader.ReadInt64();
                 int toRType = reader.ReadInt32();
                 int toRStack = reader.ReadInt32();
                 int toCType = reader.ReadInt32();
@@ -486,17 +491,37 @@ namespace UnuBattleRodsR
             pk.Write((byte)UnuBattleRodsR.Message.GetAmmoRechargerFromServer);
             pk.Write((short)who);
             pk.Write((byte)slot);
-            pk.Write((int)world.ammoRechargers[slot].X);
-            pk.Write((int)world.ammoRechargers[slot].Y);
-            pk.Write((int)world.ammoRechargers[slot].ticksPerUpdate);
-            pk.Write((int)world.ammoRechargers[slot].passedTime);
-            pk.Write((int)world.ammoRechargers[slot].toRecharge.type);
-            pk.Write((int)world.ammoRechargers[slot].toRecharge.stack);
-            pk.Write((int)world.ammoRechargers[slot].toConsume.type);
-            pk.Write((int)world.ammoRechargers[slot].toConsume.stack);
-            pk.Write((int)world.ammoRechargers[slot].recharged.type);
-            pk.Write((int)world.ammoRechargers[slot].recharged.stack);
+            if (Main.netMode == NetmodeID.Server)
+            {
+                pk.Write((int)world.ammoRechargers[slot].X);
+                pk.Write((int)world.ammoRechargers[slot].Y);
+                pk.Write((int)world.ammoRechargers[slot].ticksPerUpdate);
+                pk.Write((long)world.ammoRechargers[slot].passedTime);
+                pk.Write((int)world.ammoRechargers[slot].toRecharge.type);
+                pk.Write((int)world.ammoRechargers[slot].toRecharge.stack);
+                pk.Write((int)world.ammoRechargers[slot].toConsume.type);
+                pk.Write((int)world.ammoRechargers[slot].toConsume.stack);
+                pk.Write((int)world.ammoRechargers[slot].recharged.type);
+                pk.Write((int)world.ammoRechargers[slot].recharged.stack);
+            }
             pk.Send(who);
+        }
+
+        public static bool SummonNPC(BinaryReader reader, int whoAmI)
+        {
+            int type = reader.ReadInt32();
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+            int itemType = reader.ReadInt32();
+            if (Main.netMode == NetmodeID.Server)
+            {
+                int npcNum = NPC.NewNPC(Main.player[whoAmI].GetSource_ItemUse(ContentSamples.ItemsByType[itemType]), x, y, type);
+                if (npcNum >= 0 && npcNum < 200)
+                {
+                    NetMessage.SendData(23, -1, -1, null, npcNum);
+                }
+            }
+            return true;
         }
     }
 }

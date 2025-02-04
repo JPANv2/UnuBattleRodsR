@@ -370,10 +370,10 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
             }
             else
             {
-                if (npcIndex != -1)
+                if (npcIndex != -1 && shooter != null)
                 {
                     var ans = findSuitableDiscardableAmmo(Main.player[Projectile.owner], shooter.NumberOfDiscardables);
-                    onDiscard(ans, getStuckEntity());
+                    onDiscard(ans, e);
                 }
 
                 npcIndex = -1;

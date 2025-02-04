@@ -321,10 +321,10 @@ namespace UnuBattleRodsR.NPCs
                             }
                             if (itmID == ItemID.WoodenCrate && Main.rand.Next(2) == 0)
                             {
-                                List<int> possibleCrates = p.replaceWithRodCrate(p.Player.inventory[p.Player.selectedItem], -1);
-                                if (possibleCrates.Count > 0)
+                                int possibleCrates = p.replaceWithRodCrate(p.Player.inventory[p.Player.selectedItem], -1);
+                                if (possibleCrates > 0)
                                 {
-                                    itmID = possibleCrates[Main.rand.Next(possibleCrates.Count)];
+                                    itmID = possibleCrates;
                                 }
                             }
                             Item.NewItem(npc.GetSource_FromThis(),npc.Center, Vector2.Zero, itmID);

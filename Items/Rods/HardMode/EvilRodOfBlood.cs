@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 
@@ -44,6 +45,8 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop => Main.rand.NextBool() ? ItemID.CrimsonFishingCrateHard : ModContent.ItemType<SoulCrate>();
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

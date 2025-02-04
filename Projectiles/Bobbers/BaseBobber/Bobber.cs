@@ -19,6 +19,7 @@ using UnuBattleRodsR.Items.Rods.Battlerods;
 using Terraria.GameContent.RGB;
 using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Consumables.Turrets;
+using Terraria.ModLoader.IO;
 
 namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
 {
@@ -291,7 +292,11 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
             writer.Write(bobCounter);
             writer.Write(bobsSinceAttatched);
             writer.Write(currentTension);
-            writer.Write((byte)(bobbed ? 1 : 0));
+            writer.Write((byte)((bobbed ? 1 : 0) + (shooter != null ? 0x80: 0x0)));
+            if(shooter != null)
+            {
+                ItemIO.Send(shooter.Item,writer);
+            }
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -302,8 +307,17 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
             bobCounter = reader.ReadInt16();
             bobsSinceAttatched = reader.ReadInt32();
             currentTension = reader.ReadSingle();
-            bobbed = reader.ReadByte() == 1;
-
+            byte b = reader.ReadByte();
+            bobbed = (b&1) == 1;
+            if((b & 0x80) != 0)
+            {
+                Item itm = new Item();
+                ItemIO.Receive(itm, reader);
+                if(itm != null && itm.ModItem is BattleRod)
+                {
+                    shooter = itm.ModItem as BattleRod;
+                }
+            }
         }
 
         public virtual bool CanActivateTurret()

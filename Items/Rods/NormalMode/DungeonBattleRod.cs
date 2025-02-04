@@ -47,6 +47,8 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => false;
 
+        public override int CrateDrop => ItemID.DungeonFishingCrate; 
+
 
         public override void SetStaticDefaults()
         {

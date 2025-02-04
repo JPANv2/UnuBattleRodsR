@@ -31,7 +31,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
         public virtual int Damage => 16;
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             parent.TryGetOwner(out Player p);
             FishPlayer fp = p.GetModPlayer<FishPlayer>();
@@ -40,9 +40,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             {
                 Main.projectile[proj].friendly = true; Main.projectile[proj].trap = false;
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
-                return true;
+                return [proj];
             }
-            return false;
+            return [];
         }
     }
 

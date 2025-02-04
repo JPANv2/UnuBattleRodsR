@@ -29,8 +29,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int RealProjectileID => ModContent.ProjectileType<Beetle>();
         public override int Level => 1;
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
+            List<int> result = new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             int trueProj = RealProjectileID;
 
@@ -43,28 +44,28 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
                 if (e != null)
                 {
                     speed = normalizedSpeedBetween(parent, e);
-                    shootTargeted(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1.25f)), truekb);
+                    result.Add(shootTargeted(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1.25f)), truekb));
                 }
                 else
                 {
-                    shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1.25f)), truekb);
+                    result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1.25f)), truekb));
                 }
             }
             else
             {
                 Vector2 speed = new Vector2(1, -1);
                 speed.Normalize();
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb);
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb);
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb));
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb));
                 speed = new Vector2(-1, -1);
                 speed.Normalize();
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb);
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb);
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb));
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb));
             }            
-            return true;
+            return result;
         }
 
-        private void shootTargeted(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
+        private int shootTargeted(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
         {
             Bobber b = parent.ModProjectile as Bobber;
             Vector2 spawnPos = parent.Center;
@@ -77,9 +78,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return proj;
             }
+            return -1;
         }
-        private void shootRandom(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
+        private int shootRandom(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
         {
             Bobber b = parent.ModProjectile as Bobber;
             Vector2 spawnPos = parent.Center;
@@ -92,7 +95,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return proj;
             }
+            return -1;
         }
     }
 

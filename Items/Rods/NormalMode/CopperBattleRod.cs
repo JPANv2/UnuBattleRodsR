@@ -44,6 +44,8 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override float BaseSyphoningPercent => 0;
         public override float BaseBobberDroppingPercent => 0.20f;
         public override bool BaseAttachesOnRetracting => false;
+
+        public override int CrateDrop => ItemID.WoodenCrate;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

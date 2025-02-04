@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.NormalMode;
+using UnuBattleRodsR.Items.Crates;
 
 namespace UnuBattleRodsR.Items.Rods.NormalMode
 {
@@ -46,7 +47,36 @@ namespace UnuBattleRodsR.Items.Rods.NormalMode
         public override float BaseSyphoningPercent => 0f;
         public override float BaseBobberDroppingPercent => 0.20f;
         public override bool BaseAttachesOnRetracting => false;
-
+        public override int CrateDrop
+        {
+            get
+            {
+                switch (Main.rand.Next(10))
+                {
+                   
+                    case 0:
+                    case 1:
+                        return ItemID.JungleFishingCrate;
+                    case 2:
+                    case 3:
+                        return ItemID.DungeonFishingCrate;
+                    case 4:
+                        return ModContent.ItemType<ObsidianCrate>();
+                    case 5:
+                        return ItemID.LavaCrate;
+                    case 6:
+                        return ItemID.CorruptFishingCrate;
+                    case 7:
+                        return ModContent.ItemType<CorruptCrate>();
+                    case 8:
+                        return ItemID.CrimsonFishingCrate;
+                    case 9:
+                        return ModContent.ItemType<CrimsonCrate>();
+                    default:
+                        return ItemID.WoodenCrate;
+                }
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

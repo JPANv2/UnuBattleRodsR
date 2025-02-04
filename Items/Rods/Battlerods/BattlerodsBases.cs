@@ -151,6 +151,8 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
         /// </summary>
         public virtual bool BaseAttachesOnRetracting => true;
 
+        public virtual int CrateDrop => 0;
+
         #endregion
 
         #region MainStatsCalculated

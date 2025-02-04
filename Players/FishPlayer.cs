@@ -226,6 +226,15 @@ namespace UnuBattleRodsR.Players
 
             wiretransfer = 0;
 
+            addedBaits = 0;
+            addedDiscardables = 0;
+            addedTurrets = 0;
+            addedOptions = 0;
+
+            applyBaitsOnTurretContact = false;
+            spreadBaitsOnTurret = false;
+            applyBaitsOnOptionContact = false;
+            spreadBaitsOnOption = false;
             base.ResetEffects();
         }
 
@@ -631,18 +640,21 @@ namespace UnuBattleRodsR.Players
             {
                 if (Player.HasBuff<ActiveTurretBuff>())
                 {
-                    if (decreaseTurretTime())
+                    if (NumberOfSpawnedBobbers > 0)
                     {
-                        initTurrets();
-                    }
-                    for (int i = 0; i < Main.projectile.Length; i++)
-                    {
-                        if (Main.projectile[i] != null && Main.projectile[i].active && Main.projectile[i].ModProjectile != null && Main.projectile[i].owner == Player.whoAmI)
+                        if (decreaseTurretTime())
                         {
-                            if (Main.projectile[i].ModProjectile is Bobber)
+                            initTurrets();
+                        }
+                        for (int i = 0; i < Main.projectile.Length; i++)
+                        {
+                            if (Main.projectile[i] != null && Main.projectile[i].active && Main.projectile[i].ModProjectile != null && Main.projectile[i].owner == Player.whoAmI)
                             {
-                                Bobber b = Main.projectile[i].ModProjectile as Bobber;
-                                updateTurrets(b, i);
+                                if (Main.projectile[i].ModProjectile is Bobber)
+                                {
+                                    Bobber b = Main.projectile[i].ModProjectile as Bobber;
+                                    updateTurrets(b, i);
+                                }
                             }
                         }
                     }
@@ -872,6 +884,7 @@ namespace UnuBattleRodsR.Players
                 sbyte gear = (sbyte)currentReelGear;
                 byte turretMode = (byte)(TurretMode ? 1 : 0);
                 turretMode += (byte)(explodeTurretOnCommand ? 2 : 0);
+                turretMode += (byte)(IncreaseTension ? 4 : 0);
                 ModPacket pk = Mod.GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.SyncPlayerKeyPresses);
                 pk.Write((short)who);

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 namespace UnuBattleRodsR.Items.Rods.HardMode
@@ -43,13 +44,15 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0.03f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop => Main.rand.NextBool()?ItemID.CorruptFishingCrateHard: ModContent.ItemType<SoulCrate>();
+
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Evil Rod of Darkness");
             // Tooltip.SetDefault("Provides slight mana shyphon.");
         }
-
         public override void SetDefaults()
 		{
             base.SetDefaults();

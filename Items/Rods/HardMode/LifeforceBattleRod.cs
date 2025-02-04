@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.HardMode;
 namespace UnuBattleRodsR.Items.Rods.HardMode
@@ -43,6 +44,27 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
         public override float BaseSyphoningPercent => 0.025f;
         public override float BaseBobberDroppingPercent => 0.10f;
         public override bool BaseAttachesOnRetracting => true;
+
+        public override int CrateDrop
+        {
+            get
+            {
+                switch (Main.rand.Next(6))
+                {
+                    case 0:
+                        return ItemID.DungeonFishingCrateHard;
+                    case 1:
+                        return ModContent.ItemType<SoulCrate>();
+                    case 2:
+                    case 3:
+                        return ModContent.ItemType<ShroomiteCrate>();
+                    case 4:
+                        return ItemID.JungleFishingCrateHard;
+                    default:
+                        return ModContent.ItemType<ChlorophyteCrate>();
+                }
+            }
+        }
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();

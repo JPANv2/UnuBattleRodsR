@@ -28,10 +28,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int RealProjectileID => ProjectileID.Bee;
         public override int Level => 1;
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
+            List<int> result = new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
-            int trueProj = fp.Player.strongBees ? ProjectileID.GiantBee : RealProjectileID;
+            int trueProj = (fp.Player.strongBees && RealProjectileID == ProjectileID.Bee) ? ProjectileID.GiantBee : RealProjectileID;
 
             int trueDamage = fp.Player.beeDamage(Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber / (fp.HeldBattlerod.BobSpeedInTicks / 60f))));
             float truekb = fp.Player.beeKB(3f);
@@ -42,26 +43,26 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
                 if (e != null)
                 {
                     speed = normalizedSpeedBetween(parent, e);
-                    shootTargeted(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1f)), truekb);
+                    result.Add(shootTargeted(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1f)), truekb));
                 }
                 else
                 {
-                    shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1f)), truekb);
+                    result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 1f)), truekb));
                 }
             }
             else
             {
                 Vector2 speed = new Vector2(1, -1);
                 speed.Normalize();
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage *0.75f)), truekb);
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage *0.75f)), truekb));
                 speed = new Vector2(-1, -1);
                 speed.Normalize();
-                shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb);
+                result.Add(shootRandom(turretData, parent, speed, trueProj, Math.Max(1, (int)Math.Round(trueDamage * 0.75f)), truekb));
             }            
-            return true;
+            return result;
         }
 
-        private void shootTargeted(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
+        private int shootTargeted(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
         {
             Bobber b = parent.ModProjectile as Bobber;
             Vector2 spawnPos = parent.Center;
@@ -74,9 +75,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return proj;
             }
+            return -1;
         }
-        private void shootRandom(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
+        private int shootRandom(FishPlayer.ActiveTurret turretData, Projectile parent, Vector2 speed, int trueProj, int trueDamage, float truekb)
         {
             Bobber b = parent.ModProjectile as Bobber;
             Vector2 spawnPos = parent.Center;
@@ -89,7 +92,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return proj;
             }
+            return -1;
         }
     }
 

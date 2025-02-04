@@ -54,7 +54,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyLaserTurret>();
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber * 0.1f / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
@@ -71,8 +71,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             {
                 (Main.projectile[proj].ModProjectile as TurretLaser).Initialize(parent.whoAmI, 180, 120, 180, 60, 12f, fp.Player.direction, 1f);
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                return new List<int>() { proj };
             }
-            return true;
+            return new List<int>();
         }
 
         public override void SetDefaults()
@@ -137,8 +138,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyDoubleLaserTurret>();
 
-        public override bool ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
+        public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
+            List<int> result = new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber * 0.75f / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
             Vector2 speed = Vector2.UnitX * fp.Player.direction;
@@ -155,16 +157,18 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             int proj = Projectile.NewProjectile(parent.GetSource_FromThis(), spawnPos, speed, RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj >= 0)
             {
+                result.Add(proj);
                 (Main.projectile[proj].ModProjectile as TurretLaser).Initialize(parent.whoAmI, 120, 120, 120, 60, 12f, fp.Player.direction, 1f);
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
             }
             int proj2 = Projectile.NewProjectile(parent.GetSource_FromThis(), spawnPos2, speed2, RealProjectileID, trueDamage, 3f, parent.owner);
             if (proj2 >= 0)
             {
+                result.Add(proj2);
                 (Main.projectile[proj2].ModProjectile as TurretLaser).Initialize(parent.whoAmI, 120, 120, 120, 60, 12f, -fp.Player.direction, 1f);
                 AddIgnoreToProjectile(parent, Main.projectile[proj2]);
             }
-            return true;
+            return result;
         }
 
         public override void SetDefaults()

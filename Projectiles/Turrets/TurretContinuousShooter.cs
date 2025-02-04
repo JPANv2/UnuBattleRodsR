@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 using static UnuBattleRodsR.Players.FishPlayer;
 using UnuBattleRodsR.Players;
 using Microsoft.Xna.Framework;
+using UnuBattleRodsR.Projectiles.Bobbers;
+using System.Collections.Generic;
 
 namespace UnuBattleRodsR.Projectiles.Turrets
 {
@@ -42,7 +44,19 @@ namespace UnuBattleRodsR.Projectiles.Turrets
         {
             if (Projectile.timeLeft <= 2)
             {
-                turret.baseTurret.ShootRealProjectile(turret, Projectile);
+                List<int> lProj = turret.baseTurret.ShootRealProjectile(turret, parent);
+                if (lProj.Count > 0)
+                {
+                    foreach (int proj2 in lProj)
+                    {
+                        if (proj2 > 0)
+                        {
+                            Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = Projectile.GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader;
+                            Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = Projectile.GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact;
+                        }
+                    }
+                    
+                }
                 NumberOfShots--;
                 if (NumberOfShots == 0)
                 {
@@ -83,7 +97,7 @@ namespace UnuBattleRodsR.Projectiles.Turrets
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write((short)parentSlot);
-            writer.Write(turretSlot);
+            writer.Write((byte)turretSlot);
             writer.Write((byte)NumberOfShots);
             writer.Write(IntervalBetweenShotsInTicks);
             WriteAI(writer);
@@ -102,8 +116,17 @@ namespace UnuBattleRodsR.Projectiles.Turrets
             IntervalBetweenShotsInTicks = reader.ReadInt32();
 
             ReadAI(reader);
-            turret = Owner.activeTurrets[turretSlot];
-            parent = Main.projectile[parentSlot];
+            if(turretSlot >= 0 && turretSlot < Owner.activeTurrets.Count)
+                turret = Owner.activeTurrets[turretSlot];
+            if(parentSlot >= 0 && parentSlot < Main.projectile.Length)
+                parent = Main.projectile[parentSlot];
+
+            if(turret == null)
+            {
+                if (parent != null)
+                    parent.active = false;
+            }
+                
         }
 
         public virtual void ReadAI(BinaryReader reader)

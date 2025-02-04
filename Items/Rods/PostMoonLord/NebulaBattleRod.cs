@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Crates;
 using UnuBattleRodsR.Items.Rods.Battlerods;
 using UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord;
 
@@ -46,6 +47,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override float BaseBobberDroppingPercent => 0.0f;
         public override bool BaseAttachesOnRetracting => true;
 
+        public override int CrateDrop => ModContent.ItemType<LuminiteCrate>();
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
