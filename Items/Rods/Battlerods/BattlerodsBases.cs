@@ -642,7 +642,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                 if (baseDamageMultiplier != 1f)
                 {
                     var realDM = baseDamageMultiplier - 1f;
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_Damage",  (realDM*100f).ToString("0.00") + "% damage");
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_Damage", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes.Damage").WithFormatArgs((realDM*100f).ToString("0.00")).Value);
                     tt.OverrideColor = realDM > 0 ? Color.LimeGreen : Color.OrangeRed;
                     tooltips.Add(tt);
                 }
@@ -651,7 +651,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                     tooltips.RemoveAt(idx);
                 if (bobSpeedMult != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_BobSpeed", bobSpeedMult > 0 ? "" + (bobSpeedMult * 100).ToString("0.00") + "% faster bobs" : "" + (-bobSpeedMult * 100).ToString("0.00") + "% slower bobs");
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_BobSpeed", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes.BobSpeed." + (bobSpeedMult > 0 ? "Fast" : "Slow")).WithFormatArgs((bobSpeedMult * 100).ToString("0.00")).Value);
                     tt.OverrideColor = bobSpeedMult > 0 ? Color.LimeGreen : Color.OrangeRed;
                     tooltips.Add(tt);
                 }
@@ -661,17 +661,16 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                 if (reelSpeedModifier.Additive != 1)
                 {
                     float reelSpeedMult = reelSpeedModifier.ApplyTo(1);
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_ReelSpeed", reelSpeedMult > 0 ? "" + (reelSpeedMult * 100).ToString("0.00") + "% faster reeling" : "" + (-reelSpeedMult * 100).ToString("0.00") + "% slower reeling");
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_ReelSpeed", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes.ReelSpeed." + (reelSpeedMult > 0 ? "Fast" : "Slow")).WithFormatArgs((reelSpeedMult * 100).ToString("0.00")).Value);
                     tt.OverrideColor = reelSpeedMult > 0 ? Color.LimeGreen : Color.OrangeRed;
                     tooltips.Add(tt);
                 }
-                idx = tooltips.FindIndex(x => x.Name == "Prefix_BobAdd");
+                idx = tooltips.FindIndex(x => x.Name == "Prefix_BobberAdd");
                 if (idx > 0)
                     tooltips.RemoveAt(idx);
                 if (noOfBobsAdd != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_BobAdd", noOfBobsAdd == -9999 ? "Has a single bobber" : noOfBobsAdd > 0 ? "Gain " + noOfBobsAdd + " bobber" + (noOfBobsAdd > 1 ? "s" : "") : "Lose " + -noOfBobsAdd + " bobber" + (noOfBobsAdd < -1 ? "s" : ""));
-                    tt.OverrideColor = noOfBobsAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
+                    TooltipLine tt = PrepareAddedVariableTooltip("Prefix_BobberAdd", "Bobbers", noOfBobsAdd);
                     tooltips.Add(tt);
                 }
                 idx = tooltips.FindIndex(x => x.Name == "Prefix_BaitAdd");
@@ -679,8 +678,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                     tooltips.RemoveAt(idx);
                 if (noOfBaitsAdd != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_BaitAdd", noOfBaitsAdd > 0 ? "+" + noOfBaitsAdd + " simultaneous bait" + (noOfBaitsAdd > 1 ? "s" : "") : "-" + -noOfBaitsAdd + " simultaneous bait" + (noOfBaitsAdd < -1 ? "s" : ""));
-                    tt.OverrideColor = noOfBaitsAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
+                    TooltipLine tt = PrepareAddedVariableTooltip("Prefix_BaitAdd", "Baits", noOfBaitsAdd);
                     tooltips.Add(tt);
                 }
                 idx = tooltips.FindIndex(x => x.Name == "Prefix_DiscardableAdd");
@@ -688,8 +686,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                     tooltips.RemoveAt(idx);
                 if (noOfDiscardablesAdd != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_DiscardableAdd", noOfDiscardablesAdd > 0 ? "+" + noOfDiscardablesAdd + " simultaneous discardable bobbers" : "-" + -noOfDiscardablesAdd + " simultaneous discardable bobbers");
-                    tt.OverrideColor = noOfDiscardablesAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
+                    TooltipLine tt = PrepareAddedVariableTooltip("Prefix_DiscardableAdd", "Discardables", noOfDiscardablesAdd);
                     tooltips.Add(tt);
                 }
                 idx = tooltips.FindIndex(x => x.Name == "Prefix_TurretsAdd");
@@ -697,13 +694,52 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
                     tooltips.RemoveAt(idx);
                 if (noOfTurretsAdd != 0)
                 {
-                    TooltipLine tt = new TooltipLine(Mod, "Prefix_TurretsAdd", noOfTurretsAdd > 0 ? "+" + noOfTurretsAdd + " turret" + (noOfTurretsAdd > 1 ? "s" : "") : "-" + -noOfTurretsAdd + " turret" + (noOfTurretsAdd < -1 ? "s" : ""));
-                    tt.OverrideColor = noOfBaitsAdd > 0 ? Color.LimeGreen : Color.OrangeRed;
+                    TooltipLine tt = PrepareAddedVariableTooltip("Prefix_TurretAdd", "Turrets", noOfTurretsAdd);
+                    tooltips.Add(tt);
+                }
+                idx = tooltips.FindIndex(x => x.Name == "Prefix_DisperserRange");
+                if (idx > 0)
+                    tooltips.RemoveAt(idx);
+                if (disperserRange != 0)
+                {
+                    TooltipLine tt = new TooltipLine(Mod, "Prefix_DisperserRange", Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes.Disperser." + (disperserRange > 0 ? "Add" : "Lose")+ (hasDisperserRange ? "Native" :"")).WithFormatArgs(disperserRange).Value);
+                    tt.OverrideColor = disperserRange > 0 ? Color.LimeGreen : Color.OrangeRed;
                     tooltips.Add(tt);
                 }
             }
         }
 
+
+        private TooltipLine PrepareAddedVariableTooltip(string prefixIndex, string prefixName, int numberAdded)
+        {
+            TooltipLine tt;
+            if(numberAdded == -9999)
+            {
+                tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+prefixName+".None").Value);
+                tt.OverrideColor = Color.LemonChiffon;
+            }
+            if (numberAdded == 1)
+            {
+                tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+ prefixName+".Add1").WithFormatArgs(numberAdded).Value);
+                tt.OverrideColor = Color.LimeGreen;
+            }
+            else if (numberAdded > 1)
+            {
+                tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+ prefixName+".Add").WithFormatArgs(numberAdded).Value);
+                tt.OverrideColor = Color.LimeGreen;
+            }
+            else if (numberAdded == -1)
+            {
+                tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+ prefixName+".Lose1").WithFormatArgs(-numberAdded).Value);
+                tt.OverrideColor = Color.OrangeRed;
+            }
+            else
+            {
+                tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+ prefixName+".Lose").WithFormatArgs(-numberAdded).Value);
+                tt.OverrideColor = Color.OrangeRed;
+            }
+            return tt;
+        }
 
        
         #endregion

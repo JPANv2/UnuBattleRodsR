@@ -239,7 +239,7 @@ namespace UnuBattleRodsR.Prefixes
         public override float Velocity => 0.3f;
         public override float ReelSpeed => -0.25f;
         public override int BobAdd => -2;
-        public override int BaitAdd => 1;
+        //public override int BaitAdd => 1;
 
         public override int chances => 1;
         public override void SetStaticDefaults()

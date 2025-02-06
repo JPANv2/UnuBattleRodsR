@@ -18,6 +18,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.value = Item.buyPrice(0, 0, 25, 0);
             debuffID = BuffID.BetsysCurse;
         }
 
@@ -44,6 +45,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.value = Item.buyPrice(0, 0, 50, 0);
             debuffID = BuffID.BetsysCurse;
         }
 
@@ -69,6 +71,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.value = Item.buyPrice(0, 1, 0, 0);
             debuffID = BuffID.BetsysCurse;
         }
 

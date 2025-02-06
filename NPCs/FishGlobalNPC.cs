@@ -450,7 +450,7 @@ namespace UnuBattleRodsR.NPCs
 
         public void updateCurrentInflictedBaitDebuffs(NPC npc)
         {
-            if (Main.netMode != NetmodeID.SinglePlayer)
+            if (Main.netMode != NetmodeID.SinglePlayer && npc.active)
             {
                 ModPacket pk = Mod.GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);

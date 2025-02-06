@@ -40,16 +40,6 @@ namespace UnuBattleRodsR
             GetAmmoRechargerFromServer = 11,
             SyncPlayerKeyPresses = 12,
             SummonNPC = 13,
-            /*
-            BobProjectilePosition = 0,
-            MimicSpawn = 1,
-            BobAIUpdate = 2,
-            BobDPS = 3,
-            HealEffect = 4,
-            ManaEffect = 5,
-            BaitUpdate = 8,
-            DebuffUpdate = 12,
-            ReceiveConfig = 14*/
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -180,24 +170,40 @@ namespace UnuBattleRodsR
             int updatee = reader.ReadInt16();
             int count = reader.ReadInt32();
             List<int> debuffs = new List<int>();
+            bool notDead = true;
             for (int k = 0; k < count; k++)
             {
                 debuffs.Add(reader.ReadInt32());
             }
             if (updatee >= Main.npc.Length)
             {
-                FishPlayer pl = Main.player[updatee - Main.npc.Length].GetModPlayer<FishPlayer>();
-                pl.debuffsPresent.Clear();
-                pl.debuffsPresent.AddRange(debuffs);
+                Player target = Main.player[updatee - Main.npc.Length];
+                if (target.active && !target.dead)
+                {
+                    FishPlayer pl = target.GetModPlayer<FishPlayer>();
+                    pl.debuffsPresent.Clear();
+                    pl.debuffsPresent.AddRange(debuffs);
+                }
+                else
+                {
+                    notDead = false;
+                }
             }
-            else
+            else if (updatee > 0 && updatee < Main.npc.Length)
             {
                 NPC npc = Main.npc[updatee];
-                FishGlobalNPC fgnpc = npc.GetGlobalNPC<FishGlobalNPC>();
-                fgnpc.debuffsPresent.Clear();
-                fgnpc.debuffsPresent.AddRange(debuffs);
+                if (npc.active)
+                {
+                    FishGlobalNPC fgnpc = npc.GetGlobalNPC<FishGlobalNPC>();
+                    fgnpc.debuffsPresent.Clear();
+                    fgnpc.debuffsPresent.AddRange(debuffs);
+                }
+                else
+                {
+                    notDead = false;
+                }
             }
-            if (Main.netMode == NetmodeID.Server)
+            if (Main.netMode == NetmodeID.Server && notDead)
             {
                 ModPacket pk = GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);

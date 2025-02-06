@@ -25,7 +25,11 @@ namespace UnuBattleRodsR.Prefixes
         public virtual int Crit => 0;
         public virtual int BobAdd => 0;
         public virtual int BaitAdd => 0;
+        public virtual int DiscardableAdd => 0;
+        public virtual int TurretAdd => 0;
 
+        public virtual bool HasDisperserRange => false;
+        public virtual int DisperserRange => 0;
         public virtual int chances => 20;
 
         public override PrefixCategory Category => PrefixCategory.Custom;
@@ -56,7 +60,11 @@ namespace UnuBattleRodsR.Prefixes
             br.baseDamageMultiplier = Power;
             br.noOfBobsAdd = BobAdd;
             br.noOfBaitsAdd = BaitAdd;
+            br.noOfDiscardablesAdd = DiscardableAdd;
+            br.noOfTurretsAdd = TurretAdd;
             br.bobSpeedMult = BobSpeed;
+            br.hasDisperserRange = HasDisperserRange;
+            br.disperserRange = DisperserRange;
             br.reelSpeedModifier = new StatModifier(1 + ReelSpeed, 1,0,0);
             br.Item.UpdateItem(1);
         }

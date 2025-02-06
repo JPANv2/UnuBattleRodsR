@@ -2,6 +2,7 @@ Mods: {
 	UnuBattleRodsR: {
 		Currencies.FishSteaks: Fish Steaks
 		Crate.Unable: The Cratest Crate refuses to Open...
+		PotionShop: Potions and Baits
 
 		Tooltips: {
 			FishingDamage: "{0} Fishing Damage"
@@ -35,6 +36,59 @@ Mods: {
 			Discardables: Uses {0} discardable bobbers at once
 			NoTurrets: Cannot use turrets
 			Turrets: Uses {0} turrets at once
+
+			Prefixes: {
+				Damage: "{0}% damage"
+
+				BobSpeed: {
+					Slow: "{0}% slower bobs"
+					Fast: "{0}% faster bobs"
+				}
+
+				ReelSpeed: {
+					Slow: "{0}% slower reeling"
+					Fast: "{0}% faster reeling"
+				}
+
+				Bobbers: {
+					None: One bobber, no more possible
+					Add1: Gains {0}% bobber
+					Add: Gains {0}% bobbers
+					Lose1: Losees {0}% bobber
+					Lose: Losees {0}% bobbers
+				}
+
+				Baits: {
+					None: Has no bait slots
+					Add1: Gains {0}% bait slot
+					Add: Gains {0}% bait slots
+					Lose1: Losees {0}% bait slot
+					Lose: Losees {0}% bait slots
+				}
+
+				Discardables: {
+					None: Has no discardable bobber slots
+					Add1: Gains {0}% discardable bobber slot
+					Add: Gains {0}% discardable bobber slots
+					Lose1: Losees {0}% discardable bobber slot
+					Lose: Losees {0}% discardable bobber slots
+				}
+
+				Turrets: {
+					None: Has no turret slots
+					Add1: Gains {0}% turret slot
+					Add: Gains {0}% turrets slots
+					Lose1: Losees {0}% turret slot
+					Lose: Losees {0}% turret slots
+				}
+
+				Disperser: {
+					Add: "{0}px increased Bait Dispersal range"
+					AddNative: "{0}px increased Bait Dispersal, with included disperser!"
+					Lose: "{0}px decreased Bait Dispersal range"
+					LoseNative: "{0}px decreased Bait Dispersal, but with included disperser!"
+				}
+			}
 		}
 
 		TownNPCMood: {
@@ -90,6 +144,10 @@ Mods: {
 			FruitCrate.MapEntry: Fruit Crate
 			LihzahrdCrate.MapEntry: Lihzahrd Crate
 			TheCratestCrate.MapEntry: The Cratest Crate
+			CobwebCrate.MapEntry: Cobweb Crate
+			DyeCrate.MapEntry: Dye Crate
+			FlowerCrate.MapEntry: Flower Crate
+			GeodeCrate.MapEntry: Geode Crate
 		}
 
 		NPCs: {
@@ -3125,6 +3183,26 @@ Mods: {
 				DisplayName: Turret Trigger
 				Tooltip: Adds one extra turret slot to your battlerod
 			}
+
+			CobwebCrate: {
+				DisplayName: Cobweb Crate
+				Tooltip: Right-click to open
+			}
+
+			DyeCrate: {
+				DisplayName: Dye Crate
+				Tooltip: Right-click to open
+			}
+
+			FlowerCrate: {
+				DisplayName: Flower Crate
+				Tooltip: Right-click to open
+			}
+
+			GeodeCrate: {
+				DisplayName: Geode Crate
+				Tooltip: Right-click to open
+			}
 		}
 
 		Prefixes: {
@@ -3155,11 +3233,14 @@ Mods: {
 			FishingOnlyPrefix.DisplayName: Trawler's
 			LegendaryPrefix.DisplayName: Legendary
 			OmnilurePrefix.DisplayName: Omnilure's
+			DisperserPrefix.DisplayName: Carrier
+			Disperser2Prefix.DisplayName: Contageous
 			SuperiorOmnilurePrefix.DisplayName: Superior Omnilure's
 			VelocityDecrease1Prefix.DisplayName: Short-reached
 			VelocityDecrease2Prefix.DisplayName: Flaccid
 			VelocityIncrease1Prefix.DisplayName: Speedy
 			VelocityIncrease2Prefix.DisplayName: Caster's
+			NoAmmoPrefix.DisplayName: Bruiser
 		}
 
 		Projectiles: {
@@ -3395,6 +3476,11 @@ Mods: {
 				ammoMode: {
 					Label: Rod Ammo Mode
 					Tooltip: If you should use no Rod Ammo (Baits, Discardables, Turrets or Options), the old system (only on Ammo slot), use both Ammo and Rod Pouch, with ammo being picked first or the Rod Pouch picked first, or use the Rod pouch exclusively. Defaults to Rod Pouch First.
+				}
+
+				fishLadySellPotions: {
+					Label: Fish Lady Potion Shop
+					Tooltip: If the Fish Lady should sell Potions and Baits in a second shop. Defaults to false
 				}
 			}
 

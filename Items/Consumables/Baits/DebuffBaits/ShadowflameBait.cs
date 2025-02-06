@@ -18,6 +18,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.value = Item.buyPrice(0, 0, 7, 50);
             debuffID = BuffID.ShadowFlame;
         }
 
@@ -44,6 +45,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Item.value = Item.buyPrice(0, 0, 15,0);
             debuffID = BuffID.ShadowFlame;
         }
 
@@ -70,6 +72,7 @@ namespace UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits
         {
             base.SetDefaults();
             debuffID = BuffID.ShadowFlame;
+            Item.value = Item.buyPrice(0, 0, 30, 0);
         }
 
         public override void AddRecipes()

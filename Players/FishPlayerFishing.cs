@@ -152,6 +152,13 @@ namespace UnuBattleRodsR.Players
                     }
                 }
 
+                if(itemDrop == ItemID.Salmon && ((maxCrate && Main.rand.NextBool(3)) || Main.rand.NextBool(12)))
+                {
+                    itemDrop = ModContent.ItemType<FlowerCrate>();
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
+                    return;
+                }
+               
                 List<int> possibleCrate = new List<int>();
 
                 if ((maxCrate && Main.rand.NextBool(25) || Main.rand.NextBool(50)) && NPC.downedMoonlord && Player.ZoneSkyHeight)
@@ -188,6 +195,26 @@ namespace UnuBattleRodsR.Players
                         AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                         return;
                     }
+                }
+
+                if ((Player.ZoneNormalUnderground || Player.ZoneUndergroundDesert) &&(maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8)))
+                {
+                    if (Main.rand.NextBool(3))
+                    {
+                        itemDrop = ModContent.ItemType<GeodeCrate>();
+                    }
+                    else
+                    {
+                        itemDrop = ModContent.ItemType<CobwebCrate>();
+                    }
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
+                    return;
+                }
+                if ((Player.ZoneDesert || Player.ZoneUndergroundDesert) && (maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8)))
+                {
+                    itemDrop = ModContent.ItemType<DyeCrate>();
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
+                    return;
                 }
 
                 if (Player.ZonePeaceCandle && ((maxCrate && Main.rand.NextBool(10)) || Main.rand.NextBool(25)))

@@ -26,6 +26,32 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
+            if (!NPC.AnyNPCs(NPCID.Wizard) && !NPC.AnyNPCs(NPCID.BoundWizard))
+            {
+                if (Main.rand.NextBool(5))
+                {
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.NewNPC(player.GetSource_ItemUse(Item), (int)player.Center.X, (int)player.Center.Y, NPCID.BoundWizard);
+                    }
+                    else
+                    {
+                        ModPacket req = Mod.GetPacket();
+                        req.Write((byte)UnuBattleRodsR.Message.SummonNPC);
+                        req.Write((int)NPCID.BoundWizard);
+                        req.Write((int)player.Center.X);
+                        req.Write((int)player.Center.Y);
+                        req.Write((int)Item.type);
+                        req.Send();
+                    }
+                }
+                else
+                {
+                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.WizardsHat);
+                }
+            }
+
             player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofLight, Main.rand.Next(3, 16));
             player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofNight, Main.rand.Next(3, 16));
 

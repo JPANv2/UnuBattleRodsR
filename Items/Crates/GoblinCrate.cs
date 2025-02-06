@@ -25,6 +25,24 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
+            if (!NPC.AnyNPCs(NPCID.GoblinTinkerer) && !NPC.AnyNPCs(NPCID.BoundGoblin))
+            {
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC.NewNPC(player.GetSource_ItemUse(Item), (int)player.Center.X, (int)player.Center.Y, NPCID.BoundGoblin);
+                }
+                else
+                {
+                    ModPacket req = Mod.GetPacket();
+                    req.Write((byte)UnuBattleRodsR.Message.SummonNPC);
+                    req.Write((int)NPCID.BoundGoblin);
+                    req.Write((int)player.Center.X);
+                    req.Write((int)player.Center.Y);
+                    req.Write((int)Item.type);
+                    req.Send();
+                }
+            }
 
             if (Main.rand.Next(5) == 0)
             {

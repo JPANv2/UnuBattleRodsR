@@ -18,6 +18,8 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
         public int noOfDiscardablesAdd = 0;
         public int noOfTurretsAdd = 0;
         public int noOfOptionsAdd = 0;
+        public bool hasDisperserRange = false;
+        public int disperserRange = 0;
 
         public float baseDamageMultiplier = 1.0f;
         public float bobSpeedMult = 0f;

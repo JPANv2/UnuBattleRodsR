@@ -557,7 +557,7 @@ namespace UnuBattleRodsR.Players
 
         public void updateCurrentInflictedBaitDebuffs()
         {
-            if (Main.netMode != NetmodeID.SinglePlayer)
+            if (Main.netMode != NetmodeID.SinglePlayer && Player.active && !Player.dead)
             {
                 ModPacket pk = Mod.GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);

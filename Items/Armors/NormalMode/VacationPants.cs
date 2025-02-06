@@ -25,7 +25,7 @@ namespace UnuBattleRodsR.Items.Armors.NormalMode
             Item.width = 11;
             Item.height = 9;
             Item.rare = 1;
-            Item.defense = 2;
+            Item.defense = 4;
             Item.value = Item.sellPrice(0, 0, 1, 0);
         }
 

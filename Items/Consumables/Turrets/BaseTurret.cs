@@ -165,7 +165,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                         {
                             if (proj2 > 0)
                             {
-                                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                                if (fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                                     Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
                                 if ((BaitOnContact || fp.applyBaitsOnTurretContact))
                                     Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = true;
@@ -185,7 +185,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                         {
                             if (proj2 > 0)
                             {
-                                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                                if (fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                                     Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
                                 if ((BaitOnContact || fp.applyBaitsOnTurretContact))
                                     Main.projectile[proj2].GetGlobalProjectile<GlobalBaitedProjectile>().baitOnContact = true;
@@ -203,7 +203,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).level = (byte)Level;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turretData;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
-                if(fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                if(fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                     Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
             }
             proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, new Vector2(-5, -5), ModContent.ProjectileType<TurretSpreader>(), 0, 0, p.whoAmI);
@@ -212,7 +212,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).level = (byte)Level;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turretData;
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
-                if (fp.baitDispersalRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
+                if (fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                     Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
             }
             return true;

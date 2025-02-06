@@ -26,7 +26,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers
         public override void PostAI(Projectile projectile)
         {
             FishPlayer owner = Main.player[projectile.owner].GetModPlayer<FishPlayer>();
-            if (baitSpreader && owner.baitDispersalRange > 0)
+            if (baitSpreader && owner.BaitDisperserRange > 0)
             {
                 disperseBait(owner, projectile);
             }
@@ -87,7 +87,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers
 
         public void disperseBait(FishPlayer fp, Projectile Projectile)
         {
-            int baitRange = fp.baitDispersalRange;
+            int baitRange = fp.BaitDisperserRange;
             if (baitRange > 0 && fp.AnyBaitDebuffs)
             {
                 Rectangle rangeHitbox = new Rectangle((int)(Projectile.position.X - (Projectile.width / 2 + baitRange / 2)), (int)(Projectile.position.Y - (Projectile.height / 2 + baitRange / 2)), Projectile.width + baitRange, Projectile.height + baitRange);

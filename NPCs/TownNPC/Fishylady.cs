@@ -5,7 +5,10 @@ using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Accessories.Other;
+using UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits;
+using UnuBattleRodsR.Items.Potions;
 
 namespace UnuBattleRodsR.NPCs.TownNPC
 {
@@ -106,6 +109,8 @@ namespace UnuBattleRodsR.NPCs.TownNPC
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button = Language.GetTextValue("LegacyInterface.28");
+            if (ModContent.GetInstance<UnuDificultyConfig>().fishLadySellPotions)
+                button2 = Language.GetOrRegister("Mods.UnuBattleRodsR.PotionShop").Value;
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref string shopName)
@@ -113,10 +118,18 @@ namespace UnuBattleRodsR.NPCs.TownNPC
             if (firstButton)
             {
                 shopName = "Fishing Shop";
+            }else if (ModContent.GetInstance<UnuDificultyConfig>().fishLadySellPotions)
+            {
+                shopName = "Bait and Potion Shop";
             }
         }
-
         public override void AddShops()
+        {
+            AddFishingShop();
+            AddBaitPotionShop();
+        }
+
+        public void AddFishingShop()
         {
             NPCShop shop = new NPCShop(ModContent.NPCType<Fishylady>(), "Fishing Shop");
             /*shop.Add(
@@ -280,6 +293,187 @@ namespace UnuBattleRodsR.NPCs.TownNPC
             shop.Register();
         }
 
+        public void AddBaitPotionShop()
+        {
+            NPCShop shop = new NPCShop(ModContent.NPCType<Fishylady>(), "Bait and Potion Shop");
+            shop.Add(
+              new NPCShop.Entry(
+                  new Item(ModContent.ItemType<PoisonApprenticeBait>()), Condition.NotDownedSkeletron)
+              );
+            shop.Add( 
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<PoisonBait>()), Condition.DownedSkeletron, Condition.NotDownedMechBossAny)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<PoisonMasterBait>()), Condition.DownedMechBossAny)
+              );
+            shop.Add(
+              new NPCShop.Entry(
+                  new Item(ModContent.ItemType<OilApprenticeBait>()), Condition.NotDownedSkeletron)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<OilBait>()), Condition.DownedSkeletron, Condition.NotDownedMechBossAny)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<OilMasterBait>()), Condition.DownedMechBossAny)
+              );
+            shop.Add(
+             new NPCShop.Entry(
+                 new Item(ModContent.ItemType<FrostburnApprenticeBait>()), Condition.NotDownedSkeletron)
+             );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FrostburnBait>()), Condition.DownedSkeletron, Condition.NotDownedMechBossAny)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FrostburnMasterBait>()), Condition.DownedMechBossAny)
+              );
+            shop.Add(
+             new NPCShop.Entry(
+                 new Item(ModContent.ItemType<FireApprenticeBait>()), Condition.NotDownedSkeletron)
+             );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FireBait>()), Condition.DownedSkeletron, Condition.NotDownedMechBossAny)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FireMasterBait>()), Condition.DownedMechBossAny)
+              );
+            shop.Add(
+             new NPCShop.Entry(
+                 new Item(ModContent.ItemType<ConfusionApprenticeBait>()), Condition.NotDownedSkeletron)
+             );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<ConfusionBait>()), Condition.DownedSkeletron, Condition.NotDownedMechBossAny)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<ConfusionMasterBait>()), Condition.DownedMechBossAny)
+              );
+            shop.Add(
+             new NPCShop.Entry(
+                 new Item(ModContent.ItemType<VenomApprenticeBait>()), Condition.NotDownedQueenBee)
+             );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<VenomBait>()), Condition.DownedQueenBee, Condition.NotDownedPlantera)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<VenomMasterBait>()), Condition.DownedPlantera)
+            );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<CursedFlameApprenticeBait>()), Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<CursedFlameBait>()), Condition.DownedMechBossAny, Condition.NotDownedGolem )
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<CursedFlameMasterBait>()), Condition.DownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<IchorApprenticeBait>()), Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<IchorBait>()), Condition.DownedMechBossAny, Condition.NotDownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<IchorMasterBait>()), Condition.DownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<ShadowflameApprenticeBait>()), Condition.DownedGoblinArmy, Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<ShadowflameBait>()), Condition.DownedGoblinArmy, Condition.DownedMechBossAny, Condition.NotDownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<ShadowflameMasterBait>()), Condition.DownedGoblinArmy, Condition.DownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<MidasApprenticeBait>()), Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<MidasBait>()), Condition.DownedMechBossAny, Condition.NotDownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<MidasMasterBait>()), Condition.DownedGolem)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<BetsyCurseApprenticeBait>()), Condition.DownedOldOnesArmyT3, Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<BetsyCurseBait>()), Condition.DownedOldOnesArmyT3, Condition.DownedMechBossAny, Condition.NotDownedMoonLord)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<BetsyCurseMasterBait>()), Condition.DownedMoonLord)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<SolarfireApprenticeBait>()), Condition.DownedSolarPillar, Condition.Hardmode, Condition.NotDownedMechBossAny)
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<SolarfireBait>()), Condition.DownedSolarPillar, Condition.DownedMechBossAny, Condition.NotDownedMoonLord)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<SolarfireMasterBait>()), Condition.DownedMoonLord)
+              );
+
+            ////////////////////////////////////////////////////////
+            ///Potions
+            ////////////////////////////////////////////////////////
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<TensionOil>()) { shopCustomPrice = 50000})
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FishingDamagePotion>()) { shopCustomPrice = 50000 })
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<BobSpeedingPotion>()) { shopCustomPrice = 50000 })
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<BobEscalationPotion>()) { shopCustomPrice = 50000 })
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FasterEscalationPotion>()) { shopCustomPrice = 100000 })
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FurtherEscalationPotion>()) { shopCustomPrice = 100000 })
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<MaximumEscalationPotion>()) { shopCustomPrice = 1000000 })
+              );
+            shop.Register();
+        }
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
             damage = 80;

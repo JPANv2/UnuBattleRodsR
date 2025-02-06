@@ -62,7 +62,11 @@ namespace UnuBattleRodsR.Configs
         [Tooltip("If Battlerods should use the old (fixed increase) escalation code, or the new (tension modifier) one. Defaults to false")]
         [DefaultValue(false)]
         public bool oldEscalation = false;
-
+       
+        [Label("Fish Lady Potion Shop")]
+        [Tooltip("If the Fish Lady should sell Potions and Baits in a second shop. Defaults to false")]
+        [DefaultValue(false)]
+        public bool fishLadySellPotions = false;
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
         {
             return false;

@@ -143,7 +143,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
 
         public void disperseBait(FishPlayer fp)
         {
-            int baitRange = fp.baitDispersalRange;
+            int baitRange = fp.BaitDisperserRange;
             if (baitRange > 0 && fp.AnyBaitDebuffs && (npcIndex >= 0 || Math.Round(Math.Abs(Projectile.velocity.Y)) == 0 || Projectile.wet))
             {
                 Rectangle rangeHitbox = new Rectangle((int)(Projectile.position.X - (Projectile.width / 2 + baitRange / 2)), (int)(Projectile.position.Y - (Projectile.height / 2 + baitRange / 2)), Projectile.width + baitRange, Projectile.height + baitRange);

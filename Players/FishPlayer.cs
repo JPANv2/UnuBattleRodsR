@@ -68,6 +68,19 @@ namespace UnuBattleRodsR.Players
             }
         }
 
+        public int BaitDisperserRange
+        {
+            get {
+                if(HeldBattlerod != null && HeldBattlerod.hasDisperserRange)
+                {
+                    return System.Math.Max(baitDispersalRange + HeldBattlerod.disperserRange, 0);
+                }else if(HeldBattlerod != null && baitDispersalRange > 0)
+                {
+                    return System.Math.Max(baitDispersalRange + HeldBattlerod.disperserRange, 0);
+                }
+                return baitDispersalRange;
+            }
+        }
 
         public bool MasterBaiter = false;
 
