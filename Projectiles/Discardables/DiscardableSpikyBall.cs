@@ -29,6 +29,9 @@ namespace UnuBattleRodsR.Projectiles.Discardables
 
         public override bool effectAI()
         {
+            if (Main.myPlayer != Projectile.owner)
+                return true;
+
             double angle = Main.rand.NextDouble()* Math.PI * 2;
             float rangePos = Main.rand.NextFloat(range);
             for (int i = 0; i < 5; i++)

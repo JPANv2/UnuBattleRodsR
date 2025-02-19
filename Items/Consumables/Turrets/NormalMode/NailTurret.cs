@@ -101,6 +101,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 3, 20);
                 Main.projectile[proj].timeLeft = 3;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
                 list.Add(proj);
             }
             return list;
@@ -184,6 +185,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 3, 15);
                 Main.projectile[proj].timeLeft = 3;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
                 return [proj];
             }
             return [];

@@ -64,6 +64,6 @@ namespace UnuBattleRodsR.Projectiles.Bees
                     pbdbf.addAllBuffsToList(tpl, debuffs);
                 }
             }
-        }
+        } 
     }
 }

@@ -46,6 +46,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnStars(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = Main.rand.Next(1, 4);
             for (int i = 0; i < max; i++)
             {
@@ -73,6 +75,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnHands(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.UnitX * 3, ProjectileID.InsanityShadowFriendly, Projectile.damage, 0, player.whoAmI);
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, -Vector2.UnitX * 3, ProjectileID.InsanityShadowFriendly, Projectile.damage, 0, player.whoAmI);
 

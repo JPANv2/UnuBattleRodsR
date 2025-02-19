@@ -163,7 +163,11 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
         public float BobSpeedInSeconds => BobSpeedInTicks / 60f;
 
         public int adaptedDamage = 0;
+
+        public int adaptedBobPerTick = 0;
         public virtual int TrueBaseDamage => UnuBattleRodsR.DEBUG && adaptedDamage != 0 ? adaptedDamage : BaseDamage;
+
+        public virtual int TrueBaseBobsTick => UnuBattleRodsR.DEBUG && adaptedBobPerTick != 0 ? adaptedBobPerTick : BobSpeedInTicks;
 
         public int CurrentDamageNoBobbers
         {
@@ -717,7 +721,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
             {
                 tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+prefixName+".None").Value);
                 tt.OverrideColor = Color.LemonChiffon;
-            }
+            }else 
             if (numberAdded == 1)
             {
                 tt = new TooltipLine(Mod, prefixIndex, Language.GetOrRegister("Mods.UnuBattleRodsR.Tooltips.Prefixes."+ prefixName+".Add1").WithFormatArgs(numberAdded).Value);

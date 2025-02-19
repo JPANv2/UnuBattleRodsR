@@ -16,6 +16,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             {
                 switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
                 {
+                    case Difficulties.Experimental: 
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         return 666;
@@ -26,7 +27,22 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             }
         }
 
-        public override int BobSpeedInTicks => 200;
+        public override int BobSpeedInTicks
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Experimental:
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 200;
+                    case Difficulties.Battlerods:
+                    default:
+                        return 200;
+                }
+            }
+        }
         public override int BaseNumberOfBobbers => 6;
         public override int BaseNumberOfBaits => 3;
         public override int BaseNumberOfDiscardables => 1;

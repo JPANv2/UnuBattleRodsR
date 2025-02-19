@@ -149,7 +149,7 @@ namespace UnuBattleRodsR.Items.Rods.Battlerods
             }
             if (!Owner.HasBuff<ActiveTurretBuff>() || Owner.buffTime[Owner.FindBuffIndex(ModContent.BuffType<ActiveTurretBuff>())] < 600)
             {
-                p.resetTurrets();
+                p.AnyTurrets(true);
                 p.initTurrets();
             }
             return false;

@@ -109,6 +109,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
 
         private void shootBullets(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int bulletCounter = 0;
             for (int i = 0; i< Main.projectile.Length; i++)
             {

@@ -45,7 +45,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
         
         private void spawnProj(Player player, Entity npc)
         {
-           int max = Main.rand.Next(3,9);
+            if (Main.myPlayer != Projectile.owner)
+                return;
+            int max = Main.rand.Next(3,9);
             for (int i = 0; i < max; i++)
             {
                 int proj = ProjectileID.FairyQueenMagicItemShot;

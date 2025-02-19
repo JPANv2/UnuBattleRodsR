@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using UnuBattleRodsR.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using UnuBattleRodsR.Configs;
 
 namespace UnuBattleRodsR.Buffs
 {
@@ -25,14 +26,16 @@ namespace UnuBattleRodsR.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            if (npc.buffImmune[BuffID.Frostburn])
+            if (npc.buffImmune[BuffID.Frostburn] ||(npc.boss && !ModContent.GetInstance<UnuDificultyConfig>().frozenOnBosses))
             {
                 npc.buffTime[buffIndex] = 0;
                 npc.buffType[buffIndex] = 0;
                 return;
             }
-
-            npc.velocity = new Microsoft.Xna.Framework.Vector2(0, 8);
+            if (npc.noTileCollide)
+                npc.velocity = new Vector2(0, 0);
+            else
+                npc.velocity = new Vector2(0, 8);
 
             /*if (npc.buffTime[buffIndex] % 6 == 0)
             {

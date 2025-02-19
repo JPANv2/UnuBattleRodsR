@@ -12,6 +12,7 @@ using UnuBattleRodsR.Players.AmmoUI;
 
 namespace UnuBattleRodsR
 {
+    [Autoload(Side = ModSide.Client)]
     public class AmmoUISystem : ModSystem
     {
         public UserInterface AmmoUI;
@@ -20,15 +21,20 @@ namespace UnuBattleRodsR
         public override void Load()
         {
             AmmoUI = new UserInterface();
+            AmmoUI.SetState(new UIStateBaitAmmo());
             AmmoRecharger = new UserInterface();
+            AmmoRecharger.SetState(new AmmoRechargerUI());
             base.Load();
         }
 
         public override void UpdateUI(GameTime gameTime)
         {
-            if(AmmoUI?.CurrentState != null)
+            if (!Main.LocalPlayer.TryGetModPlayer<FishPlayer>(out FishPlayer cur))
+                return;
+            bool shouldDisplay = !(cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar) || !Main.playerInventory || cur.Player.chest != -1 || Main.CreativeMenu.Enabled || Main.npcShop > 0);
+            if (AmmoUI?.CurrentState != null && shouldDisplay)
                 AmmoUI?.Update(gameTime);
-            if (AmmoRecharger?.CurrentState != null)
+            if (AmmoRecharger?.CurrentState != null && cur.AmmoRecharger >= 0)
                 AmmoRecharger?.Update(gameTime);
 
         }
@@ -58,20 +64,21 @@ namespace UnuBattleRodsR
                     "UnusBattlerodsR: Ammo Recharger",
                     delegate {
                         FishPlayer cur = Main.LocalPlayer.GetModPlayer<FishPlayer>();
-                        if (cur.AmmoRecharger >= 0)
+                        bool shouldDisplay = cur.AmmoRecharger >= 0;
+                        if (AmmoRecharger?.CurrentState != null)
                         {
-                            if(AmmoRecharger.CurrentState == null)
+                            if (shouldDisplay)
                             {
-                                AmmoRecharger.SetState(new AmmoRechargerUI());
+                                (AmmoRecharger.CurrentState as AmmoRechargerUI).SetRechargerSlot(cur.AmmoRecharger);
+                                GameTime gt = new GameTime();
+                                AmmoRecharger.Update(gt);
+                                if (AmmoRecharger?.CurrentState != null)
+                                    AmmoRecharger.Draw(Main.spriteBatch, gt);
                             }
-                            GameTime gt = new GameTime();
-                            AmmoRecharger.Update(gt);
-                            if (AmmoRecharger?.CurrentState != null)
-                                AmmoRecharger.Draw(Main.spriteBatch, gt);
-                        }
-                        else
-                        {
-                            AmmoRecharger.SetState(null);
+                            else
+                            {
+                                (AmmoRecharger.CurrentState as AmmoRechargerUI).SetRechargerSlot(-1);
+                            }
                         }
                         return true;
                     },

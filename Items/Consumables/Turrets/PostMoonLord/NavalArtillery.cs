@@ -109,6 +109,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 4, 15);
                 Main.projectile[proj].timeLeft = 3;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
                 return [proj];
             }
             return [];

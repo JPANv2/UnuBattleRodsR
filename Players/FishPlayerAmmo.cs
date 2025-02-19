@@ -10,6 +10,8 @@ using UnuBattleRodsR.Items.Consumables.Discardables;
 using UnuBattleRodsR.Items.Consumables.Turrets;
 using System.IO;
 using UnuBattleRodsR.Buffs.RodAmmo;
+using Microsoft.Build.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace UnuBattleRodsR.Players
 {
@@ -63,15 +65,15 @@ namespace UnuBattleRodsR.Players
                     case AmmoMode.Old:
                         return gatherAmmosFromAmmoSlots(Player, typeof(BasePoweredBait));
                     case AmmoMode.DedicatedFirst:
-                        var g = gatherAmmosFromDedicatedSlots(DedicatedBaits, typeof(BasePoweredBait));
+                        var g = gatherAmmosFromDedicatedSlots(DedicatedBaits, NumberOfBaits, typeof(BasePoweredBait));
                         g.AddRange(gatherAmmosFromAmmoSlots(Player, typeof(BasePoweredBait)));
                         return g;
                     case AmmoMode.DedicatedOnly:
-                        return gatherAmmosFromDedicatedSlots(DedicatedBaits, typeof(BasePoweredBait));
+                        return gatherAmmosFromDedicatedSlots(DedicatedBaits, NumberOfBaits, typeof(BasePoweredBait));
                     case AmmoMode.AmmoFirst:
                     default:
                         var g2 = gatherAmmosFromAmmoSlots(Player, typeof(BasePoweredBait));
-                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedBaits, typeof(BasePoweredBait)));
+                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedBaits, NumberOfBaits-g2.Count, typeof(BasePoweredBait)));
                         return g2;
                 }
             }
@@ -110,15 +112,15 @@ namespace UnuBattleRodsR.Players
                     case AmmoMode.Old:
                         return gatherAmmosFromAmmoSlots(Player, typeof(BaseDiscardable));
                     case AmmoMode.DedicatedFirst:
-                        var g = gatherAmmosFromDedicatedSlots(DedicatedDiscardables, typeof(BaseDiscardable));
+                        var g = gatherAmmosFromDedicatedSlots(DedicatedDiscardables, NumberOfDiscardables, typeof(BaseDiscardable));
                         g.AddRange(gatherAmmosFromAmmoSlots(Player, typeof(BaseDiscardable)));
                         return g;
                     case AmmoMode.DedicatedOnly:
-                        return gatherAmmosFromDedicatedSlots(DedicatedDiscardables, typeof(BaseDiscardable));
+                        return gatherAmmosFromDedicatedSlots(DedicatedDiscardables, NumberOfDiscardables, typeof(BaseDiscardable));
                     case AmmoMode.AmmoFirst:
                     default:
                         var g2 = gatherAmmosFromAmmoSlots(Player, typeof(BaseDiscardable));
-                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedDiscardables, typeof(BaseDiscardable)));
+                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedDiscardables, NumberOfDiscardables-g2.Count, typeof(BaseDiscardable)));
                         return g2;
                 }
             }
@@ -159,15 +161,15 @@ namespace UnuBattleRodsR.Players
                     case AmmoMode.Old:
                         return gatherAmmosFromAmmoSlots(Player, typeof(BaseTurret));
                     case AmmoMode.DedicatedFirst:
-                        var g = gatherAmmosFromDedicatedSlots(DedicatedTurrets, typeof(BaseTurret));
+                        var g = gatherAmmosFromDedicatedSlots(DedicatedTurrets, NumberOfTurrets, typeof(BaseTurret));
                         g.AddRange(gatherAmmosFromAmmoSlots(Player, typeof(BaseTurret)));
                         return g;
                     case AmmoMode.DedicatedOnly:
-                        return gatherAmmosFromDedicatedSlots(DedicatedTurrets, typeof(BaseTurret));
+                        return gatherAmmosFromDedicatedSlots(DedicatedTurrets, NumberOfTurrets, typeof(BaseTurret));
                     case AmmoMode.AmmoFirst:
                     default:
                         var g2 = gatherAmmosFromAmmoSlots(Player, typeof(BaseTurret));
-                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedTurrets, typeof(BaseTurret)));
+                        g2.AddRange(gatherAmmosFromDedicatedSlots(DedicatedTurrets, NumberOfTurrets - g2.Count, typeof(BaseTurret)));
                         return g2;
                 }
             }
@@ -236,10 +238,10 @@ namespace UnuBattleRodsR.Players
         /// <param name="p">the player to check</param>
         /// <param name="t">a list of Types to check against, empty accepts any item, otherwise the object needs to be assignable to this type (inherites from any t)</param>
         /// <returns></returns>
-        private List<(Item, int)> gatherAmmosFromDedicatedSlots(Item[] db, params Type[] t)
+        private List<(Item, int)> gatherAmmosFromDedicatedSlots(Item[] db,int maxNumber, params Type[] t)
         {
             List<(Item, int)> ans = new List<(Item, int)>();
-            for (int i = 0; i < db.Length; i++)
+            for (int i = 0; i < db.Length && i < maxNumber; i++)
             {
                 if (db[i] == null)
                 {
@@ -462,18 +464,35 @@ namespace UnuBattleRodsR.Players
                     {
                         if (PlayerLoader.CanConsumeAmmo(Player, baits[i].Item1, baits[i].Item2 < 1000 ? Player.inventory[baits[i].Item2] : DedicatedBaits[baits[i].Item2 - 1000]))
                         {
+
                             if (baits[i].Item2 < 1000)
+                            {
                                 Player.inventory[baits[i].Item2].stack--;
+                                if(Player.inventory[baits[i].Item2].stack <= 0)
+                                    Player.inventory[baits[i].Item2].SetDefaults(0);
+                            }
                             else
+                            {
                                 DedicatedBaits[baits[i].Item2 - 1000].stack--;
+                                if (DedicatedBaits[baits[i].Item2 - 1000].stack <= 0)
+                                    DedicatedBaits[baits[i].Item2 - 1000].SetDefaults(0);
+                            }
                         }
                     }
                     else if (consumeBait.Value)
                     {
                         if (baits[i].Item2 < 1000)
+                        {
                             Player.inventory[baits[i].Item2].stack--;
+                            if (Player.inventory[baits[i].Item2].stack <= 0)
+                                Player.inventory[baits[i].Item2].SetDefaults(0);
+                        }
                         else
+                        {
                             DedicatedBaits[baits[i].Item2 - 1000].stack--;
+                            if (DedicatedBaits[baits[i].Item2 - 1000].stack <= 0)
+                                DedicatedBaits[baits[i].Item2 - 1000].SetDefaults(0);
+                        }
                     }
                     else
                     {
@@ -561,7 +580,7 @@ namespace UnuBattleRodsR.Players
             {
                 ModPacket pk = Mod.GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);
-                pk.Write(Player.whoAmI + Main.npc.Length);
+                pk.Write((short)(Player.whoAmI + Main.npc.Length));
                 pk.Write(debuffsPresent.Count);
                 for (int i = 0; i < debuffsPresent.Count; i++)
                 {
@@ -606,6 +625,30 @@ namespace UnuBattleRodsR.Players
             public Dictionary<int, int> timer;
             public Dictionary<int, int> cycle;
             public int slot;
+            public bool countTowardsBuff = true;
+            List<Projectile> dependantProjectiles = new List<Projectile>();
+
+            public bool NoDependants()
+            {
+                if (dependantProjectiles.Count == 0)
+                    return true;
+
+                int cnt = dependantProjectiles.Count;
+                for (int i = 0; i < cnt; i++)
+                {
+                    if (!dependantProjectiles[i].active)
+                    {
+                        dependantProjectiles.RemoveAt(i);
+                        i--; cnt--;
+                    }
+                }
+                return cnt == 0;
+            }
+
+            public void AddDependantProjectile(Projectile proj)
+            {
+                dependantProjectiles.Add(proj);
+            }
         }
 
         public List<ActiveTurret> activeTurrets = new List<ActiveTurret>();
@@ -615,7 +658,8 @@ namespace UnuBattleRodsR.Players
                 int ans = 0;
                 for(int i = 0;i < activeTurrets.Count; i++)
                 {
-                    ans = Math.Max(ans, activeTurrets[i].duration);
+                    if (activeTurrets[i].countTowardsBuff)
+                        ans = Math.Max(ans, activeTurrets[i].duration);
                 }
                 return ans;
             } }
@@ -623,7 +667,7 @@ namespace UnuBattleRodsR.Players
         {
             for(int i = 0; i < activeTurrets.Count; i++)
             {
-                if (activeTurrets[i].baseTurret.Type == baseTurret.Type)
+                if (activeTurrets[i].baseTurret.Type == baseTurret.Type && activeTurrets[i].countTowardsBuff)
                 {
                     return activeTurrets[i];
                 }
@@ -641,12 +685,12 @@ namespace UnuBattleRodsR.Players
 
         public void resetTurrets()
         {
-            activeTurrets.Clear();
+            AnyTurrets(true);
         }
 
         public void initTurrets()
         {
-            resetTurrets();
+            //resetTurrets();
             int maxDur = -1;
             List<(Item, int)> turrets = TotalTurrets;
             for (int i = 0; i < NumberOfTurrets && i < turrets.Count; i++)
@@ -663,18 +707,42 @@ namespace UnuBattleRodsR.Players
                             if (PlayerLoader.CanConsumeAmmo(Player, turrets[i].Item1, turrets[i].Item2 < 1000 ? Player.inventory[turrets[i].Item2] : DedicatedTurrets[turrets[i].Item2 - 1000]))
                             {
                                 if (turrets[i].Item2 < 1000)
+                                {
                                     Player.inventory[turrets[i].Item2].stack--;
+                                    if (Player.inventory[turrets[i].Item2].stack <= 0)
+                                    {
+                                        Player.inventory[turrets[i].Item2].SetDefaults(0);
+                                    }
+                                }
                                 else
+                                {
                                     DedicatedTurrets[turrets[i].Item2 - 1000].stack--;
+                                    if (DedicatedTurrets[turrets[i].Item2 - 1000].stack <= 0)
+                                    {
+                                        DedicatedTurrets[turrets[i].Item2 - 1000].SetDefaults(0);
+                                    }
+                                }
                                 consumed = true;
                             }
                         }
                         else if (consumeBait.Value)
                         {
                             if (turrets[i].Item2 < 1000)
+                            {
                                 Player.inventory[turrets[i].Item2].stack--;
+                                if (Player.inventory[turrets[i].Item2].stack <= 0)
+                                {
+                                    Player.inventory[turrets[i].Item2].SetDefaults(0);
+                                }
+                            }
                             else
+                            {
                                 DedicatedTurrets[turrets[i].Item2 - 1000].stack--;
+                                if (DedicatedTurrets[turrets[i].Item2 - 1000].stack <= 0)
+                                {
+                                    DedicatedTurrets[turrets[i].Item2 - 1000].SetDefaults(0);
+                                }
+                            }
                             consumed = true;
                         }
                         else
@@ -688,7 +756,8 @@ namespace UnuBattleRodsR.Players
                             byBob = bp.UsesBobCycles,
                             duration = bp.DurationInTicks,
                             cycle = new Dictionary<int, int>(),
-                            timer = new Dictionary<int, int>()
+                            timer = new Dictionary<int, int>(),
+                            countTowardsBuff = true
                         });
                         maxDur = Math.Max(bp.DurationInTicks, maxDur);
                         if (consumed && bp.EmptyTurretType != 0)
@@ -707,18 +776,18 @@ namespace UnuBattleRodsR.Players
             }
         }
 
-        public bool decreaseTurretTime(int time = 1)
+        public bool decreaseTurretTime(int time = 1, bool bobbed = false)
         {
             bool removed = false;
             int cnt = this.activeTurrets.Count;
             for (int i = 0; i < cnt; i++)
             {
                 activeTurrets[i].duration -= time;
-                if (activeTurrets[i].duration <= 0)
+                if (activeTurrets[i].duration <= 0 && activeTurrets[i].NoDependants())
                 {
+                    removed = removed || activeTurrets[i].countTowardsBuff;
                     activeTurrets.RemoveAt(i);
                     i--; cnt--;
-                    removed = true;
                 }
             }
             for (int i = 0; i < activeTurrets.Count; i++)
@@ -728,23 +797,45 @@ namespace UnuBattleRodsR.Players
             return removed;
         }
 
-        public void updateTurrets(Bobber owner, int index)
+        public bool updateTurrets(Bobber owner, int index)
         {
+            bool removed = false;
             if (owner != null && owner.Projectile != null && owner.Projectile.active)
             {
-                for (int i = 0; i < this.activeTurrets.Count; i++)
+                int cnt = this.activeTurrets.Count;
+                for (int i = 0; i < cnt; i++)
                 {
-                    if (this.activeTurrets[i].byBob)
+                    if (activeTurrets[i].duration > 0)
                     {
-                        if (owner.bobbed)
+                        if (this.activeTurrets[i].byBob)
+                        {
+                            if (owner.bobbed)
+                            {
+                                if (!this.activeTurrets[i].timer.ContainsKey(index))
+                                    this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobCycles : 0;
+
+                                this.activeTurrets[i].timer[index]++;
+                                if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobCycles)
+                                {
+                                    activeTurrets[i].timer[index] -= this.activeTurrets[i].baseTurret.BobCycles;
+                                    if (this.activeTurrets[i].baseTurret.ShootProjectile(this.activeTurrets[i], owner.Projectile))
+                                    {
+                                        if (!this.activeTurrets[i].cycle.ContainsKey(index))
+                                            this.activeTurrets[i].cycle[index] = 0;
+                                        this.activeTurrets[i].cycle[index]++;
+                                    }
+                                }
+                            }
+                        }
+                        else
                         {
                             if (!this.activeTurrets[i].timer.ContainsKey(index))
-                                this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobCycles : 0; 
+                                this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobTime : 0;
 
                             this.activeTurrets[i].timer[index]++;
-                            if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobCycles)
+                            if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobTime)
                             {
-                                activeTurrets[i].timer[index] -= this.activeTurrets[i].baseTurret.BobCycles;
+                                activeTurrets[i].timer[index] -= this.activeTurrets[i].baseTurret.BobTime;
                                 if (this.activeTurrets[i].baseTurret.ShootProjectile(this.activeTurrets[i], owner.Projectile))
                                 {
                                     if (!this.activeTurrets[i].cycle.ContainsKey(index))
@@ -756,24 +847,59 @@ namespace UnuBattleRodsR.Players
                     }
                     else
                     {
-                        if (!this.activeTurrets[i].timer.ContainsKey(index))
-                            this.activeTurrets[i].timer[index] = this.activeTurrets[i].baseTurret.ShootFirst ? this.activeTurrets[i].baseTurret.BobTime : 0;
-
-                        this.activeTurrets[i].timer[index]++;
-                        if (activeTurrets[i].timer[index] >= this.activeTurrets[i].baseTurret.BobTime)
+                        if (activeTurrets[i].NoDependants())
                         {
-                            activeTurrets[i].timer[index] -= this.activeTurrets[i].baseTurret.BobTime;
-                            if (this.activeTurrets[i].baseTurret.ShootProjectile(this.activeTurrets[i], owner.Projectile))
-                            {
-                                if (!this.activeTurrets[i].cycle.ContainsKey(index))
-                                    this.activeTurrets[i].cycle[index] = 0;
-                                this.activeTurrets[i].cycle[index]++;
-                            }
+                            removed = removed || activeTurrets[i].countTowardsBuff;
+                            activeTurrets.RemoveAt(i);
+                            i--; cnt--;
                         }
                     }
                 }
             }
+            return removed;
         }
+
+        public int AddRodTurret(BaseTurret toAdd)
+        {
+            this.activeTurrets.Add(new ActiveTurret()
+            {
+                baseTurret = toAdd,
+                costAmmo = false,
+                byBob = false,
+                duration = toAdd.BobTime,
+                cycle = new Dictionary<int, int>(),
+                timer = new Dictionary<int, int>(),
+                countTowardsBuff = false
+            });
+            activeTurrets[activeTurrets.Count-1].slot = activeTurrets.Count -1;
+
+            return activeTurrets.Count - 1;
+        }
+
+        public bool AnyTurrets(bool removeAnyWithBuff = false)
+        {
+            int cnt = this.activeTurrets.Count;
+            for (int i = 0; i < cnt; i++)
+            {
+                if (this.activeTurrets[i] != null && this.activeTurrets[i].countTowardsBuff)
+                {
+                    if (removeAnyWithBuff)
+                    {
+                        this.activeTurrets.RemoveAt(i);
+                        i--; cnt--;
+                    }
+                }
+                else if (this.activeTurrets[i] != null && !this.activeTurrets[i].countTowardsBuff)
+                {
+                    if (!removeAnyWithBuff)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return cnt != 0;
+        }
+
         #endregion
 
         public int AmmoRecharger = -1;

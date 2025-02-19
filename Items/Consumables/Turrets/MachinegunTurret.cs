@@ -72,6 +72,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
                 (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, 5, 5);
                 Main.projectile[proj].timeLeft = 3;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
                 return new List<int> { proj };
             }
             return new List<int>();

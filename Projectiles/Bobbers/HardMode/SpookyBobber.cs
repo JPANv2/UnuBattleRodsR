@@ -39,7 +39,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnBats(Player player, Entity npc)
         {
-           int max = Main.rand.Next(1, 3);
+            if (Main.myPlayer != Projectile.owner)
+                return;
+            int max = Main.rand.Next(1, 3);
                 for (int i = 0; i < max; i++)
                 {
                     int proj = ProjectileID.Bat;
@@ -51,7 +53,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
                     int size = npc.width > npc.height ? npc.width : npc.height;
                     newPos.X += (float)(Math.Cos(angle) * size);
                     newPos.Y += (float)(Math.Sin(angle) * size);
-                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), newPos, new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 5, proj, dmg, kb);
+                    int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), newPos, new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 2, proj, dmg, kb);
                     if (p >= 0 && p < Main.projectile.Length)
                     {
                         Main.projectile[p].owner = player.whoAmI;

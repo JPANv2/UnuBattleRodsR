@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 
@@ -24,17 +25,17 @@ namespace UnuBattleRodsR.Players
             if (!fp.IsBattlerodHeld)
             {
                 displayColor = InactiveInfoTextColor;
-                return "No Battlerod!";
+                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoRod").Value;
             }
             if (fp.NumberOfSpawnedBobbers == 0)
             {
                 displayColor = InactiveInfoTextColor;
-                return "No Bobbers!";
+                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoBobber").Value;
             }
             if (fp.NumberOfStuckBobbers == 0)
             {
                 displayColor = InactiveInfoTextColor;
-                return "No Stuck Bobbers!";
+                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoStuckBobber").Value;
             }
             int proj = -1;
             float maxTension = -1;
@@ -55,10 +56,10 @@ namespace UnuBattleRodsR.Players
             if (proj < 0)
             {
                 displayColor = InactiveInfoTextColor;
-                return "No Stuck Bobbers!";
+                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoStuckBobber").Value;
             }
             displayColor = (Main.projectile[proj].ModProjectile as Bobber).lineColorWithTension(Color.White);
-            return "Tension = " + maxTension;
+            return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.Tension").WithFormatArgs(maxTension).Value;
         }
     }
 }

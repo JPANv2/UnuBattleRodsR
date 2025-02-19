@@ -10,6 +10,9 @@ namespace UnuBattleRodsR.Configs
         public FishSteakRecipesConfig()
         {
             fishRecipes = new Dictionary<ItemDefinition, int>();
+            fishRecipes[new ItemDefinition(ItemID.NeonTetra)] = 2;
+            fishRecipes[new ItemDefinition(ItemID.SpecularFish)] = 2;
+            fishRecipes[new ItemDefinition(ItemID.Flounder)] = 3;
             fishRecipes[new ItemDefinition(ItemID.Tuna)] = 6;
             fishRecipes[new ItemDefinition(ItemID.Salmon)] = 4;
             fishRecipes[new ItemDefinition(ItemID.Bass)] = 2;
@@ -22,6 +25,7 @@ namespace UnuBattleRodsR.Configs
             fishRecipesNotAuto = new List<ItemDefinition>();
 
             fishRecipesNotAuto.Add(new ItemDefinition(ItemID.GoldenCarp));
+            fishRecipesNotAuto.Add(new ItemDefinition(ItemID.SpecularFish));
         }
         public override ConfigScope Mode => ConfigScope.ServerSide;
 

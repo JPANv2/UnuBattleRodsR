@@ -36,9 +36,17 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
                         if (PlayerLoader.CanConsumeAmmo(p, p.HeldItem, discards[i].Item2 < 1000 ? p.inventory[discards[i].Item2] : fp.DedicatedDiscardables[discards[i].Item2 - 1000]))
                         {
                             if (discards[i].Item2 < 1000)
+                            {
                                 p.inventory[discards[i].Item2].stack--;
+                                if (p.inventory[discards[i].Item2].stack <= 0)
+                                    p.inventory[discards[i].Item2].SetDefaults(0);
+                            }
                             else
+                            {
                                 fp.DedicatedDiscardables[discards[i].Item2 - 1000].stack--;
+                                if (fp.DedicatedDiscardables[discards[i].Item2 - 1000].stack <= 0)
+                                    fp.DedicatedDiscardables[discards[i].Item2 - 1000].SetDefaults(0);
+                            }
 
                             consumed = true;
                         }
@@ -46,9 +54,17 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.BaseBobber
                     else if (consumeBait.Value)
                     {
                         if (discards[i].Item2 < 1000)
+                        {
                             p.inventory[discards[i].Item2].stack--;
+                            if (p.inventory[discards[i].Item2].stack <= 0)
+                                p.inventory[discards[i].Item2].SetDefaults(0);
+                        }
                         else
+                        {
                             fp.DedicatedDiscardables[discards[i].Item2 - 1000].stack--;
+                            if (fp.DedicatedDiscardables[discards[i].Item2 - 1000].stack <= 0)
+                                fp.DedicatedDiscardables[discards[i].Item2 - 1000].SetDefaults(0);
+                        }
                         consumed = true;
                     }
                     else

@@ -19,6 +19,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             {
                 switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
                 {
+                    case Difficulties.Experimental: 
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         return 180;
@@ -29,7 +30,22 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             }
         }
 
-        public override int BobSpeedInTicks => 40;
+        public override int BobSpeedInTicks
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Experimental:
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 40;
+                    case Difficulties.Battlerods:
+                    default:
+                        return 40;
+                }
+            }
+        }
         public override int BaseNumberOfBobbers => 6;
         public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 2;
@@ -81,7 +97,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.GetModPlayer<FishPlayer>().stardustCells < 2)
+            if (player.GetModPlayer<FishPlayer>().stardustCells < 2 && Main.myPlayer == player.whoAmI)
             {
                 int p = Projectile.NewProjectile(source, position + new Vector2(16, 16), velocity, ProjectileID.StardustCellMinion, damage, knockback, player.whoAmI);
                 if (p >= 0 && p < Main.projectile.Length)

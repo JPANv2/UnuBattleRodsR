@@ -28,6 +28,7 @@ namespace UnuBattleRodsR.Configs
     public enum Difficulties
     {
         Vanilla,
+        Experimental,
         Calamity,
         Battlerods
     }
@@ -44,7 +45,7 @@ namespace UnuBattleRodsR.Configs
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Label("Balance")]
-        [Tooltip("If this mod should be balanced around the Vanilla Terraria Expert Mode experience, or stick to the original (un)balanced Battlerods.")]
+        [Tooltip("If this mod should be balanced around the Vanilla Terraria Expert Mode experience, or stick to the original (un)balanced Battlerods. Changes to vanilla balance will be exposed first in Experimental mode")]
         [DefaultValue(Difficulties.Vanilla)]
         public Difficulties difficulty = Difficulties.Vanilla;
 
@@ -67,6 +68,22 @@ namespace UnuBattleRodsR.Configs
         [Tooltip("If the Fish Lady should sell Potions and Baits in a second shop. Defaults to false")]
         [DefaultValue(false)]
         public bool fishLadySellPotions = false;
+        
+        [Label("Frozen debuff works on bosses")]
+        [Tooltip("If the Frozen debuff from the Snowy Bobbers and Dreamweaver Spiders should apply to bosses as well. (Warning, effects may be a bit wonky)")]
+        [DefaultValue(false)]
+        public bool frozenOnBosses = false;
+
+        [Label("Bosses Break free from bobbers: When")]
+        [Tooltip("If Boss tagged npcs should try to break the bobber around every MaxHP/[this] health lost. 0 and 1 disable it.")]
+        [DefaultValue(0), Range(0,100)]
+        public int bossBobberBreakHealthDivider;
+
+        [Label("Bosses Break free from bobbers: How often")]
+        [Tooltip("If Boss tagged npcs try to break free, how often should they succeed. 1/[this] chance. 0 disables it, 1 is guaranteed break at the above value")]
+        [DefaultValue(0), Range(0, 100)]
+        public int bossBobberBreakChance;
+
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
         {
             return false;

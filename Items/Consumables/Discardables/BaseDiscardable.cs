@@ -34,7 +34,7 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables
 
         public virtual void onDiscard(ActiveDiscardable discardable, Player p, Bobber bobber, Entity target)
         {
-            if (DiscardableProjectileID != 0)
+            if (DiscardableProjectileID != 0 && Main.myPlayer == p.whoAmI)
             {
                 int projID = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), target.position, Vector2.Zero, DiscardableProjectileID, (int)Math.Round(bobber.shooter.DamagePerStuckOrTurretBobber * DamageMultiplier) + AddedDamage, 0, p.whoAmI);
 
@@ -83,7 +83,7 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables
 
         public override void onDiscard(ActiveDiscardable discardable, Player p, Bobber bobber, Entity target)
         {
-            if(DiscardableProjectileID != 0)
+            if(DiscardableProjectileID != 0 && Main.myPlayer == p.whoAmI)
                 shootProjectile(discardable, p, bobber, target);
             dropItem(discardable,p,bobber, target);
         }

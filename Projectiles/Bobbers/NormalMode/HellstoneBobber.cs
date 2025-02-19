@@ -36,12 +36,13 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.NormalMode
         {
 
             Lighting.AddLight(Projectile.Center, 1.0f, 1.0f, 0.0f);
-            
-           /* if (isStuck() || !(Projectile.wet || Projectile.lavaWet))
+            if (Main.myPlayer != Projectile.owner)
                 return;
-           */
+            /* if (isStuck() || !(Projectile.wet || Projectile.lavaWet))
+                 return;
+            */
 
-            if(CanActivateTurret())
+            if (CanActivateTurret())
             {
                 int cnt = 0;
                 int bobCnt = 0;

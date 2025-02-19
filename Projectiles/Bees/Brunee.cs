@@ -39,6 +39,8 @@ namespace UnuBattleRodsR.Projectiles.Bees
 
         public virtual void spawnTyphoon(Entity entity)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = 1;
             int proj = ProjectileID.Typhoon;
             float kb = 0;

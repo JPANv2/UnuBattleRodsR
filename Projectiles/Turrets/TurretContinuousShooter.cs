@@ -32,17 +32,19 @@ namespace UnuBattleRodsR.Projectiles.Turrets
             this.parentSlot = parentSlot;
             this.NumberOfShots = noOfShots;
             this.IntervalBetweenShotsInTicks = interval;
+
         }
 
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.Grenade);
             AIType = 0;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
         {
-            if (Projectile.timeLeft <= 2)
+            if (Projectile.timeLeft <= 2 && turret != null)
             {
                 List<int> lProj = turret.baseTurret.ShootRealProjectile(turret, parent);
                 if (lProj.Count > 0)

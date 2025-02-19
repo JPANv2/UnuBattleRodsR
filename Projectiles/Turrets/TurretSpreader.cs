@@ -28,6 +28,7 @@ namespace UnuBattleRodsR.Projectiles.Turrets
         {
             Projectile.CloneDefaults(ProjectileID.Grenade);            
             AIType = ProjectileID.Grenade;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI()
@@ -63,6 +64,8 @@ namespace UnuBattleRodsR.Projectiles.Turrets
                 Projectile.Kill();
                 return false;
             }
+            if (Main.myPlayer != Projectile.owner)
+                return false;
             if (level <= 1  && turret != null)
             {
                 if (turret.baseTurret.Repeater)
@@ -83,6 +86,7 @@ namespace UnuBattleRodsR.Projectiles.Turrets
                     (Main.projectile[proj].ModProjectile as TurretSpreader).level = level;
                     (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turret;
                     (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = turretSlot;
+                    turret.AddDependantProjectile(Main.projectile[proj]);
                 }
                 proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, new Vector2(-5, -5), Type, 0, 0f, Projectile.owner);
                 if (proj >= 0)
@@ -90,6 +94,7 @@ namespace UnuBattleRodsR.Projectiles.Turrets
                     (Main.projectile[proj].ModProjectile as TurretSpreader).level = level;
                     (Main.projectile[proj].ModProjectile as TurretSpreader).turret = turret;
                     (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = turretSlot;
+                    turret.AddDependantProjectile(Main.projectile[proj]);
                 }
                 Projectile.Kill();
             }
@@ -118,7 +123,8 @@ namespace UnuBattleRodsR.Projectiles.Turrets
             level = reader.ReadByte();
             turretSlot = reader.ReadByte();
             ReadAI(reader);
-            turret = Owner.activeTurrets[turretSlot];
+            if(Owner.Player.whoAmI == Main.myPlayer)
+                turret = Owner.activeTurrets[turretSlot];
 
         }
 

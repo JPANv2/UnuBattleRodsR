@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Projectiles.Bees;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UnuBattleRodsR.Players
 {
@@ -58,6 +60,9 @@ namespace UnuBattleRodsR.Players
 
         private void fireSomeBees(int proj )
         {
+            if (Main.myPlayer != Player.whoAmI)
+                return;
+
             int max = Main.rand.Next(1, 3);
             for (int i = 0; i < max; i++)
             {

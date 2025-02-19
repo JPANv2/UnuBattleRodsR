@@ -26,7 +26,12 @@ namespace UnuBattleRodsR.Items.Crates
         public override void RightClick(Player player)
         {
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.HiveWall, Main.rand.Next(5, 26));
+            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Hive, Main.rand.Next(5, 26));
+
+            if (NPC.downedQueenBee)
+            {
+                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BeeWax, Main.rand.Next(5, 21));
+            }
 
             if (Main.rand.Next(4) == 0)
             {

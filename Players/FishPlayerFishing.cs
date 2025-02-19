@@ -96,6 +96,14 @@ namespace UnuBattleRodsR.Players
 
         }
 
+        public override bool? CanConsumeBait(Item bait)
+        {
+            if(Player.ZoneBeach && bait.type == ModContent.ItemType<IceyWorm>())
+            {
+                return true;
+            }
+            return null;
+        }
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
@@ -197,7 +205,7 @@ namespace UnuBattleRodsR.Players
                     }
                 }
 
-                if ((Player.ZoneNormalUnderground || Player.ZoneUndergroundDesert) &&(maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8)))
+                if ((Player.ZoneNormalUnderground || Player.ZoneNormalCaverns|| Player.ZoneUndergroundDesert) &&((maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8))))
                 {
                     if (Main.rand.NextBool(3))
                     {
@@ -210,7 +218,7 @@ namespace UnuBattleRodsR.Players
                     AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
                     return;
                 }
-                if ((Player.ZoneDesert || Player.ZoneUndergroundDesert) && (maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8)))
+                if ((Player.ZoneDesert || Player.ZoneUndergroundDesert) && ((maxCrate && Main.rand.NextBool(4)) || Main.rand.NextBool(32) || (attempt.crate && Main.rand.NextBool(8))))
                 {
                     itemDrop = ModContent.ItemType<DyeCrate>();
                     AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);

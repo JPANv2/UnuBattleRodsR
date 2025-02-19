@@ -22,11 +22,22 @@ namespace UnuBattleRodsR.Players.AmmoUI
         private VanillaItemSlotWrapper[] turretSlots = new VanillaItemSlotWrapper[10];
 
         public BattleRod selectedBattlerod;
+
+        public bool initCompleted = false;
         public override void OnInitialize()
-        { 
-            FishPlayer cur = Main.player[Main.myPlayer].GetModPlayer<FishPlayer>();
-            if (cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar))
+        {
+            if (Main.LocalPlayer == null || !Main.LocalPlayer.TryGetModPlayer<FishPlayer>(out FishPlayer cur))
+            {
+                initCompleted = false;
                 return;
+            }
+                
+            
+            if (cur == null || !(cur.IsBattlerodHeld || cur.IsBattlerodOnHotbar))
+            {
+                initCompleted = false;
+                return;
+            }
 
             selectedBattlerod = cur.HeldBattlerod;
 
@@ -62,11 +73,12 @@ namespace UnuBattleRodsR.Players.AmmoUI
             int totalTurrets= cur.NumberOfTurrets;
             turretSlots = new VanillaItemSlotWrapper[cur.DedicatedTurrets.Length];
             initTurretSlot(ref cur.DedicatedTurrets, turretSlots, totalTurrets, startX, startY);
+            initCompleted = true;
         }
 
         public override void OnDeactivate()
         {
-            if(Main.player[Main.myPlayer] != null)
+            if(Main.player[Main.myPlayer] != null && initCompleted)
             {
                 syncSlots(Main.player[Main.myPlayer].GetModPlayer<FishPlayer>());
             }

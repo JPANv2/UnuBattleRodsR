@@ -154,6 +154,8 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 return false;
             List<int> lProj;
             bool shotSomething = false;
+            if (Main.myPlayer != p.whoAmI)
+                return true;
             if(Level == 1)
             {
                 if (Repeater)
@@ -205,6 +207,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
                 if(fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                     Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
             }
             proj = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), parent.Center, new Vector2(-5, -5), ModContent.ProjectileType<TurretSpreader>(), 0, 0, p.whoAmI);
             if (proj >= 0)
@@ -214,6 +217,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
                 (Main.projectile[proj].ModProjectile as TurretSpreader).turretSlot = (byte)turretData.slot;
                 if (fp.BaitDisperserRange > 0 && (BaitSpreader || fp.spreadBaitsOnTurret))
                     Main.projectile[proj].GetGlobalProjectile<GlobalBaitedProjectile>().baitSpreader = true;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
             }
             return true;
         }

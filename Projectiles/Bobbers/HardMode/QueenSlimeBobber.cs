@@ -72,7 +72,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
                         }
                     }
                 }
-                if (npc3 != null)
+                if (npc3 != null && Main.myPlayer == Projectile.owner)
                 {
                     //Vector2 vector = npc3.Center - Projectile.Center;
                     Vector2 spawnPos = Projectile.Center + new Vector2(npc3.Center.X < Projectile.Center.X? -npc.Size.X: +npc.Size.X, npc3.Center.Y < Projectile.Center.Y ? -npc.Size.Y : +npc.Size.Y);

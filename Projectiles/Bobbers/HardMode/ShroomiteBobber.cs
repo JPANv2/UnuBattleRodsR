@@ -44,6 +44,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnShrooms(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = Main.rand.Next(1, 3);
             for (int i = 0; i < max; i++)
             {

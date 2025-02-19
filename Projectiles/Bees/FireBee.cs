@@ -71,6 +71,8 @@ namespace UnuBattleRodsR.Projectiles.Bees
 
         public override void OnKill(int timeLeft)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int projectile = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT1Explosion, Projectile.damage, 10, Projectile.owner);
             //Main.projectile[projectile].Center = Projectile.Center;
             base.OnKill(timeLeft);

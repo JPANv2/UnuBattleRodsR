@@ -37,7 +37,7 @@ namespace UnuBattleRodsR.Items.Rechargers
             Recipe rr = Recipe.Create(this.Type, 1);
             rr.AddIngredient(ItemID.Barrel, 1);
             rr.AddRecipeGroup("UnuBattleRodsR:Tier0Bars", 6);
-            r.AddIngredient(ItemID.Chain, 2);
+            rr.AddIngredient(ItemID.Chain, 2);
             rr.AddTile(TileID.WorkBenches);
             rr.Register();
         }

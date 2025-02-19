@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Common;
+using UnuBattleRodsR.Items.Consumables;
 using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 
 namespace UnuBattleRodsR.Items.Accessories.Hooks
@@ -80,6 +81,15 @@ namespace UnuBattleRodsR.Items.Accessories.Hooks
                 }
             } 
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(ItemID.Hook, 1);
+            recipe.AddIngredient(this);
+            recipe.AddIngredient<Sandpaper>(1);
+            recipe.AddTile(TileID.Tables);
+            recipe.Register();  
         }
 
     }

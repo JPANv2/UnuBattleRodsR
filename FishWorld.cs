@@ -576,6 +576,13 @@ namespace UnuBattleRodsR
                  ModContent.ItemType<CoolerBattlerod>()
         });
             RecipeGroup.RegisterGroup("UnuBattleRodsR:CoolerBattlerods", group);
+            
+            group = new RecipeGroup(() => "Prismatic Battlerod", new int[]
+        {
+                 ModContent.ItemType<PrismaticBattlerod>(),
+                 ModContent.ItemType<ShimmeringBattlerod>(),
+        });
+            RecipeGroup.RegisterGroup("UnuBattleRodsR:PrismaticBattlerods", group);
         }
 
 
@@ -824,6 +831,15 @@ namespace UnuBattleRodsR
             {
                 key = "Angler Earring",
                 mainItem = ItemID.AnglerEarring,
+                accessoryTypes = new List<int>
+                {
+                }
+            });
+
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            {
+                key = "Lava Fishing Hook",
+                mainItem = ItemID.LavaFishingHook,
                 accessoryTypes = new List<int>
                 {
                 }

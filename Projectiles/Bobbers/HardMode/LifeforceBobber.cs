@@ -59,7 +59,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnSpheres(Player player, Entity npc)
         {
-                int proj = 254;
+            if (Main.myPlayer != Projectile.owner)
+                return;
+            int proj = 254;
                 float kb = 0f;
                 int dmg = Projectile.damage / 5;
 

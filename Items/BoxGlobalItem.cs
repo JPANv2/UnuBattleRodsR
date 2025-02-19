@@ -24,7 +24,7 @@ namespace UnuBattleRodsR.Items
 
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (item.fishingPole > 0 && (item.ModItem == null || !(item.ModItem is BattleRod)))
+            if (item.fishingPole > 0 && (item.ModItem == null || !(item.ModItem is BattleRod)) && Main.myPlayer == player.whoAmI)
             {
                 int lures = player.GetModPlayer<FishPlayer>().multilineFishing;
                 if (lures > 0)

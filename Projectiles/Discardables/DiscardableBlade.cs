@@ -57,7 +57,10 @@ namespace UnuBattleRodsR.Projectiles.Discardables
 
         public override bool effectAI()
         {
-            
+            if (npcIndex < 0)
+            {
+                return true;
+            }
             NPC targetN = npcIndex < Main.npc.Length ? Main.npc[npcIndex] : null;
             Player targetP = (targetN == null && (npcIndex - Main.npc.Length < Main.player.Length)) ? Main.player[npcIndex - Main.npc.Length] : null;
             if (Projectile.width == 100 || Projectile.height == 100)

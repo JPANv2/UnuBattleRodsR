@@ -27,7 +27,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
                     tornadoCounter++;
                 }
             }
-            if (tornadoCounter < 5)
+            if (tornadoCounter < 5 && Main.myPlayer == Projectile.owner)
             {
                 int p = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SandnadoFriendly, Projectile.damage / 2, 0f, Projectile.owner);
             }

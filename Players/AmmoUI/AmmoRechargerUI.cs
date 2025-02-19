@@ -28,15 +28,24 @@ namespace UnuBattleRodsR.Players.AmmoUI
         RechargingTurretInputSlot ammo;
         RechargedTurretSlot recharged;
 
+        int ticksSinceOpen = 0;
+        int slot = -1;
         public override void OnInitialize()
         {
-            FishPlayer fp = Main.LocalPlayer.GetModPlayer<FishPlayer>();
-            FishWorld world = ModContent.GetInstance<FishWorld>(); 
-            background = new TexturedDraggableUIPanel();
-            background.Left.Set(Main.screenWidth/2-50,0);
-            background.Top.Set(Main.screenHeight/2 -100, 0);
-            background.Width.Set(120,0f);
-            background.Height.Set(120, 0f);
+            if (Main.LocalPlayer == null || !Main.LocalPlayer.TryGetModPlayer<FishPlayer>(out FishPlayer fp))
+                return;
+
+            if (background != null)
+                background.RemoveAllChildren();
+            else {
+                background = new TexturedDraggableUIPanel();
+                background.Left.Set(Main.screenWidth / 2 - 50, 0);
+                background.Top.Set(Main.screenHeight / 2 - 100, 0);
+                background.Width.Set(120, 0f);
+                background.Height.Set(120, 0f);
+            }
+
+            FishWorld world = ModContent.GetInstance<FishWorld>();
             progressBar = new UIProgressBar() {
                 Top = new StyleDimension(2,0),
                 Left = new StyleDimension(5, 0f),
@@ -58,37 +67,74 @@ namespace UnuBattleRodsR.Players.AmmoUI
                 Top = new StyleDimension(18, 0),
                 Left = new StyleDimension(5, 0),
             };
+            turret.HaltMouseInput();
             ammo = new RechargingTurretInputSlot(ref world.ammoRechargers[fp.AmmoRecharger].toConsume, fp.AmmoRecharger, turret)
             {
                 Top = new StyleDimension(18,0),
                 Left = new StyleDimension(turret.Width.Pixels + 10,0),
-            }; 
+            };
+            ammo.HaltMouseInput();
             recharged = new RechargedTurretSlot(ref world.ammoRechargers[fp.AmmoRecharger].recharged, fp.AmmoRecharger)
             {
                 Top = new StyleDimension(20+ turret.Height.Pixels ,0),
                 Left = new StyleDimension(turret.Width.Pixels / 2 + 3.5f, 0),
-                
             };
+            recharged.HaltMouseInput();
             background.Append(turret);
             background.Append(ammo);
             background.Append(recharged);
             Append(background);
-            if(Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                world.ammoRechargers[fp.AmmoRecharger].updated = false;
-                ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
-                pk.Write((byte)UnuBattleRodsR.Message.GetAmmoRechargerFromServer);
-                pk.Write((short)Main.LocalPlayer.whoAmI);
-                pk.Write((byte)fp.AmmoRecharger);
-                pk.Send();
+            ticksSinceOpen = 0;
+        }
 
+        public void SetRechargerSlot(int slot)
+        {
+            if(this.slot != slot)
+            {
+                if (slot >= 0)
+                {
+                    this.Initialize();
+                    this.slot = slot;
+                }
+                else
+                {
+                    this.slot = -1;
+                    this.Deactivate();
+                }
             }
         }
 
+
         public override void Update(GameTime gameTime)
         {
+            if (this.slot == -1)
+            {
+                return;
+            }
             FishPlayer fp = Main.LocalPlayer.GetModPlayer<FishPlayer>();
             FishWorld world = ModContent.GetInstance<FishWorld>();
+            if (ticksSinceOpen == 0)
+            {
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    world.ammoRechargers[fp.AmmoRecharger].updated = false;
+                    ModPacket pk = ModContent.GetInstance<UnuBattleRodsR>().GetPacket();
+                    pk.Write((byte)UnuBattleRodsR.Message.GetAmmoRechargerFromServer);
+                    pk.Write((short)Main.myPlayer);
+                    pk.Write((byte)fp.AmmoRecharger);
+                    pk.Send();
+                }
+            }
+            if(ticksSinceOpen < 10)
+            {
+                ticksSinceOpen++;
+            }
+            else
+            {
+                ammo.ResumeMouseInput();
+                turret.ResumeMouseInput();
+                recharged.ResumeMouseInput();
+            }
             if (world.ammoRechargers[fp.AmmoRecharger] == null)
                 return;
             if (!world.ammoRechargers[fp.AmmoRecharger].updated)

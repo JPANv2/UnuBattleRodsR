@@ -52,34 +52,34 @@ Mods: {
 
 				Bobbers: {
 					None: One bobber, no more possible
-					Add1: Gains {0}% bobber
-					Add: Gains {0}% bobbers
-					Lose1: Losees {0}% bobber
-					Lose: Losees {0}% bobbers
+					Add1: Gains {0} bobber
+					Add: Gains {0} bobbers
+					Lose1: Losees {0} bobber
+					Lose: Losees {0} bobbers
 				}
 
 				Baits: {
 					None: Has no bait slots
-					Add1: Gains {0}% bait slot
-					Add: Gains {0}% bait slots
-					Lose1: Losees {0}% bait slot
-					Lose: Losees {0}% bait slots
+					Add1: Gains {0} bait slot
+					Add: Gains {0} bait slots
+					Lose1: Losees {0} bait slot
+					Lose: Losees {0} bait slots
 				}
 
 				Discardables: {
 					None: Has no discardable bobber slots
-					Add1: Gains {0}% discardable bobber slot
-					Add: Gains {0}% discardable bobber slots
-					Lose1: Losees {0}% discardable bobber slot
-					Lose: Losees {0}% discardable bobber slots
+					Add1: Gains {0} discardable bobber slot
+					Add: Gains {0} discardable bobber slots
+					Lose1: Losees {0} discardable bobber slot
+					Lose: Losees {0} discardable bobber slots
 				}
 
 				Turrets: {
 					None: Has no turret slots
-					Add1: Gains {0}% turret slot
-					Add: Gains {0}% turrets slots
-					Lose1: Losees {0}% turret slot
-					Lose: Losees {0}% turret slots
+					Add1: Gains {0} turret slot
+					Add: Gains {0} turrets slots
+					Lose1: Losees {0} turret slot
+					Lose: Losees {0} turret slots
 				}
 
 				Disperser: {
@@ -89,6 +89,13 @@ Mods: {
 					LoseNative: "{0}px decreased Bait Dispersal, but with included disperser!"
 				}
 			}
+		}
+
+		Info: {
+			NoRod: No Battlerod Held!
+			NoBobber: No Bobber Out!
+			NoStuckBobber: No Stuck Bobber!
+			Tension: Tension = {0}
 		}
 
 		TownNPCMood: {
@@ -284,7 +291,12 @@ Mods: {
 
 			CharmingWalrusfishBuff: {
 				DisplayName: Charming Walrusfish Buff
-				Description: Mods.UnuBattleRodsR.Buffs.CharmingWalrusfishBuff.Description
+				Description: A Charming Walrusfish follows you!
+			}
+
+			ImmunityDebuff: {
+				Description: ""
+				DisplayName: Immunity Debuff
 			}
 		}
 
@@ -2673,7 +2685,7 @@ Mods: {
 				Tooltip:
 					'''
 					A depleted turret, that must be recharged at a recharger
-					Requires a Queen Spider Staff to recharge, but does not consume it.
+					Requires a Queen Spider Staff or a Dreamweaver Battlerod to recharge, but does not consume them.
 					'''
 			}
 
@@ -3203,6 +3215,86 @@ Mods: {
 				DisplayName: Geode Crate
 				Tooltip: Right-click to open
 			}
+
+			TopazBattlerod: {
+				Tooltip: ""
+				DisplayName: Topaz Battlerod
+			}
+
+			ShimmeringBattlerod: {
+				Tooltip: Gems mixed together!
+				DisplayName: Shimmering Battlerod
+			}
+
+			SapphireBattlerod: {
+				Tooltip: ""
+				DisplayName: Sapphire Battlerod
+			}
+
+			RubyBattlerod: {
+				Tooltip: ""
+				DisplayName: Ruby Battlerod
+			}
+
+			PrismaticBattlerod: {
+				Tooltip: Gem Fusion!
+				DisplayName: Prismatic Battlerod
+			}
+
+			EmeraldBattlerod: {
+				Tooltip: ""
+				DisplayName: Emerald Battlerod
+			}
+
+			DiamondBattlerod: {
+				Tooltip: ""
+				DisplayName: Diamond Battlerod
+			}
+
+			AmethystBattlerod: {
+				Tooltip: ""
+				DisplayName: Amethyst Battlerod
+			}
+
+			AmberBattlerod: {
+				Tooltip: ""
+				DisplayName: Amber Battlerod
+			}
+
+			SpiderBattlerod: {
+				Tooltip: Spawns Spiders!
+				DisplayName: Spider Battlerod
+			}
+
+			HardlightBattlerod: {
+				Tooltip: Made from real Light!
+				DisplayName: Hardlight Battlerod
+			}
+
+			DreamweaverSpiderTurret: {
+				DisplayName: Dreamweaver Spider Turret
+				Tooltip:
+					'''
+					Allows any bobber to shoot when idle.
+					Shoots a spreader that every 1.5 seconds that, when exhausted, spawns:
+					- Dreamweaver Spiders!
+					Maximum 5 minutes duration
+					'''
+			}
+
+			DreamweaverBattlerod: {
+				DisplayName: Dreamweaver Battlerod
+				Tooltip: Spawns spiders that remove Buff Immunity from enemies and slow them down!
+			}
+
+			MorallyWrongBattlerod: {
+				DisplayName: Morally Wrong Battlerod
+				Tooltip:
+					'''
+					From your wildest Nightmares!
+					Super effective against Bosses!
+					'''
+			}
 		}
 
 		Prefixes: {
@@ -3333,6 +3425,21 @@ Mods: {
 			TurretRepeater.DisplayName: Turret Repeater
 			Brunee.DisplayName: Brunee
 			CharmingWalrusfishProjectile.DisplayName: Charming Walrusfish Projectile
+			TopazBobber.DisplayName: Topaz Bobber
+			ShimmeringBobber.DisplayName: Shimmering Bobber
+			SapphireBobber.DisplayName: Sapphire Bobber
+			RubyBobber.DisplayName: Ruby Bobber
+			PrismaticBobber.DisplayName: Prismatic Bobber
+			HardlightBobber.DisplayName: Hardlight Bobber
+			EmeraldBobber.DisplayName: Emerald Bobber
+			DiamondBobber.DisplayName: Diamond Bobber
+			AmethystBobber.DisplayName: Amethyst Bobber
+			AmberBobber.DisplayName: Amber Bobber
+			SpiderBobber.DisplayName: Spider Bobber
+			DreamweaverSpider.DisplayName: Dreamweaver Spider
+			FireBat.DisplayName: Fire Bat
+			DreamweaverBobber.DisplayName: Dreamweaver Bobber
+			MorallyWrongBobber.DisplayName: Morally Wrong Bobber
 		}
 
 		Configs: {
@@ -3446,6 +3553,7 @@ Mods: {
 			Difficulties: {
 				Tooltip: ""
 				Vanilla.Label: Vanilla
+				Experimental.Label: Experimental
 				Calamity.Label: Calamity
 				Battlerods.Label: Battlerods
 			}
@@ -3455,7 +3563,11 @@ Mods: {
 
 				difficulty: {
 					Label: Balance
-					Tooltip: If this mod should be balanced around the Vanilla Terraria Expert Mode experience, Calamity mod expert, or stick to the original (un)balanced Battlerods.
+					Tooltip:
+						'''
+						If this mod should be balanced around the Vanilla Terraria Expert Mode experience, Calamity mod expert, or stick to the original (un)balanced Battlerods.
+						Changes to vanilla balance will be exposed first in Experimental mode.
+						'''
 				}
 
 				tensionOnly: {
@@ -3482,6 +3594,21 @@ Mods: {
 					Label: Fish Lady Potion Shop
 					Tooltip: If the Fish Lady should sell Potions and Baits in a second shop. Defaults to false
 				}
+
+				frozenOnBosses: {
+					Label: Frozen debuff works on bosses
+					Tooltip: If the Frozen debuff from the Snowy Bobbers and Dreamweaver Spiders should apply to bosses as well. (Warning, effects may be a bit wonky)
+				}
+
+				bossBobberBreakHealthDivider: {
+					Label: Bosses Break free from bobbers: When
+					Tooltip: If Boss tagged npcs should try to break the bobber around every MaxHP/[this] health lost. 0 and 1 disable it.
+				}
+
+				bossBobberBreakChance: {
+					Label: Bosses Break free from bobbers: How often
+					Tooltip: If Boss tagged npcs try to break free, how often should they succeed. 1/[this] chance. 0 disables it, 1 is guaranteed break at the above value
+				}
 			}
 
 			TensionMode: {
@@ -3502,8 +3629,8 @@ Mods: {
 		}
 
 		Keybinds: {
-			"Gear Shift.DisplayName": Gear  Shift
-			"Turret Mode.DisplayName": Turret  Mode
+			"Gear Shift.DisplayName": Gear Shift (in Sticky Mode) or Explode Turrets (in Turret Mode)
+			"Turret Mode.DisplayName": Toggle Turret Mode (Not Sticky or Sticky Mode)
 		}
 
 		DamageClasses.FishingDamage.DisplayName: Fishing Damage

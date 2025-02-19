@@ -22,7 +22,7 @@ namespace UnuBattleRodsR.Items.Armors.PostMoonLord
             base.SetStaticDefaults();
             // DisplayName.SetDefault("Hat Containment Hat");
             // Tooltip.SetDefault("Increases Fishing Skill by 100\nIncreases Bob Speed and Fishing Damage by 25%");
-            ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
+            ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = false;
             Item.ResearchUnlockCount = 1;
         }
 

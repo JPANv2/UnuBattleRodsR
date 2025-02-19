@@ -43,6 +43,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void spawnBubbles(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = Main.rand.Next(1, 4);
             for (int i = 0; i < max; i++)
             {

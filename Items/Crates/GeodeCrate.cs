@@ -24,7 +24,7 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
-            int rolls = Main.rand.Next(4);
+            int rolls = Main.rand.Next(1,4);
             for (int i = 0; i < rolls; i++)
             {
                 switch (Main.rand.Next(6))

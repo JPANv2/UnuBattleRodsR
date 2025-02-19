@@ -63,7 +63,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
 
         private void spawnBeetles(Player player, Entity npc)
         {
-           int max = Main.rand.Next(6, 12);
+            if (Main.myPlayer != Projectile.owner)
+                return;
+            int max = Main.rand.Next(6, 12);
             for (int i = 0; i < max; i++)
             {
                 int proj = ModContent.ProjectileType<BlazeBeetleProjectile>();

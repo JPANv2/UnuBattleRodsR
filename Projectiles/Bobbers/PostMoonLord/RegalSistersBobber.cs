@@ -51,6 +51,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
 
         private void spawnSlimes(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = Main.rand.Next(2, 7);
             List<int> npcs = new List<int>();
             if (npc is NPC)
@@ -93,6 +95,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
 
         private void spawnProj(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             int max = Main.rand.Next(3, 9);
             for (int i = 0; i < max; i++)
             {

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Players;
@@ -18,6 +20,18 @@ namespace UnuBattleRodsR.Projectiles.Discardables
     {
         public int npcIndex = -1;
         public int trueDamage = 0;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write((short)npcIndex);
+            writer.Write(trueDamage);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npcIndex = reader.ReadInt16();
+            trueDamage = reader.ReadInt32();
+        }
 
         public override bool PreAI()
         {
@@ -66,6 +80,8 @@ namespace UnuBattleRodsR.Projectiles.Discardables
 
         public static void createAreaDamage(Projectile proj, float range, bool applyfishingDamage = true, bool explosive = false)
         {
+            if (Main.myPlayer != proj.owner)
+                return;
             int trueDamage = proj.damage;
             if (applyfishingDamage)
             {
@@ -75,7 +91,7 @@ namespace UnuBattleRodsR.Projectiles.Discardables
 
             if (ModContent.GetInstance<UnuServerConfig>().explosivesDamageEveryone && explosive)
             {
-                trueDamage *= 2;
+                //trueDamage *= 2;
                 //Bobber b = new WoodenBobber();
                 Rectangle rangeHitbox = new Rectangle((int)(proj.position.X - (proj.width / 2 + range / 2)), (int)(proj.position.Y - (proj.height / 2 + range / 2)), (int)(proj.width + range), (int)(proj.height + range));
                 for (int i = 0; i < 200; i++) //Main.npc.Length
@@ -87,6 +103,11 @@ namespace UnuBattleRodsR.Projectiles.Discardables
                             Damage = trueDamage
                         };
                         Main.npc[i].StrikeNPC(info);
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            NetMessage.SendStrikeNPC(Main.npc[i],info, Main.LocalPlayer.whoAmI);
+                        }
+                        
                     }
                 }
                 for (int i = 0; i < Main.player.Length; i++)
@@ -111,7 +132,11 @@ namespace UnuBattleRodsR.Projectiles.Discardables
                             {
                                 Damage = trueDamage
                             };
-                            Main.npc[i].StrikeNPC(info);
+                            Main.npc[i].StrikeNPC(info); 
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
+                            {
+                                NetMessage.SendStrikeNPC(Main.npc[i], info, Main.LocalPlayer.whoAmI);
+                            }
                         }
                     
                     }

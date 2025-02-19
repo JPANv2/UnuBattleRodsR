@@ -67,6 +67,10 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.PostMoonLord
                                         HitDirection = npc.Center.X < Projectile.Center.X ? -1 : 1,
                                     };
                                     npc.StrikeNPC(info);
+                                    if (Main.netMode != 0)
+                                    {
+                                        NetMessage.SendStrikeNPC(npc, info);
+                                    }
                                 }
                             }
                             else

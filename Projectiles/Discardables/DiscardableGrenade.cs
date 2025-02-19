@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 
 namespace UnuBattleRodsR.Projectiles.Discardables
@@ -17,10 +18,17 @@ namespace UnuBattleRodsR.Projectiles.Discardables
             AIType = ProjectileID.Grenade;
         }
 
+        public override bool effectAI()
+        {
+            return true;
+        }
+
         public override bool PreKill(int timeLeft)
         {
+          
             createAreaDamage(this.Projectile, 32, true, true);
             this.Projectile.type = ProjectileID.Grenade;
+
             return true;
         }
     }

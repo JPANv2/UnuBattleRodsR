@@ -46,6 +46,10 @@ namespace UnuBattleRodsR
         {
             int i = reader.ReadByte();
             bool result = false;
+            /*if (UnuBattleRodsR.DEBUG)
+            {
+                Logger.Info("Received " + ((Message)i).ToString());
+            }*/
             try
             {
                 switch((Message)i)
@@ -126,7 +130,7 @@ namespace UnuBattleRodsR
                     pk.Write((byte)UnuBattleRodsR.Message.SyncPlayerKeyPresses);
                     pk.Write((short)who);
                     pk.Write((sbyte)gear);
-                    pk.Write(turretMode);
+                    pk.Write((byte)turretMode);
                     pk.Send();
                 }
             }
@@ -189,7 +193,7 @@ namespace UnuBattleRodsR
                     notDead = false;
                 }
             }
-            else if (updatee > 0 && updatee < Main.npc.Length)
+            else if (updatee >= 0 && updatee < Main.npc.Length)
             {
                 NPC npc = Main.npc[updatee];
                 if (npc.active)
@@ -207,7 +211,7 @@ namespace UnuBattleRodsR
             {
                 ModPacket pk = GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);
-                pk.Write(updatee);
+                pk.Write((short)updatee);
                 pk.Write(count);
                 for (int k = 0; k < count; k++)
                 {

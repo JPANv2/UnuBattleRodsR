@@ -37,6 +37,8 @@ namespace UnuBattleRodsR.Items.Consumables.Discardables.HardMode
 
         public override void onDiscard(ActiveDiscardable discardable, Player p, Bobber bobber, Entity target)
         {
+            if (Main.myPlayer != p.whoAmI)
+                return;
             int projID = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), target.position, new Vector2(-1, 0), ProjectileID.DemonScythe, (int)(bobber.shooter.DamagePerStuckOrTurretBobber * 0.75f), 0, p.whoAmI);
             int projID2 = Projectile.NewProjectile(new EntitySource_ItemUse_WithAmmo(p, p.HeldItem, Type), target.position, new Vector2(1, 0), ProjectileID.DemonScythe, (int)(bobber.shooter.DamagePerStuckOrTurretBobber * 0.75f), 0, p.whoAmI);
             if (projID >= 0 && projID < Main.projectile.Length)

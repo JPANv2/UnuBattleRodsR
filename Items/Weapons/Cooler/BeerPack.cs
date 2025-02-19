@@ -61,6 +61,9 @@ namespace UnuBattleRodsR.Items.Weapons.Cooler
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if(Main.myPlayer != player.whoAmI)
+                return base.Shoot(player, source, position, velocity, type, damage, knockback);
+
             if (Main.rand.Next(8) == 0)
             {
                 Vector2 speed = new Vector2(velocity.X, velocity.Y);

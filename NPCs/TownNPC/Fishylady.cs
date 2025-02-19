@@ -358,15 +358,15 @@ namespace UnuBattleRodsR.NPCs.TownNPC
               );
             shop.Add(
              new NPCShop.Entry(
-                 new Item(ModContent.ItemType<VenomApprenticeBait>()), Condition.NotDownedQueenBee)
+                 new Item(ModContent.ItemType<VenomApprenticeBait>()), Condition.DownedQueenBee, Condition.PreHardmode)
              );
             shop.Add(
                 new NPCShop.Entry(
-                  new Item(ModContent.ItemType<VenomBait>()), Condition.DownedQueenBee, Condition.NotDownedPlantera)
+                  new Item(ModContent.ItemType<VenomBait>()), Condition.DownedQueenBee, Condition.Hardmode, Condition.NotDownedPlantera)
               );
             shop.Add(
                 new NPCShop.Entry(
-                  new Item(ModContent.ItemType<VenomMasterBait>()), Condition.DownedPlantera)
+                  new Item(ModContent.ItemType<VenomMasterBait>()), Condition.DownedQueenBee, Condition.DownedPlantera)
             );
             shop.Add(
                 new NPCShop.Entry(

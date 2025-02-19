@@ -14,6 +14,7 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
             {
                 switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
                 {
+                    case Difficulties.Experimental: 
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         return 76;
@@ -23,7 +24,22 @@ namespace UnuBattleRodsR.Items.Rods.HardMode
                 }
             }
         }
-        public override int BobSpeedInTicks => 15;
+        public override int BobSpeedInTicks
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Experimental:
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 15;
+                    case Difficulties.Battlerods:
+                    default:
+                        return 15;
+                }
+            }
+        }
         public override int BaseNumberOfBobbers => 3;
         public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 2;

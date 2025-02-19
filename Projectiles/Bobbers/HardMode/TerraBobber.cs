@@ -44,7 +44,9 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
 
         private void shootTerra(Player player, Entity npc)
         {
-           // int max = Main.rand.Next(1, 3);
+            if (Main.myPlayer != Projectile.owner)
+                return;
+            // int max = Main.rand.Next(1, 3);
             int proj = ProjectileID.TerraBeam;
             float kb = 8.0f;
             int dmg = Projectile.damage;

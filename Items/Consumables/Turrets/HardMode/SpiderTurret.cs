@@ -12,6 +12,7 @@ using UnuBattleRodsR.Projectiles.Bobbers.BaseBobber;
 using static UnuBattleRodsR.Players.FishPlayer;
 using UnuBattleRodsR.Projectiles.Turrets;
 using Microsoft.Xna.Framework;
+using UnuBattleRodsR.Items.Rods.HardMode;
 
 namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 {
@@ -67,6 +68,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         }
         public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
+            if(parent == null) return new List<int>();
             FishPlayer fp = Main.player[parent.owner].GetModPlayer<FishPlayer>();
             int trueProj = RealProjectileID;
             int trueDamage = Math.Max(1, (int)Math.Round(fp.HeldBattlerod.DamagePerStuckOrTurretBobber*0.75 / (fp.HeldBattlerod.BobSpeedInTicks / 60f)));
@@ -87,6 +89,7 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
+                Main.projectile[proj].timeLeft = 300;
                 return [proj];
             }
             return [];
@@ -98,8 +101,9 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             if (proj >= 0)
             {
                 AddIgnoreToProjectile(parent, Main.projectile[proj]);
-                (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, Main.rand.Next(2,4), 5);
+                (Main.projectile[proj].ModProjectile as TurretRepeater).SetupRepeater(turretData, turretData.slot, parent, parent.whoAmI, Main.rand.Next(1,4), 5);
                 Main.projectile[proj].timeLeft = 3;
+                turretData.AddDependantProjectile(Main.projectile[proj]);
                 return [proj];
             }
             return [];
@@ -114,5 +118,17 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             rr.Register();
         }
     }
-   
+    public class DreamweaverSpiderTurret : SpiderTurret
+    {
+        public override int RealProjectileID => ModContent.ProjectileType<DreamweaverSpider>();
+
+        public override void AddRecipes()
+        {
+            RechargeRecipe rr = RechargeRecipe.Create(this.Item.type, 1);
+            rr.Recharges(EmptyTurretType, 1);
+            rr.Consumes(ModContent.ItemType<DreamweaverBattlerod>(), 0);
+            rr.WithDurationInTicks(7200);
+            rr.Register();
+        }
+    }
 }

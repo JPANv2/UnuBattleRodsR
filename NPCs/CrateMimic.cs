@@ -141,24 +141,7 @@ namespace UnuBattleRodsR.NPCs
             }
             else if(Main.rand.Next(5) == 0)
             {
-                if (!Main.hardMode)
-                {
-                    switch (Main.rand.Next(3))
-                    {
-                        case 1:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.HighTestFishingLine);
-                            break;
-                        case 2:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.AnglerEarring);
-                            break;
-                        default:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.TackleBox);
-                            break;
-                    }
-                    
-                }
-                else
-                {
+                
                     switch (Main.rand.Next(6))
                     {
                         case 1:
@@ -180,7 +163,7 @@ namespace UnuBattleRodsR.NPCs
                             Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.TackleBox);
                             break;
                     }
-                }
+                
 
             }
             else

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Configs;
 using UnuBattleRodsR.Items.Accessories.Emblems;
 using UnuBattleRodsR.Items.Rods.HardMode;
 using UnuBattleRodsR.Items.Rods.NormalMode;
@@ -49,16 +50,55 @@ namespace UnuBattleRodsR.NPCs
         public int isHooked = 0;
         public int isSealed = 0;
 
+        public bool ignoreBuffImmunity = false;
+
         public Vector2 newSpeed = Vector2.Zero;
         public Vector2 newCenter = new Vector2(-10000,-10000);
 
         public List<int> debuffsPresent = new List<int>();
+
+        public int lifeLostSoFar = 0;
 
         public override void ResetEffects(NPC npc)
         {
             base.ResetEffects(npc);
             frostFire = false;
             solarFire = false;
+            ignoreBuffImmunity = false;
+        }
+
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
+            if (npc.boss) {
+                int divisor = ModContent.GetInstance<UnuDificultyConfig>().bossBobberBreakHealthDivider;
+                int chance = ModContent.GetInstance<UnuDificultyConfig>().bossBobberBreakChance;
+                if (divisor > 1 && chance > 0)
+                {
+                    int healthToCheck = npc.lifeMax / divisor;
+                    lifeLostSoFar += hit.Damage;
+                    if (lifeLostSoFar >= healthToCheck)
+                    {
+                        lifeLostSoFar = 0;
+                        for(int i = 0; i < Main.projectile.Length; i++)
+                        {
+                            if (Main.projectile[i].active && Main.projectile[i].ModProjectile is Bobber)
+                            {
+                                Bobber b = Main.projectile[i].ModProjectile as Bobber;
+                                if(b != null && b.npcIndex == npc.whoAmI)
+                                {
+                                   if(chance == 1 || Main.rand.NextBool(chance))
+                                    {
+                                        b.breakFree();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            base.HitEffect(npc, hit);
         }
 
         public override void PostAI(NPC npc)
@@ -337,7 +377,7 @@ namespace UnuBattleRodsR.NPCs
 
         public void UpdateDebuffsByID(NPC npc, ref int id, int time, int buffSlot = -1)
         {
-            if (npc.buffImmune[id])
+            if (npc.buffImmune[id] && !ignoreBuffImmunity)
                 return;
             ModBuff bf = BuffLoader.GetBuff(id);
             if(bf != null)
@@ -454,7 +494,7 @@ namespace UnuBattleRodsR.NPCs
             {
                 ModPacket pk = Mod.GetPacket();
                 pk.Write((byte)UnuBattleRodsR.Message.DebuffUpdate);
-                pk.Write(npc.whoAmI);
+                pk.Write((short)npc.whoAmI);
                 pk.Write(debuffsPresent.Count);
                 for (int i = 0; i < debuffsPresent.Count; i++)
                 {

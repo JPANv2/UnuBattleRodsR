@@ -36,12 +36,16 @@ namespace UnuBattleRodsR.Buffs.RodAmmo
             {
                 for (int i = 0; i < pl.activeTurrets.Count; i++)
                 {
-                    if (pl.activeTurrets[i].duration > 3600)
+                    if (pl.activeTurrets[i].countTowardsBuff)
                     {
-                        tip += Lang.GetItemName(pl.activeTurrets[i].baseTurret.Type) + " : " + (pl.activeTurrets[i].duration / 3600) + "m \n";
-                    }
-                    else { 
-                        tip += Lang.GetItemName(pl.activeTurrets[i].baseTurret.Type) + " : " + (pl.activeTurrets[i].duration / 60) + "s \n";
+                        if (pl.activeTurrets[i].duration > 3600)
+                        {
+                            tip += Lang.GetItemName(pl.activeTurrets[i].baseTurret.Type) + " : " + (pl.activeTurrets[i].duration / 3600) + "m \n";
+                        }
+                        else
+                        {
+                            tip += Lang.GetItemName(pl.activeTurrets[i].baseTurret.Type) + " : " + (pl.activeTurrets[i].duration / 60) + "s \n";
+                        }
                     }
                 }
             }

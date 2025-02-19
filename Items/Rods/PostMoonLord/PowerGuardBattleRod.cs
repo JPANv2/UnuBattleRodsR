@@ -21,6 +21,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             {
                 switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
                 {
+                    case Difficulties.Experimental: 
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         return 300;
@@ -30,12 +31,27 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
                 }
             }
         }
-        public override int BobSpeedInTicks => 40;
+        public override int BobSpeedInTicks
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Experimental:
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 40;
+                    case Difficulties.Battlerods:
+                    default:
+                        return 40;
+                }
+            }
+        }
         public override int BaseNumberOfBobbers => 4;
         public override int BaseNumberOfBaits => 2;
         public override int BaseNumberOfDiscardables => 2;
         public override int BaseNumberOfTurrets => 4;
-        public override bool IsCrowdControlRod => false;
+        public override bool IsCrowdControlRod => true;
         public override bool IsCrowdControlOnlyInTurretMode => false;
         public override bool CanReel => false;
         public override float BaseReelingSpeed => 32.0f / 60f;

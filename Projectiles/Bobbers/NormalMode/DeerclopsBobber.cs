@@ -42,6 +42,8 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.NormalMode
 
         private void spawnHands(Player player, Entity npc)
         {
+            if (Main.myPlayer != Projectile.owner)
+                return;
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.UnitX*3, ProjectileID.InsanityShadowFriendly, Projectile.damage, 0, player.whoAmI);
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, -Vector2.UnitX*3, ProjectileID.InsanityShadowFriendly, Projectile.damage, 0, player.whoAmI);
 

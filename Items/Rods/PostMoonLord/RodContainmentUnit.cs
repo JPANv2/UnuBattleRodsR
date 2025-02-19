@@ -19,6 +19,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             {
                 switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
                 {
+                    case Difficulties.Experimental: 
                     case Difficulties.Vanilla:
                     case Difficulties.Calamity:
                         return 1000;
@@ -29,7 +30,22 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             }
         }
 
-        public override int BobSpeedInTicks => 10;
+        public override int BobSpeedInTicks
+        {
+            get
+            {
+                switch (ModContent.GetInstance<UnuDificultyConfig>().difficulty)
+                {
+                    case Difficulties.Experimental:
+                    case Difficulties.Vanilla:
+                    case Difficulties.Calamity:
+                        return 10;
+                    case Difficulties.Battlerods:
+                    default:
+                        return 10;
+                }
+            }
+        }
         public override int BaseNumberOfBobbers => 8;
         public override int BaseNumberOfBaits => 4;
         public override int BaseNumberOfDiscardables => 4;
@@ -74,17 +90,14 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe(1);
-            recipe.AddIngredient(ModContent.ItemType<SpookyBattlerod>());
-            recipe.AddIngredient(ModContent.ItemType<StarMixBattlerod>());
+            recipe.AddIngredient(ModContent.ItemType<MorallyWrongBattlerod>());
+            recipe.AddIngredient(ModContent.ItemType<HardlightBattlerod>());
             recipe.AddRecipeGroup("UnuBattleRodsR:CoolerBattlerods");
-            recipe.AddRecipeGroup("UnuBattleRodsR:EvilRods");
-            recipe.AddIngredient(ModContent.ItemType<DeerstruckBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<HardTriadBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<LifeforceBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<TerraBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<DragonMixBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<FractaliteBattlerod>());
-            recipe.AddIngredient(ModContent.ItemType<PowerGuardBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<RegalSistersBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<HeartOfMillions>());
             recipe.AddIngredient(ItemID.Cobweb, 5);

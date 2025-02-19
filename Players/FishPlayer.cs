@@ -23,6 +23,7 @@ using UnuBattleRodsR.Players.AmmoUI;
 using Terraria.ModLoader.IO;
 using UnuBattleRodsR.Buffs.RodAmmo;
 using System.IO;
+using UnuBattleRodsR.Tiles;
 
 namespace UnuBattleRodsR.Players
 {
@@ -266,7 +267,7 @@ namespace UnuBattleRodsR.Players
 
         public override void PreUpdate()
         {
-            if (Main.netMode != NetmodeID.Server) {
+            if (Main.netMode != NetmodeID.Server && Player.whoAmI == Main.myPlayer) {
                 if ((IsBattlerodHeld || IsBattlerodOnHotbar) && Main.playerInventory && Player.chest == -1)
                 {
                     if (IsBattlerodHeld)
@@ -295,19 +296,24 @@ namespace UnuBattleRodsR.Players
                     }
                     ammoUI.SetState(null);
                 }
-                if (AmmoRecharger >= 0 && Main.playerInventory && ModContent.GetInstance<FishWorld>().ammoRechargers[AmmoRecharger] != null)
+                if (AmmoRecharger >= 0 && Main.playerInventory) // && ModContent.GetInstance<FishWorld>().ammoRechargers[AmmoRecharger] != null)
                 {
                     UserInterface AmmoRecharger2 = ModContent.GetInstance<AmmoUISystem>().AmmoRecharger;
                     if (AmmoRecharger2.CurrentState == null)
                     {
                         AmmoRecharger2.SetState(new AmmoRechargerUI());
                     }
+                    (AmmoRecharger2.CurrentState as AmmoRechargerUI).SetRechargerSlot(AmmoRecharger);
                 }
                 else
                 {
                     AmmoRecharger = -1;
                     UserInterface AmmoRecharger2 = ModContent.GetInstance<AmmoUISystem>().AmmoRecharger;
-                    AmmoRecharger2.SetState(null);
+                    if (AmmoRecharger2.CurrentState != null)
+                    {
+                        (AmmoRecharger2.CurrentState as AmmoRechargerUI).SetRechargerSlot(-1);
+                    }
+                    
                 }
 
             }
@@ -651,14 +657,11 @@ namespace UnuBattleRodsR.Players
             }
             if (activeTurrets.Count > 0)
             {
-                if (Player.HasBuff<ActiveTurretBuff>())
+                if (AnyTurrets(!Player.HasBuff<ActiveTurretBuff>()))
                 {
                     if (NumberOfSpawnedBobbers > 0)
                     {
-                        if (decreaseTurretTime())
-                        {
-                            initTurrets();
-                        }
+                        bool newTurrets = false;
                         for (int i = 0; i < Main.projectile.Length; i++)
                         {
                             if (Main.projectile[i] != null && Main.projectile[i].active && Main.projectile[i].ModProjectile != null && Main.projectile[i].owner == Player.whoAmI)
@@ -666,9 +669,13 @@ namespace UnuBattleRodsR.Players
                                 if (Main.projectile[i].ModProjectile is Bobber)
                                 {
                                     Bobber b = Main.projectile[i].ModProjectile as Bobber;
-                                    updateTurrets(b, i);
+                                    newTurrets = newTurrets || updateTurrets(b, i);
                                 }
                             }
+                        }
+                        if (newTurrets || decreaseTurretTime())
+                        {
+                            initTurrets();
                         }
                     }
                 }
@@ -692,7 +699,7 @@ namespace UnuBattleRodsR.Players
         {
             //checkForMimicLikeSpawns();
             resetBaits();
-            resetTurretsIfBuffOver();
+            
 
 
             if (newCenter.X > -10000 && newCenter.Y > -10000 && !IncreaseTension)
@@ -788,8 +795,10 @@ namespace UnuBattleRodsR.Players
         SoundStyle gear4 = new SoundStyle("UnuBattleRodsR/Items/Accessories/Reels/Gear4");
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
+            if (Main.myPlayer != Player.whoAmI)
+                return;
             bool send = false;
-            if(Player.HeldItem != null && Player.HeldItem.ModItem as BattleRod != null)
+            if(IsBattlerodHeld)
             {
                 if (triggersSet.Left && triggersSet.Right)
                 {
@@ -811,17 +820,22 @@ namespace UnuBattleRodsR.Players
                         Player.maxFallSpeed *= 2.2f;
                     }*/
                     IncreaseTension = true;
+                    send = true;
                 }
                 else
                 {
+                    if(IncreaseTension)
+                        send = true;
                     IncreaseTension = false;
                 }
             }
             else
             {
+                if (IncreaseTension)
+                    send = true;
                 IncreaseTension = false;
             }
-            if (FishWorld.GearShift.JustPressed)
+            if (IsBattlerodHeld && FishWorld.GearShift.JustPressed)
             {
                 var oldGear = currentReelGear;
                 if (TurretMode)
@@ -857,19 +871,23 @@ namespace UnuBattleRodsR.Players
                     PopupText.NewText(v, Player.Top + new Vector2(0, -16));
                     send = true;
                 }
-                if(oldGear < currentReelGear)
+                if (oldGear < currentReelGear)
                 {
                     SoundEngine.PlaySound(Main.rand.NextBool() ? gear1 : gear3);
-                }else if (oldGear >= currentReelGear)
+                }
+                else if (oldGear >= currentReelGear)
                 {
                     SoundEngine.PlaySound(Main.rand.NextBool() ? gear2 : gear4);
                 }
             }
             else
             {
+                if (explodeTurretOnCommand)
+                    send = true;
                 explodeTurretOnCommand = false;
+
             }
-            if(FishWorld.TurretMode.JustPressed)
+            if(IsBattlerodHeld && FishWorld.TurretMode.JustPressed)
             {
                 TurretMode = !TurretMode;
                 if(TurretMode)
@@ -902,7 +920,7 @@ namespace UnuBattleRodsR.Players
                 pk.Write((byte)UnuBattleRodsR.Message.SyncPlayerKeyPresses);
                 pk.Write((short)who);
                 pk.Write((sbyte)gear);
-                pk.Write(turretMode);
+                pk.Write((byte)turretMode);
                 pk.Send();
             }
         }
