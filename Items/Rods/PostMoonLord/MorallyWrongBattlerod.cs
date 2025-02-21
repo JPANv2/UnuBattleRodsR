@@ -111,7 +111,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             recipe.AddRecipeGroup("UnuBattleRodsR:EvilRods");
             recipe.AddIngredient(ModContent.ItemType<DeerstruckBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<DreamweaverBattlerod>());
-            //recipe.AddIngredient(ModContent.ItemType<SpiderBattlerod>());
+            recipe.AddIngredient(ModContent.ItemType<FractaliteBar>(),10);
             recipe.AddIngredient(ItemID.Cobweb, 5);
             recipe.AddTile(ModContent.TileType<BaitWorkshop>());
             recipe.Register();

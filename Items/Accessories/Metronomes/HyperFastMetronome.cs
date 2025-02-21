@@ -12,14 +12,8 @@ namespace UnuBattleRodsR.Items.Accessories.Metronomes
     public class HyperFastMetronome : Metronome
     {
 
-        protected override bool CloneNewInstances
-        {
-            get
-            {
-                return true;
-            }
-        }
-
+        public override float bobberDamage => -0.26f;
+        public override float bobberSpeed => 0.30f;
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Hyper Fast Metronome");
@@ -32,8 +26,6 @@ namespace UnuBattleRodsR.Items.Accessories.Metronomes
             base.SetDefaults();
             Item.value = Item.sellPrice(0,3,00,0);
             Item.rare = 6;
-            bobberDamage = -0.26f;
-            bobberSpeed = 0.30f;
         }
         public override void AddRecipes()
         {

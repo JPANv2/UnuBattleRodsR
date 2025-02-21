@@ -30,6 +30,10 @@ namespace UnuBattleRodsR.Items.Crates
 
         public override void RightClick(Player player)
         {
+            if (player.whoAmI != Main.myPlayer)
+            {
+                return;
+            }
             List<string> crateKeys = new List<string>();
             crateKeys.AddRange(player.GetModPlayer<FishPlayer>().fishedCrates.Keys);
             if(crateKeys.Count == 0 || (crateKeys.Count == 1 && crateKeys[0].Equals(this.FullName)))

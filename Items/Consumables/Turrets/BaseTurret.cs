@@ -24,10 +24,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
 {
     public abstract class BaseEmptyTurret : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            Item.ResearchUnlockCount = 5;
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -129,7 +133,6 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -138,6 +141,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets
             Item.value = Item.buyPrice(0, 1, 0, 0);
         }
 
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 5;
+            base.SetStaticDefaults();
+        }
 
         /// <summary>
         /// Processes the action of the turret when it reaches either the number of ticks in time or the bob cycle specified. Has access to the information stored by the player about the turret, and can do things with it such as finding out how many cycles it has

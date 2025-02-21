@@ -30,7 +30,10 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 2;
 
         public virtual int Damage => 16;
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             parent.TryGetOwner(out Player p);
@@ -48,10 +51,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptySpikeballTurretV1: BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
-            base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
+            base.SetDefaults();            
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -71,10 +77,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     {
         public override int RealProjectileID => ProjectileID.SpikyBall;
         public override int EmptyTurretType => ModContent.ItemType<EmptySpikeballTurretV1>();
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -96,10 +106,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int RealProjectileID => ProjectileID.SpikyBallTrap;
         public override int EmptyTurretType => ModContent.ItemType<EmptySpikeballTurretV1>();
         public override int Damage => 80;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -119,10 +132,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptySpikeballTurretV2 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -145,10 +161,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 3;
 
         public override int Damage => 32;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -171,10 +190,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int EmptyTurretType => ModContent.ItemType<EmptySpikeballTurretV2>();
         public override int Damage => 80;
         public override int Level => 3;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -194,10 +216,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptySpikeballTurretV3 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -220,10 +245,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 4;
 
         public override int Damage => 32;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -246,10 +275,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int EmptyTurretType => ModContent.ItemType<EmptySpikeballTurretV3>();
         public override int Damage => 160;
         public override int Level => 4;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;

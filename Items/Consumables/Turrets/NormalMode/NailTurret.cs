@@ -18,10 +18,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptyNailTurret : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -54,11 +57,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override bool Repeater => true;
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyNailTurret>();
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -140,10 +145,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyNailTurret>();
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;

@@ -6,36 +6,38 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using UnuBattleRodsR.Items.Materials;
 
 namespace UnuBattleRodsR.Items.Accessories.Metronomes
 {
-    public class SuperSlowMetronome : Metronome
+    public class UltraSlowMetronome : Metronome
     {
-        public override float bobberDamage => 0.2f;
-        public override float bobberSpeed => -0.15f;
+
+        public override float bobberDamage => 0.50f;
+        public override float bobberSpeed => -0.40f;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Super Slow Metronome");
-            // Tooltip.SetDefault("Increases fishing damage by 20%, but decreases bob speed by 15%");
+            // DisplayName.SetDefault("Hyper Fast Metronome");
+            // Tooltip.SetDefault("Increases bob speed by 30%, but decreases fishing damage by 26%");
             Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.value = Item.sellPrice(0,1,50,0);
-            Item.rare = 4;
+            Item.value = Item.sellPrice(0,3,00,0);
+            Item.rare = 6;
         }
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddRecipeGroup("UnuBattleRodsR:HMTier1Bars", 15);
-            recipe.AddIngredient(Mod,"SlowMetronome", 1);
+            recipe.AddIngredient<FractaliteBar>(5);
+            recipe.AddIngredient(Mod,"HyperSlowMetronome", 1);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
 
             recipe = CreateRecipe();
-            recipe.AddIngredient(Mod, "SuperFastMetronome");
+            recipe.AddIngredient(Mod, "UltraFastMetronome");
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
         }

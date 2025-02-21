@@ -16,8 +16,6 @@ namespace UnuBattleRodsR.Items.Accessories.Other
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            // DisplayName.SetDefault("Sinker");
-            // Tooltip.SetDefault("Makes bobbers Sink into water when cast. Does not allow for Fishing.\nAlso, 5% Bob speed and Fishing damage increase if the player is underwater.");
             Item.ResearchUnlockCount = 1;
         }
 

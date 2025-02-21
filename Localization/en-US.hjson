@@ -3295,6 +3295,34 @@ Mods: {
 					Super effective against Bosses!
 					'''
 			}
+
+			UltraFastMetronome: {
+				DisplayName: Ultra Fast Metronome
+				Tooltip: Increases bob speed by 50%, but decreases fishing damage by 40%
+			}
+
+			UltraSlowMetronome: {
+				DisplayName: Ultra Slow Metronome
+				Tooltip: Increases fishing damage by 50%, but decreases bob speed by 40%
+			}
+
+			DarkSinker: {
+				DisplayName: Dark Sinker
+				Tooltip:
+					'''
+					Makes bobbers Sink into water when cast. Does not allow for Fishing.
+					Also, 30% Bob speed and Fishing damage increase if the player is underwater
+					'''
+			}
+
+			SuperSinker: {
+				DisplayName: Super Sinker
+				Tooltip:
+					'''
+					Makes bobbers Sink into water when cast. Does not allow for Fishing.
+					Also, 15% Bob speed and Fishing damage increase if the player is underwater
+					'''
+			}
 		}
 
 		Prefixes: {

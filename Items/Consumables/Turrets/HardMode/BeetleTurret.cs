@@ -28,7 +28,10 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int RealProjectileID => ModContent.ProjectileType<Beetle>();
         public override int Level => 1;
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             List<int> result = new List<int>();
@@ -104,11 +107,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
     public class EmptyBeetleTurretV1 : BaseEmptyTurret
     {
 
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -129,11 +134,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
     public class BeetleTurretV1 : BeetleTurret
     {
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV1>();
-        
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -162,10 +169,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV1>();
         public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -186,10 +196,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
     public class EmptyBeetleTurretV2 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -211,10 +224,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV2>();
         public override int Level => 2;
         public override int DurationInTicks => 25200;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -244,10 +261,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
         public override int Level => 2;
         public override int DurationInTicks => 25200;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -268,10 +289,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
     public class EmptyBeetleTurretV3 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Red;
@@ -295,10 +319,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeetleTurretV3>();
         public override int Level => 3;
         public override int DurationInTicks => 36000;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -328,10 +355,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int RealProjectileID => ModContent.ProjectileType<BlazeBeetleProjectile>();
         public override int Level => 3;
         public override int DurationInTicks => 36000;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;

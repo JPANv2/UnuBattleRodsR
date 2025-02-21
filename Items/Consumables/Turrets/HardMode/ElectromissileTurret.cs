@@ -16,10 +16,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 {
     public class EmptyElectromissileTurret : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;
@@ -53,10 +56,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyElectromissileTurret>();
         public override int DurationInTicks => 36000;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;

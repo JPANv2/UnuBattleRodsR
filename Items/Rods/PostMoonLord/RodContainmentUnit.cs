@@ -99,7 +99,7 @@ namespace UnuBattleRodsR.Items.Rods.PostMoonLord
             recipe.AddIngredient(ModContent.ItemType<DragonMixBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<FractaliteBattlerod>());
             recipe.AddIngredient(ModContent.ItemType<RegalSistersBattlerod>());
-            recipe.AddIngredient(ModContent.ItemType<HeartOfMillions>());
+            recipe.AddIngredient(ModContent.ItemType<HeartOfMillions>(),10);
             recipe.AddIngredient(ItemID.Cobweb, 5);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

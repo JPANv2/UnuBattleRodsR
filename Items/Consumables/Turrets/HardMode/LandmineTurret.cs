@@ -16,10 +16,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
     public class EmptyLandmineTurret : BaseEmptyTurret
     {
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;
@@ -51,7 +55,10 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override int Level => 2;
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyLandmineTurret>();
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override List<int> ShootRealProjectile(ActiveTurret turretData, Projectile parent)
         {
 
@@ -69,7 +76,6 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;

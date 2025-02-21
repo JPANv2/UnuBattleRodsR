@@ -28,6 +28,11 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int RealProjectileID => ProjectileID.Bee;
         public override int Level => 1;
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
+
         public override List<int> ShootRealProjectile(FishPlayer.ActiveTurret turretData, Projectile parent)
         {
             List<int> result = new List<int>();
@@ -100,10 +105,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptyBeeTurretV1 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -125,10 +133,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     {
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -150,10 +162,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     {
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
         public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -181,10 +197,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
     {
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV1>();
         public override int RealProjectileID => ModContent.ProjectileType<FireBee>();
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Blue;
@@ -204,10 +224,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptyBeeTurretV2 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -231,10 +254,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 2;
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
         public override int DurationInTicks => 25200;
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -258,10 +284,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int DurationInTicks => 25200;
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
         public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
-            base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
+            base.SetDefaults();           
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -291,10 +320,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int DurationInTicks => 25200;
         public override int EmptyTurretType => ModContent.ItemType<EmptyBeeTurretV2>();
         public override int RealProjectileID => ModContent.ProjectileType<FireBee>();
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.LightRed;
@@ -315,10 +348,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
 
     public class EmptyBeeTurretV3 : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -344,10 +380,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 3;
         public override int DurationInTicks => 36000;
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -372,11 +411,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int RealProjectileID => ModContent.ProjectileType<BoneeBee>();
         public override int Level => 3;
         public override int DurationInTicks => 36000;
-
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;
@@ -407,10 +448,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.NormalMode
         public override int Level => 3;
         public override int DurationInTicks => 36000;
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
-            base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
+            base.SetDefaults();            
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Yellow;

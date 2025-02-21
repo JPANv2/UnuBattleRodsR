@@ -22,7 +22,7 @@ namespace UnuBattleRodsR.Items.Accessories.Wires
         {
             Item.width = 16;
             Item.height = 16;
-            Item.value = Item.sellPrice(0, 1, 00, 0);
+            Item.value = Item.sellPrice(1, 0, 0, 0);
             Item.rare = ItemRarityID.Expert;
             Item.accessory = true;
         }
@@ -30,7 +30,7 @@ namespace UnuBattleRodsR.Items.Accessories.Wires
         {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient<WireTransferGold>();
-            recipe.AddIngredient<HeartOfMillions>();
+            recipe.AddIngredient<HeartOfMillions>(3);
             recipe.Register();
         }
         public override void UpdateEquip(Player player)

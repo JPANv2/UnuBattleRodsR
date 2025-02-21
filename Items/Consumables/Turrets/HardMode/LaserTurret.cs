@@ -15,10 +15,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 {
     public class EmptyLaserTurret : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;
@@ -76,10 +79,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             return new List<int>();
         }
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Pink;
@@ -99,10 +105,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
 
     public class EmptyDoubleLaserTurret : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 999;
@@ -171,10 +180,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.HardMode
             return result;
         }
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.maxStack = 999;

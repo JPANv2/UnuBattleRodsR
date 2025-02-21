@@ -16,10 +16,13 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
 {
     public class EmptyNavalArtillery : BaseEmptyTurret
     {
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
-            base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
+            base.SetDefaults();            
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Red;
@@ -55,10 +58,14 @@ namespace UnuBattleRodsR.Items.Consumables.Turrets.PostMoonLord
 
         public override int EmptyTurretType => ModContent.ItemType<EmptyNavalArtillery>();
         public override int DurationInTicks => 36000;
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.ResearchUnlockCount = 20;
             Item.width = 16;
             Item.height = 16;
             Item.rare = ItemRarityID.Red;

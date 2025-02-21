@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Configs;
+using UnuBattleRodsR.Items.Accessories.Hooks;
 using UnuBattleRodsR.Items.Accessories.Other;
 using UnuBattleRodsR.Items.Consumables.Baits.DebuffBaits;
 using UnuBattleRodsR.Items.Potions;
@@ -147,6 +148,10 @@ namespace UnuBattleRodsR.NPCs.TownNPC
             shop.Add(
                 new NPCShop.Entry(
                     new Item(ModContent.ItemType<TurretTrigger>()) { shopCustomPrice = 100, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
+                );
+            shop.Add(
+                new NPCShop.Entry(
+                    new Item(ModContent.ItemType<Wormicide>()) { shopCustomPrice = 50, shopSpecialCurrency = UnuBattleRodsR.fishSteaksCurrencyID })
                 );
             shop.Add(
                   new NPCShop.Entry(
@@ -428,6 +433,18 @@ namespace UnuBattleRodsR.NPCs.TownNPC
                 new NPCShop.Entry(
                   new Item(ModContent.ItemType<BetsyCurseMasterBait>()), Condition.DownedMoonLord)
               );
+            shop.Add(
+               new NPCShop.Entry(
+                   new Item(ModContent.ItemType<FrostfireApprenticeBait>()), Condition.DownedStardustPillar, Condition.Hardmode, Condition.NotDownedMechBossAny)
+               );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FrostfireBait>()), Condition.DownedStardustPillar, Condition.DownedMechBossAny, Condition.NotDownedMoonLord)
+              );
+            shop.Add(
+                new NPCShop.Entry(
+                  new Item(ModContent.ItemType<FrostfireMasterBait>()), Condition.DownedMoonLord)
+                );
             shop.Add(
                 new NPCShop.Entry(
                     new Item(ModContent.ItemType<SolarfireApprenticeBait>()), Condition.DownedSolarPillar, Condition.Hardmode, Condition.NotDownedMechBossAny)

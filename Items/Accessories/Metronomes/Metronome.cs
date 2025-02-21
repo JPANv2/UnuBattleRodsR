@@ -13,8 +13,8 @@ namespace UnuBattleRodsR.Items.Accessories.Metronomes
 {
     public abstract class Metronome : ModItem
     {
-        public float bobberDamage = 0f;
-        public float bobberSpeed = 0f;
+        public virtual float bobberDamage => 0f;
+        public virtual float bobberSpeed => 0f;
         public override void SetDefaults()
         {
             Item.width = 16;
