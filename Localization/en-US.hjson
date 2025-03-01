@@ -93,6 +93,7 @@ Mods: {
 
 		Info: {
 			NoRod: No Battlerod Held!
+			NoSticky: Not Sticky!
 			NoBobber: No Bobber Out!
 			NoStuckBobber: No Stuck Bobber!
 			Tension: Tension = {0}
@@ -2209,7 +2210,7 @@ Mods: {
 					'''
 					Triple-Gear Reel
 					Slow Gears: Decreases reeling acceleration and max speed by 20%/40%/60%
-					Fast Gears: Increases reeling acceleration and max speed by 20%/50%/60%
+					Fast Gears: Increases reeling acceleration and max speed by 20%/40%/60%
 					Getting there in tech!
 					'''
 			}

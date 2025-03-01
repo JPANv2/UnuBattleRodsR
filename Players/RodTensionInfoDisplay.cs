@@ -15,17 +15,18 @@ namespace UnuBattleRodsR.Players
     {
         public override bool Active()
         {
-            //return Main.LocalPlayer.GetModPlayer<FishPlayer>().accCurrentTension;
-            return true;
+            if(Main.LocalPlayer.TryGetModPlayer<FishPlayer>(out FishPlayer fp))
+                return fp.IsBattlerodHeld;
+            return false;
         }
 
         public override string DisplayValue(ref Color displayColor, ref Color displayShadowColor)
         {
             FishPlayer fp = Main.LocalPlayer.GetModPlayer<FishPlayer>();
-            if (!fp.IsBattlerodHeld)
+            if (fp.TurretMode)
             {
                 displayColor = InactiveInfoTextColor;
-                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoRod").Value;
+                return Language.GetOrRegister("Mods.UnuBattleRodsR.Info.NoSticky").Value;
             }
             if (fp.NumberOfSpawnedBobbers == 0)
             {

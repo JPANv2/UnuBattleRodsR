@@ -844,12 +844,14 @@ namespace UnuBattleRodsR
                 {
                 }
             });
-            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()
+            FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGrouping()
             {
                 key = "Sinker",
-                mainItem = ModContent.ItemType<Sinker>(),
                 accessoryTypes = new List<int>
                 {
+                    ModContent.ItemType<DarkSinker>(),
+                    ModContent.ItemType<SuperSinker>(),
+                    ModContent.ItemType<Sinker>()
                 }
             });
             FishermansKit.allowedAccessories.Add(new FishermansKit.AccessoryGroupingWithTop()

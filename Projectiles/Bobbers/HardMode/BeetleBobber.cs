@@ -51,7 +51,7 @@ namespace UnuBattleRodsR.Projectiles.Bobbers.HardMode
             {
                 int proj = Mod.Find<ModProjectile>("Beetle").Type;
                 float kb = 5.0f;
-                int dmg = (int)(shooter.DamagePerStuckOrTurretBobber*2.5f);
+                int dmg = (int)(shooter.DamagePerStuckOrTurretBobber*1.25f);
 
                 double angle = Main.rand.NextDouble() * Math.PI * 2;
                 Vector2 newPos = new Vector2(npc.Center.X, npc.Center.Y);

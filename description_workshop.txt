@@ -1,0 +1,33 @@
+The Battlerods Experience, but re-balanced to make the game fairer.
+
+Includes many new features including:
+ - Total rework of the damage provided by rods: Most of them, when used normally and with tier-appropriate gear, produce about the same boss vanquishing times as their ranged and magic counterparts.
+ - Tension reworked: Damage is now done by applying tension to the rod, by reeling in an enemy. Balance out the reeling in and the relaxing of the wire to defeat bosses. By default, the old bobbing damage no longer occurrs on bosses.
+	- Tension applies a multiplier to Bob Speed or Damage (or both, not recommended) depending on config. Most rods go from 1x to 2x damage/speed, but some go further beyond! 
+	- Tension goes from green, to yellow, purple and then red when maximum is reached. Reel in too much on red and the line breaks!
+	- Escalation was replaced with Over Tension, where after red tension, you can keep reeling for even more damage!
+	   - The potions and reels that geve escalation now give Over Tension and max line tension.
+	- New items were added to change the tension applied in the rod, such as the Reel accessories, and the Tension Oil potion.
+ - New ammo screen for rods (optional), that allows you to take advantage of the true power of baits, discardables and (new) turrets.
+ - New ammo type, turrets, that allow for bobbers to spread new (existing) projectiles, besides whatever ones they do by default.
+   - Turrets, for most part, are crafted empty, and must be recharged at a Recharger, which takes the empty turret and produces a recharged version after a time. Most require items to recharge, that may or may not be consumed on the process.
+   - These Turrets were spread out in the progression, with the earliest made with iron, and the last ones with luminite. Some are more difficult to make than others, and one is even sold by the fish lady!
+   - Turrets drop the empty version on consumption, which you can then recharge for later use.
+- Most Discardables can now be crafted from equivalent items, such as Grenades for Grenade Bobbers and Molotov Cocktails for Molotov Bobbers, but some still can only be purchased.
+- Many new Miscelaneous items, such as the Worm Wings, Suspicious looking Fish Steak...
+- Keys for changing Gears on the Reels and Swap between Sticky and Turret mode.
+- Options in the server config for many things, including changing the balance of the rods for the old "balanced" Battlerods experience.
+
+And Returning features:
+ - Battle Rods, Fishing rods that do damage when the bobber attaches to the enemy, by bobbing at a certain speed. They come in many tiers, from the starter Wooden Battlerod to the Post-Moonlord Fractalite Battlerod.
+   - A special Battle Rod made with all other rods, the Rod Containment Unit, that can insta-kill any non-boss enemies, at a cost...
+   - Some rods were changed in tier, such as the Fragment Rods, which became accessible before Moon Lord.
+   - Post-Moonlord rods should carry you through Calamity Post-MoonLord tier.
+ - Its unique Fishing Damage Class and its new fishing emblems (speed or damage)
+ - Many accessories that can be equipped in the accessory slots or, later on, left on the piggy bank or safe, through the equipping of the Fisherman's Kit and its variants.
+   - Lures that increase or decrease the amount of bobbers your fishing rods have, including other mod's rods.
+   - Hooks, wires and shafts that provide a variety of effects.
+ - Ammo such as the Powered baits, baits that cause debuffs on enemies they are attached to (or nearby with the Bait Dispersers), and the Discardable Bobbers, that do an effect on line break.
+ - Many new fished crates that contain a variety of useful content, such as souls and ectoplasm in the Soul Crate, or Fragments and Luminite (after Moon Lord defeated) in the Luminite crate
+ - And, lastly, the Cooler Boss that drops a station to craft baits, an exclusive (situational) Battle Rod, and that grows stronger with the stage of the game you are on:
+	- Try fighting it Post-Moon Lord for a real challenge.

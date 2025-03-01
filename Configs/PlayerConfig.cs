@@ -76,12 +76,12 @@ namespace UnuBattleRodsR.Configs
 
         [Label("Bosses Break free from bobbers: When")]
         [Tooltip("If Boss tagged npcs should try to break the bobber around every MaxHP/[this] health lost. 0 and 1 disable it.")]
-        [DefaultValue(0), Range(0,100)]
+        [DefaultValue(4), Range(0,100)]
         public int bossBobberBreakHealthDivider;
 
         [Label("Bosses Break free from bobbers: How often")]
         [Tooltip("If Boss tagged npcs try to break free, how often should they succeed. 1/[this] chance. 0 disables it, 1 is guaranteed break at the above value")]
-        [DefaultValue(0), Range(0, 100)]
+        [DefaultValue(4), Range(0, 100)]
         public int bossBobberBreakChance;
 
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)

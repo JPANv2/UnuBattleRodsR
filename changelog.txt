@@ -1,0 +1,129 @@
+- Complete rewrite of the original BattleRods mod from the ground up;
+- Buffs
+  - Added the charming Walrusfish Buff for the light pet.
+  - Added Turret buff for seeing what turrets you have active.
+	- Turret buff lasts while the time of at least one active turret is greater than 0
+  - Added ImmunityDebuff, an invisible debuff that affects only npcs, removing their immunity to certain debuffs
+  - Fishing damage Buff for the fishing damage potion
+  - Tension oil Buff for the tension oil potion
+- UI
+  - Added a "dedicated ammo slots" section for the battlerods ammos, with its own simple ItemSlots UI
+    - Ammo in red slots will not be used up, but you can store some there if you want
+	- Ammo in blue slots will be consumed when appropriate, (on swing for baits and turrets, on breaking the line for discardables)
+  - Added a UI for the Recharger tiles, that limit the contents based on the object (empty turret) to be recharged
+- Configs
+  - Added a Dificulty Config, to configure several dificulty options:
+   - Dificulty (default vanilla) controls bob speed and damage for all rods
+     - Vanilla is the balanced version for base game Terraria
+	 - Experimental is where we will place nerfs that the we or the community requests of us before being placed in vanilla
+	 - Calamity is mostly the same as vanilla, but will balance for Calamity content, including post-moonlord
+	 - Battlerods is the original values for the rods, as overpowering as they were in the previous mod.
+   - Tension mode determines if tension is required for damage or not
+     - Tension only means any enemy will only be damaged from green tension upwards
+	 - Tension On Bosses (default) means boss-tagged npcs can only be damaged from green tension onwards, while regular enemies will not require tension to be damaged by bobs
+	 - No Tension means all enemies will be affected by regular bobs, regardless of tension
+   - Ammo Slots tells where the ammo must be placed to be used by rods
+     - Dedicated Only forces you to use the dedicated ammo slots below the inventory to place your ammos to use later
+	 - Dedicated First means it will use the ones on the dedicated ammo slot first, but if some slots remain, will use the ones in Terraria's Ammo slot
+	 - Ammo Only means it will only use the ones in the Terraria Ammo slot, ignoring the ammos in the dedicated slot
+	 - Ammo First means it will use the ones in Terraria ammo slot first, and then use the remaining from the dedicated slot
+	 - No Ammos disables the use of baits, discardables and turrets by all rods. (more challenging?)
+   - Toggle for the fish lady "secret" potion and bait shop (off by default)
+   - When bosses should break the line during their fights, default at each quarter health, with a 25% chance to break
+   - If the Frozen Debuff should apply to bosses (default false). Turn it on at your own risk.
+- Dusts
+	- Added Sweat as a subtle indicator of the tension being put on the rod. The more sweat, the closer it is to break
+- Items
+  - Accessories
+	- The Worm Wings, worm cape that allows flight.
+	- Fishing emblems, that drop from Wall of Flesh
+		- One for Bob speed (blue)
+		- One for Damage increase (yellow, like normal
+		  - Can convert one into the other at will
+	- Rusty hooks can now also be fished at the ocean, and can be crafted with sandpaper into regular Hooks from Terraria
+	- Wormicide can be now bought from the Fishlady as well
+	- The Ultra metronomes, for post-Moonlord
+	  - Ultra slow (+50% damage, -40% bob speed)
+	  - Ultra fast (+50% bob speed, -40% damage)
+	- Accessories that allow for +1 of each ammo, sold by the FishLady
+	  - Bait box for baits
+	  - Fish glue for discardables
+	  - Turret Trigger for turrets
+	- Two new versions of the Sinker
+	  - Super sinker, crafted on hardmode
+	  - Dark sinker, for post-moonlord
+	- The Throws, a family of accessories that allow you to halt the bobber with your mouse:
+	  - Targeted throw blocks the bobber and makes it fall down
+	  - Sticky targeted throw blocks the bobber and keeps it on the mouse position for as long as the mouse does not move
+	  - Magnetic targeted throw allows you to move the bobbers around
+	- Turret Dispenser, sold by the fish lady, allows for turret projectiles to spread baits
+	- The Fishermans kit allows you to make use of selected acessories from your inventories (including piggy bank, safe, defender's forge and void bag)
+	  - The items that can be used there are tagged with that information on the description tooltip
+	  - Exclusive items means that they cannot be "equipped" with others of the same category, only the first will be accepted.
+	- Reels are accessories that allow any rod to reel in and provide "gears" that increase or decrease the speed at which tension increases/decreases
+	  - Training Reel is the starting reel and provides only 20% increase/decrease
+	  - The Reel Simple has 20-40% increase/decrease in tension
+	  - Reel Advanced has 20-40-60% increase/decrease in tension
+	  - Reel Expert has 20-40-60-80% increased/decrease in tension
+	  - Lossless reel has 20-40-60-80-99% increase/decrease in tension (post moonlord) and also increases max tension by 15-60-135-240-375%
+	  - Mana reels were changed from previous, no longer providing escalation, but instead over-tension. Only on Over-tension does it spend mana
+		- Mana reel 25% increase/decrease in tension, minimum tension lowered by 20% and over tension of 20% of up to 20% damage increase over the max
+		- Stronger Mana reel 25-50-75% increase/decrease in tension, minimum tension lowered by 40% and over tension of 150% of up to 150% damage increase over the max
+		- Maximum Mana reel 25-50-75-99% increase/decrease in tension, minimum tension lowered by 60% and over tension of 300% of up to 300% damage increase over the max
+	  - The Vampiric wire and the Projectile canceling shaft now require Hearts of Millions to be crafted
+	  - Wire Transfers, a set of items that spend 99 copper/Silver/Gold to reduce damage made to you to a max of 399/199/99
+	    - And a Wire Transfer Platinum, that spends 1 copper/silver/gold/platinum to reduce damage made to you to a max of 399/199/99/9
+		  - The stronger the effect, the more money it will spend, always starting by spending the most expensive coin you own. Also gets funds from every terraria bank inventory, so keep some funds on a regular chest (or fish some crates after the boss fight!)
+	- Armor sets
+	  - Added the Lil'seidon armor set, providing near limit breath. It is pre-bosses.
+	  - Added the Bonee Armor set, which shoots Bonee Bees that inflict oil on contact. It is Post-skeletron
+	  - Added the Set Contaiment Set, combination of all armors, that requires Heart Of Millions and all Armors to craft. Shoots chainsaw bees that inflilct Solarfire
+	- Ammos
+	  - Many Discardable bobbers are now craftable. Examples include the Explosive and Dynamite bobbers.
+	  - Discardable Loaded Flintlock and Boomstick discardables, that are crafted from the flintlock/Boomstick and recharged at a Rechargers
+	  - Turrets
+	    - New type of ammo that shoots projectiles from the bobber (or from spreader projectiles in V2 and V3 versions) that damage the enemies on contact and can sometimes spread bait debuffs
+		- Obtained by crafting an empty version, which is then recharged at a Recharger.
+		- 13 base types, some with up to 6 variants!
+	- Crates
+	  - Each rod can now roll a specific or group of crates, allowing some pre-hardmode crates to be fished even in hardmode.
+	  - Added Event Crates to all events, each with their own event brand
+	  - Added Fruit Crates, Cobweb crate, Geode Crate, Dye crate, Flower crate, Lizhard crate and The Cratest Crate
+	- "Heart Of Millions", that drop from enemies over 1 million HP, one per million hp they have, used for many post-moonlord recipes
+	- Removed Buddyfish from the shop, making it unobtainable oustside of cheats. It was simply not balanceable.
+	- Rechargers, A furniture that allows you to (re)charge turrets and some other items by placing the empty version and a group of consumable item in the right-click opened ui.
+		- Bullets are spent by the 100s
+		- Bars by 15/25 depending on the turret
+		- Blocks by the 50s
+		- Potions by the 15
+		- Rods that produce recharged turrets are not spent, same with other weapons.
+	- BattleRods:
+	  - In pre-hardmode:
+		- Added the Gem Rods, made with each gem
+		  - Amber is not a gem for the prismatic battlerod.
+		- Added the Prismatic rod
+		- Added Startruck battlerod
+		- Added Deerclops Battlerod
+	  - In Hardmode
+		- Added Spider BattleRod
+		- Added the HardLight battlerod
+		- Added Dreamweaver Battlerod
+		- Added DeerStruck Battlerod
+		- Moved the Fragment Battlerods to be Pre-Moonlord
+	  - Post-Moonlord
+		- Added the Morally Wrong Battlerod
+		- Added an unobtainable Unusacies's Battlerod
+	- Every battlerod was rebalanced to the core, including adding differences between easy mode ore rods and hardmode ore rods
+	  - Many rods have more of one type of ammo they can use, culminating in 4 of each ammo in Morally Wrong and Rod Containment Unit
+	  - Bob Speeds will be further refined later on
+- All text is now Localizable into other languages
+- Tension display that shows if you have sticky bobbers, if you have a bobber out attached and the tension currently in the rod.
+- Battlerods Prefixes
+  - Several Prefixes were added to battlerods, including one for natural bait spread and rebalanced existing ones (some are still unbalanced)
+- Projectiles
+  - New types of Bees such as the Bonee Bee, as well as Spiders and even Fire Bats!
+  - Bobber changes:
+    - Bobbers now determine based on rod equipped their stats
+	- Bobs are somewhat random now, from +-25% of their starting speed.
+	- Tension mechanic, where you need to reel in to do damage (or more damage or faster damage) to your enemies. Core change, that makes battlerods much more active to play
+  - Added the Charming Walrusfish pet, a light pet that acts as a Charm of Myths when equipped.
