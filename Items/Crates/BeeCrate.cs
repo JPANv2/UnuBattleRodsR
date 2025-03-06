@@ -1,74 +1,41 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class BeeCrate : Crate
     {
+        protected override int LesserReplacement => ItemID.BottledHoney;
+
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Bee Crate");
             base.SetStaticDefaults();
             Item.ResearchUnlockCount = 10;
         }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            LesserReplacement = ItemID.BottledHoney;
-           // AddTooltip("Right-click to open.");
-            Item.value = Item.sellPrice(0,1,0,0);
+            // AddTooltip("Right-click to open.");
+            Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("BeeCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Hive, Main.rand.Next(5, 26));
-
-            if (NPC.downedQueenBee)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BeeWax, Main.rand.Next(5, 21));
-            }
-
-            if (Main.rand.Next(4) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Beenade, Main.rand.Next(3, 13));
-            }
-
-            if (Main.rand.Next(35) == 0)
-            {
-                switch (Main.rand.Next(3))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BeeGun);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BeeKeeper);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BeesKnees);
-                        break;
-                }
-                
-            }
-            if (Main.rand.Next(20) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.HoneyComb);
-            }
-
-            if(Main.rand.Next(50) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Nectar);
-            }
-            if (Main.rand.Next(50) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.HoneyedGoggles);
-            }
-
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Hive, 1, 5, 25));
+            itemLoot.Add(ItemDropRule.ByCondition(new DownedQueenBeeItemDropCondition(), ItemID.BeeWax, 1, 5, 20));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Beenade, 4, 3, 12));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(35, ItemID.BeeGun, ItemID.BeeKeeper, ItemID.BeesKnees));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.HoneyComb, 20));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Nectar, 50));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.HoneyedGoggles, 50));
         }
     }
 }

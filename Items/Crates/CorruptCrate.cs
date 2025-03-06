@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -20,81 +20,32 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("CorruptCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(2500) == 0 && Main.hardMode && NPC.downedPlantBoss)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ScourgeoftheCorruptor);
-            }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.DemoniteOre, 1, 5, 25));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ShadowScale, 3, 2, 8));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.RottenChunk, 5, 10, 30));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.VileMushroom, 3, 2, 8));
 
-            if (Main.hardMode && Main.rand.Next(25) == 0)
-            {
-                switch (Main.rand.Next(5))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.DartRifle);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ChainGuillotines);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ClingerStaff);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.PutridScent);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.WormHook);
-                        break;
-                }
-            }
+            IItemDropRule hardmodeRule = new LeadingConditionRule(new Conditions.IsHardmode());
+            hardmodeRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.CursedFlame, 3, 2, 7));
+            hardmodeRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(25, ItemID.DartRifle, ItemID.ChainGuillotines, ItemID.ClingerStaff, ItemID.PutridScent, ItemID.WormHook));
+            hardmodeRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemID.ScourgeoftheCorruptor, 2500));
+            itemLoot.Add(hardmodeRule);
 
-            if (Main.rand.Next(25) == 0)
-            {
-                switch (Main.rand.Next(5))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BandofStarpower);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Musket);
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MusketBall, 100);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Vilethorn);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BallOHurt);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ShadowOrb);
-                        break;
-                }
-            }
-
-            if (Main.hardMode && Main.rand.Next(3) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.CursedFlame, Main.rand.Next(2, 8));
-            }
-
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.DemoniteOre, Main.rand.Next(5, 26));
-            if (Main.rand.Next(3) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ShadowScale, Main.rand.Next(2, 9));
-            }
-            if (Main.rand.Next(5) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.RottenChunk, Main.rand.Next(10, 31));
-            }
-            if (Main.rand.Next(3) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.VileMushroom, Main.rand.Next(2, 9));
-            }
-            base.RightClick(player);
+            IItemDropRule musketRule = ItemDropRule.NotScalingWithLuck(ItemID.Musket);
+            musketRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MusketBall, 1, 100, 100), hideLootReport: true);
+            itemLoot.Add(new OneFromRulesRule(25,
+                ItemDropRule.NotScalingWithLuck(ItemID.BandofStarpower),
+                musketRule,
+                ItemDropRule.NotScalingWithLuck(ItemID.Vilethorn),
+                ItemDropRule.NotScalingWithLuck(ItemID.BallOHurt),
+                ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb)
+            ));
         }
     }
 }

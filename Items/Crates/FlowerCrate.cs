@@ -1,16 +1,15 @@
-﻿using Terraria.ModLoader;
+﻿using System;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
-using System.Collections.Generic;
-using System.Collections;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class FlowerCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults(); Item.ResearchUnlockCount = 10;
@@ -21,12 +20,25 @@ namespace UnuBattleRodsR.Items.Crates
             base.SetDefaults();
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("FlowerCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            List<int> flowers = new List<int>()
+            // Do not drop normal crate loot
+            //base.ModifyItemLoot(itemLoot);
+
+            IItemDropRule equipmentRule = new OneFromWeightedRulesRule(10,
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.AbigailsFlower), 1.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.FlowerofFire), 1.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.JungleRose), 1.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.NaturesGift), 1.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.ObsidianRose), 1.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.FlowerBoots), 3.0)
+            );
+            equipmentRule.OnFailedRoll(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.FlowerofFrost, 10));
+            itemLoot.Add(equipmentRule);
+
+            int[] flowers =
             {
                 ItemID.Daybloom,
                 ItemID.Moonglow,
@@ -37,53 +49,17 @@ namespace UnuBattleRodsR.Items.Crates
                 ItemID.Shiverthorn,
                 ItemID.Sunflower,
             };
-            List<int> flowerSeeds = new List<int>()
-            {
-                ItemID.FlowerPacketWild
-            };
-            for(int i = 4041; i <= 4048; i++)
-            {
-                flowerSeeds.Add(i);
-            }
+            IItemDropRule flowerRule = new OneFromRulesRule(1, flowers.Select(type => ItemDropRule.NotScalingWithLuck(type, 1, 1, 3)).ToArray());
 
-            if (Main.rand.NextBool(10))
-            {
-                switch (Main.rand.Next(8)) {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.AbigailsFlower, 1);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.FlowerofFire, 1);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.JungleRose, 1);
-                        break;
-                    case 4:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.NaturesGift, 1);
-                        break;
-                    case 5:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.ObsidianRose, 1);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.FlowerBoots, 1);
-                        break;
-                }
-            }else if (Main.hardMode && Main.rand.NextBool(10))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.FlowerofFrost, 1);
-            }
+            IItemDropRule seedsRule = new OneFromRulesRule(1, ItemID.Sets.flowerPacketInfo
+                .Select((value, type) => type)
+                .Where(type => type < ItemID.Count && ItemID.Sets.flowerPacketInfo[type] != null)
+                .Select(type => ItemDropRule.NotScalingWithLuck(type, 1, 1, 3))
+                .ToArray());
 
-            for (int i = 0; i < 3; i++)
-            {
-                if (Main.rand.NextBool())
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), flowers[Main.rand.Next(0, flowers.Count)], Main.rand.Next(1, 4));
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), flowerSeeds[Main.rand.Next(0, flowerSeeds.Count)], Main.rand.Next(1, 4));
-                }
-            }            
+            itemLoot.Add(new RepeatRules(3, 1,
+                new OneFromRulesRule(1, flowerRule, seedsRule)
+            ));
         }
-      }
-   }
+    }
+}

@@ -1,13 +1,12 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class BloodCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Blood Crate");
@@ -21,54 +20,28 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("BloodCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(10) == 0)
-            {
-                if (Main.rand.Next(2) == 0)
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.TopHat, 1);
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),3478, 1);
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),3479, 1);
-                }
-            }
-            if (Main.rand.Next(20) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MoneyTrough, 1);
-            }
-            if (Main.rand.Next(15) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SharkToothNecklace, 1);
-            }
-            if (Main.rand.Next(6) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Shackle, 1);
-            }
-            if (Main.rand.Next(6) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BloodMoonStarter, 1);
-            }
-            if (Main.rand.Next(12) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ZombieArm, 1);
-            }
-            if (Main.hardMode && Main.rand.Next(9) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Bananarang, 1);
-            }
-            if (Main.hardMode && Main.rand.Next(18) == 0)
-            { 
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SlapHand, 1);
-            }
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.ChumBucket, Main.rand.Next(1,5));
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ChumBucket, 1, 1, 4));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.MoneyTrough, 20));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SharkToothNecklace, 15));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Shackle, 6));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.BloodMoonStarter, 6));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ZombieArm, 12));
+
+            IItemDropRule brideVanityRule = ItemDropRule.NotScalingWithLuck(ItemID.TheBrideHat);
+            brideVanityRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.TheBrideDress));
+            itemLoot.Add(new OneFromRulesRule(10,
+                ItemDropRule.NotScalingWithLuck(ItemID.TopHat),
+                brideVanityRule
+            ));
+
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.Bananarang, 9));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.SlapHand, 18));
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using Terraria.ModLoader;
+﻿using System.Linq;
 using Terraria;
-using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 using UnuBattleRodsR.Players;
-using Terraria.Localization;
-using System;
-using rail;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -22,58 +18,22 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("TheCratestCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override bool CanRightClick()
         {
-            if (player.whoAmI != Main.myPlayer)
-            {
-                return;
-            }
-            List<string> crateKeys = new List<string>();
-            crateKeys.AddRange(player.GetModPlayer<FishPlayer>().fishedCrates.Keys);
-            if(crateKeys.Count == 0 || (crateKeys.Count == 1 && crateKeys[0].Equals(this.FullName)))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), Type, 1);
-                Main.NewText(Language.GetOrRegister("Mods.UnuBattleRodsR.Crate.Unable").Value, 255, 255, 0);
-                return;
-            }
-            int tries = 0;
-            int provided = 0;
-            while (tries < 10 && provided < 4)
-            {
-                string crate = crateKeys[Main.rand.Next(0, crateKeys.Count)];
-                if (!crate.Equals(this.FullName)){
-                    if (Int32.TryParse(crate, out int cid))
-                    {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), cid, Main.rand.Next(1, 5));
-                        provided++;
-                    }
-                    else
-                    {
-                        foreach (Item itm in ContentSamples.ItemsByType.Values)
-                        {
-                            if (itm.ModItem != null && itm.ModItem.FullName.Equals(crate))
-                            {
-                                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), itm.type, Main.rand.Next(1, 5));
-                                provided++;
-                                break;
-                            }
-                        }
-                    }
-                }
-                tries++;
-            }
-            if (provided == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), Type, 1);
-                Main.NewText(Language.GetOrRegister("Mods.UnuBattleRodsR.Crate.Unable").Value, 255, 255, 0);
-            }
-            return;
+            return Main.LocalPlayer.GetModPlayer<FishPlayer>().fishedCrates.Keys.Any(key => key != FullName) && base.CanRightClick();
+        }
+
+        public override void ModifyItemLoot(ItemLoot itemLoot)
+        {
+            // Do not drop normal crate loot
+            //base.ModifyItemLoot(itemLoot);
+
+            itemLoot.Add(new CratestCrateItemDropRule());
         }
     }
 }

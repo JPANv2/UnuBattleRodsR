@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using UnuBattleRodsR.Items.Crates;
@@ -23,23 +23,21 @@ namespace UnuBattleRodsR.NPCs
 
         public override void SetDefaults()
         {
-         
             base.NPC.width = 24;
             base.NPC.height = 24;
-            
+
             base.NPC.rarity = 2;
             base.NPC.HitSound = SoundID.NPCHit3;
             base.NPC.DeathSound = SoundID.NPCDeath6;
-           
-           
+
             this.Banner = 16;
             this.BannerItem = ItemID.MimicBanner;
             base.NPC.aiStyle = 25;
-          
+
             Main.npcFrameCount[base.NPC.type] = 24;
             this.AnimationType = 85;
 
-            if(Main.rand == null)
+            if (Main.rand == null)
             {
                 Main.rand = new Terraria.Utilities.UnifiedRandom();
             }
@@ -69,14 +67,15 @@ namespace UnuBattleRodsR.NPCs
                 base.NPC.knockBackResist = 0.1f;
             }
         }
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-
             bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                 new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
                 new FlavorTextBestiaryInfoElement("The Crate Mimic is a mean crate that attacks anyone that tries to open it.")
             });
         }
+
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             return 0f;
@@ -104,95 +103,16 @@ namespace UnuBattleRodsR.NPCs
             }
         }
 
-        /*public override void ModifyNPCLoot(NPCLoot npcLoot)
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-                
-        }*/
+            Crate.AddHealthPotionDrops(npcLoot);
+            Crate.AddBaitDrops(npcLoot);
 
-        public override void OnKill()
-        {
-            int id = 0; int stack = 0;
-
-            Crate.spawnBait(ref id, ref stack);
-            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, id, stack);
-            Crate.spawnHealthPotion(ref id, ref stack);
-            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, id, stack);
-
-            if (Main.rand.Next(3) == 0)
-            {
-                switch (Main.rand.Next(5))
-                {
-                    case 0:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.Sextant);
-                        break;
-                    case 1:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.FishermansGuide);
-                        break;
-                    case 2:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.WeatherRadio);
-                        break;
-                    case 3:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.DepthMeter);
-                        break;
-                    default:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.Compass);
-                        break;
-                }
-            }
-            else if(Main.rand.Next(5) == 0)
-            {
-                
-                    switch (Main.rand.Next(6))
-                    {
-                        case 1:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.AnglerHat);
-                            break;
-                        case 2:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.AnglerPants);
-                            break;
-                        case 3:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.HighTestFishingLine);
-                            break;
-                        case 4:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.AnglerVest);
-                            break;
-                        case 5:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.AnglerEarring);
-                            break;
-                        default:
-                            Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.TackleBox);
-                            break;
-                    }
-                
-
-            }
-            else
-            {
-                switch (Main.rand.Next(6))
-                {
-                    case 1:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.StarCloak);
-                        break;
-                    case 2:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.DualHook);
-                        break;
-                    case 3:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.MagicDagger);
-                        break;
-                    case 4:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.PhilosophersStone);
-                        break;
-                    case 5:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.CrossNecklace);
-                        break;
-                    default:
-                        Item.NewItem(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ItemID.TitanGlove);
-                        break;
-                }
-            }
-            
+            npcLoot.Add(new SequentialRulesNotScalingWithLuckRule(1,
+                ItemDropRule.OneFromOptionsNotScalingWithLuck(3, ItemID.Sextant, ItemID.FishermansGuide, ItemID.WeatherRadio, ItemID.DepthMeter, ItemID.Compass),
+                ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ItemID.AnglerHat, ItemID.AnglerVest, ItemID.AnglerPants, ItemID.HighTestFishingLine, ItemID.AnglerEarring, ItemID.TackleBox),
+                ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ItemID.StarCloak, ItemID.DualHook, ItemID.MagicDagger, ItemID.PhilosophersStone, ItemID.CrossNecklace, ItemID.TitanGlove)
+            ));
         }
     }
 }
-
-

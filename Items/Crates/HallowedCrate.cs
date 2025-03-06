@@ -1,7 +1,9 @@
-﻿using Terraria.ModLoader;
+﻿using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -16,74 +18,36 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("HallowedCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(2500) == 0 && Main.hardMode && NPC.downedPlantBoss)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.RainbowGun);
-            }
+            itemLoot.Add(new OneFromWeightedRulesRule(1,
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.CrystalShard, 1, 4, 12), 2.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.PixieDust, 1, 4, 12), 2.0),
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.UnicornHorn, 1, 2, 5), 1.0)
+            ));
 
-            if (Main.hardMode && Main.rand.Next(25) == 0)
-            {
-                switch (Main.rand.Next(5))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.FlyingKnife);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.CrystalVileShard);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.DaedalusStormbow);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BlessedApple);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.IlluminantHook);
-                        break;
-                }
-            }
+            IItemDropRule hardmodeRule = new LeadingConditionRule(new Conditions.IsHardmode());
+            hardmodeRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemID.RainbowGun, 2500));
+            hardmodeRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(25, ItemID.FlyingKnife, ItemID.CrystalVileShard, ItemID.DaedalusStormbow, ItemID.BlessedApple, ItemID.IlluminantHook));
+            itemLoot.Add(hardmodeRule);
 
-            switch (Main.rand.Next(5))
+            IItemDropRule postMechRule = new LeadingConditionRule(new Conditions.BeatAnyMechBoss());
+            postMechRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.HallowedBar, 1, 2, 12));
+            if (ModLoader.TryGetMod("ThoriumMod", out Mod thoriumMod) && thoriumMod.TryFind("StrangePlating", out ModItem strangePlating) && thoriumMod.TryFind("LifeCell", out ModItem lifeCell))
             {
-                case 0:
-                case 1:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.CrystalShard, Main.rand.Next(4,13));
-                    break;
-                case 2:
-                case 3:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.PixieDust, Main.rand.Next(4, 13));
-                    break;
-                default:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.UnicornHorn, Main.rand.Next(2, 6));
-                    break;
+                postMechRule.OnSuccess(new OneFromRulesRule(10,
+                    ItemDropRule.NotScalingWithLuck(strangePlating.Type, 1, 2, 6),
+                    ItemDropRule.NotScalingWithLuck(lifeCell.Type, 1, 1, 3)
+                ));
             }
-
-            if (NPC.downedMechBossAny)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.HallowedBar, Main.rand.Next(2, 13));
-                if (UnuBattleRodsR.thoriumPresent && Main.rand.Next(10) == 1)
-                {
-                    if(Main.rand.Next(2) == 1)
-                    {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:StrangePlating"), Main.rand.Next(2, 7));
-                    }
-                    else
-                    {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:LifeCell"), Main.rand.Next(1, 4));
-                    }
-                }
-            }
-            
-            base.RightClick(player);
+            itemLoot.Add(postMechRule);
         }
     }
 }

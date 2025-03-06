@@ -1,7 +1,9 @@
-﻿using Terraria.ModLoader;
+﻿using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -17,123 +19,29 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("LihzahrdCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(2500) == 0 && Main.hardMode && NPC.downedGolemBoss)
-            {
-                switch (Main.rand.Next(8))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Stynger);
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.StyngerBolt, Main.rand.Next(60, 100));
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GolemFist);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.EyeoftheGolem);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.StaffofEarth);
-                        break;
-                    case 4:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.PossessedHatchet);
-                        break;
-                    case 5:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.HeatRay);
-                        break;
-                    case 6:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SunStone);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Picksaw);
-                        break;
-                }
-            }
-            if (Main.rand.Next(100) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdAltar);
-            }
-            if (Main.rand.Next(20) == 0)
-            {
-                switch (Main.rand.Next(3))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdFurnace);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdPowerCell);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SolarTablet);
-                        break;
-                }
-            }
-            switch (Main.rand.Next(17))
-            {
-                case 0:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdBathtub);
-                    break;
-                case 1:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdBed);
-                    break;
-                case 2:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdBookcase);
-                    break;
-                case 3:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdCandelabra);
-                    break;
-                case 4:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdCandle);
-                    break;
-                case 5:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdChair);
-                    break;
-                case 6:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdChandelier);
-                    break;
-                case 7:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdChest);
-                    break;
-                case 8:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdClock);
-                    break;
-                case 9:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdDresser);
-                    break;
-                case 10:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdLamp);
-                    break;
-                case 11:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdLantern);
-                    break;
-                case 12:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdPiano);
-                    break;
-                case 13:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdSink);
-                    break;
-                case 14:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdSofa);
-                    break;
-                case 15:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.ToiletLihzhard);
-                    break;
-                default:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LihzahrdTable);
-                    break;
-            }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.LihzahrdBrick, 1, 10, 25));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.LihzahrdAltar, 100));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(20, ItemID.LihzahrdFurnace, ItemID.LihzahrdPowerCell, ItemID.SolarTablet));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ItemID.LihzahrdBathtub, ItemID.LihzahrdBed, ItemID.LihzahrdBookcase, ItemID.LihzahrdCandelabra, ItemID.LihzahrdCandle, ItemID.LihzahrdChair, ItemID.LihzahrdChandelier, ItemID.LihzahrdChest, ItemID.LihzahrdClock, ItemID.LihzahrdDresser, ItemID.LihzahrdLamp, ItemID.LihzahrdLantern, ItemID.LihzahrdPiano, ItemID.LihzahrdSink, ItemID.LihzahrdSofa, ItemID.ToiletLihzhard, ItemID.LihzahrdTable));
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.LihzahrdBrick, Main.rand.Next(10, 26));
-           
-            base.RightClick(player);
+            IItemDropRule styngerRule = ItemDropRule.NotScalingWithLuck(ItemID.Stynger);
+            styngerRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.StyngerBolt, 1, 60, 100), hideLootReport: true);
+            int[] golemDrops = [ItemID.GolemFist, ItemID.EyeoftheGolem, ItemID.StaffofEarth, ItemID.PossessedHatchet, ItemID.HeatRay, ItemID.SunStone, ItemID.Picksaw];
+            IItemDropRule postGolemRule = new LeadingConditionRule(new DownedGolemItemDropCondition())
+                .OnSuccess(new LeadingConditionRule(new Conditions.IsHardmode()));
+            postGolemRule.OnSuccess(new OneFromRulesRule(10,
+                [styngerRule, .. golemDrops.Select(type => ItemDropRule.NotScalingWithLuck(type))]
+            ));
+            itemLoot.Add(postGolemRule);
         }
     }
 }

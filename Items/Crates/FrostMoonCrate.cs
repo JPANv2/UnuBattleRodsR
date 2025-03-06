@@ -1,13 +1,12 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class FrostMoonCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Frost Moon Crate");
@@ -20,87 +19,29 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("FrostMoonCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.Next(3) == 0)
-            {
-                switch (Main.rand.Next(3))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ElfHat);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ElfShirt);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ElfPants);
-                        break;
-                }
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                    switch (Main.rand.Next(4))
-                    {
-                        case 0:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ChristmasTreeSword);
-                            break;
-                        case 1:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Razorpine);
-                            break;
-                        case 2:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.FestiveWings);
-                            break;
-                        default:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ChristmasHook);
-                            break;
-                    }
-                }
-            if (Main.rand.Next(10) == 0)
-            {
-                switch (Main.rand.Next(2))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),1910);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ChainGun);
-                        break;
-                }
-            }
-            if (Main.rand.Next(15) == 0)
-                {
-                    switch (Main.rand.Next(5))
-                    {
-                        case 0:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BlizzardStaff);
-                            break;
-                        case 1:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.NorthPole, (1));
-                            break;
-                        case 2:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SnowmanCannon, (1));
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Snowball, Main.rand.Next(25,100));
-                        break;
-                        case 3:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BabyGrinchMischiefWhistle, (1));
-                            break;
-                        default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ReindeerBells, (1));
-                            break;
-                    }
-                }
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(5) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.NaughtyPresent, (1));
-                    }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Present, 1, 1, 9));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.NaughtyPresent, 5));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(3, ItemID.ElfHat, ItemID.ElfShirt, ItemID.ElfPants));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(7, ItemID.ChristmasTreeSword, ItemID.Razorpine, ItemID.FestiveWings, ItemID.ChristmasHook));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(10, ItemID.ElfMelter, ItemID.ChainGun));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(15, ItemID.ChristmasTreeSword, ItemID.Razorpine, ItemID.FestiveWings, ItemID.ChristmasHook));
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Present, Main.rand.Next(1, 10));
+            IItemDropRule snowmanCannonRule = ItemDropRule.NotScalingWithLuck(ItemID.SnowmanCannon);
+            snowmanCannonRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.Snowball, 1, 25, 99), hideLootReport: true);
+            itemLoot.Add(new OneFromRulesRule(15,
+                ItemDropRule.NotScalingWithLuck(ItemID.BlizzardStaff),
+                ItemDropRule.NotScalingWithLuck(ItemID.NorthPole),
+                snowmanCannonRule,
+                ItemDropRule.NotScalingWithLuck(ItemID.BabyGrinchMischiefWhistle),
+                ItemDropRule.NotScalingWithLuck(ItemID.ReindeerBells)
 
-            base.RightClick(player);
-            }
+            ));
         }
     }
+}

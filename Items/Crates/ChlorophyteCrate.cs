@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -17,44 +17,23 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("ChlorophyteCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(2500) == 0 && Main.hardMode && NPC.downedPlantBoss)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.PiranhaGun);
-            }
-            if (Main.rand.Next(100) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TurtleShell);
-            }
-            if (Main.rand.Next(50) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Seedling);
-            }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ChlorophyteOre, 1, 5, 25));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.TurtleShell, 100));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Seedling, 50));
 
-            if (Main.hardMode && Main.rand.Next(25) == 0)
-            {
-                switch (Main.rand.Next(2))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Seedler);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ThornHook);
-                        break;
-                }
-            }
-
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ChlorophyteOre, Main.rand.Next(5, 26));
-           
-            base.RightClick(player);
+            IItemDropRule hardmodeRule = new LeadingConditionRule(new Conditions.IsHardmode());
+            hardmodeRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(25, ItemID.Seedler, ItemID.ThornHook));
+            hardmodeRule.OnSuccess(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemID.PiranhaGun, 2500));
+            itemLoot.Add(hardmodeRule);
         }
     }
 }

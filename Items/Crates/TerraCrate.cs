@@ -1,14 +1,14 @@
-﻿using Terraria.ModLoader;
+﻿using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class TerraCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Terra Crate");
@@ -21,40 +21,21 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("TerraCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if(Main.rand.Next(20) == 0)
-            {
-                List<int> possibleBrokens = new List<int>();
-                possibleBrokens.Add(ItemID.BrokenHeroSword);
-                /*     if (UnuBattleRodsR.thoriumPresent)
-                     {
-                         int bhf = UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroFragment");
-                         possibleBrokens.Add(bhf);
-                         possibleBrokens.Add(bhf);
-                         possibleBrokens.Add(bhf);
-                     }
-                     if (ModLoader.GetMod("ExpandedSentries") != null)
-                     {
-                         int bhs = UnuBattleRodsR.getItemTypeFromTag("ExpandedSentries:BrokenSentryParts");
-                         possibleBrokens.Add(bhs);
-                         possibleBrokens.Add(bhs);
-                     }*/
-                if (Main.rand.NextBool(8))
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TerraToilet, 1);
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), possibleBrokens[Main.rand.Next(possibleBrokens.Count)], 1);
-                }
-            }
-            
-            base.RightClick(player);
+            // Using OneFromWeightedRulesRule to facilitate adding weights later, unsure if the commented-out code for other mods' broken items was removed intentionally.
+            IItemDropRule brokenHeroRule = new OneFromWeightedRulesRule(1,
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.BrokenHeroSword), 1.0)
+            );
+
+            itemLoot.Add(new OneFromWeightedRulesRule(20,
+                new Tuple<IItemDropRule, double>(ItemDropRule.NotScalingWithLuck(ItemID.TerraToilet), 1.0),
+                new Tuple<IItemDropRule, double>(brokenHeroRule, 7.0)
+            ));
         }
     }
 }

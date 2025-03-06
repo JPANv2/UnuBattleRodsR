@@ -1,13 +1,12 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class FrostLegionCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Frost Legion Crate");
@@ -20,24 +19,17 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("FrostLegionCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-         player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SnowBlock, Main.rand.Next(1, 1000));
-         player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SnowGlobe, 1);
-         player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),1869, Main.rand.Next(1, 4));
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.rand.Next(2) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Snowball, Main.rand.Next(1, 1000));
-            }
-            if (Main.rand.Next(2) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.IceBlock, Main.rand.Next(1, 1000));
-            }
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SnowBlock, 1, 1, 999));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Snowball, 2, 1, 999));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.IceBlock, 2, 1, 999));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SnowGlobe));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Present, 1, 1, 3));
         }
     }
 }
