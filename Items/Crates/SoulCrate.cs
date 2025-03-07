@@ -1,9 +1,10 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using System;
-using Terraria.DataStructures;
-using Terraria.ModLoader.Config;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
+using UnuBattleRodsR.Items.Rods.HardMode;
+using UnuBattleRodsR.Items.Rods.PostMoonLord;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -21,105 +22,57 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("SoulCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (!NPC.AnyNPCs(NPCID.Wizard) && !NPC.AnyNPCs(NPCID.BoundWizard))
+            base.ModifyItemLoot(itemLoot);
+
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SoulofLight, 1, 3, 15));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SoulofNight, 1, 3, 15));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.SoulofFlight, 3, 3, 15));
+            itemLoot.Add(ItemDropRule.ByCondition(new DownedDestroyerDropCondition(), ItemID.SoulofMight, 3, 1, 8));
+            itemLoot.Add(ItemDropRule.ByCondition(new DownedTwinsDropCondition(), ItemID.SoulofSight, 3, 1, 8));
+            itemLoot.Add(ItemDropRule.ByCondition(new DownedSkeletronPrimeDropCondition(), ItemID.SoulofFright, 3, 1, 8));
+
+            IItemDropRule spectreRodRule = new LeadingConditionRule(new HasAnyItemsItemDropCondition(
+                ModContent.ItemType<SpectreBattlerod>(),
+                ModContent.ItemType<LifeforceBattlerod>(),
+                ModContent.ItemType<RodContainmentUnit>()
+            ));
+            spectreRodRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.Ectoplasm, 1, 1, 4));
+
+            if (ModLoader.TryGetMod("CalamityMod", out Mod calamityMod))
             {
-                if (Main.rand.NextBool(5))
+                if (calamityMod.TryFind("EssenceofEleum", out ModItem essenceOfEleum)
+                    && calamityMod.TryFind("EssenceofHavoc", out ModItem essenceOfHavoc)
+                    && calamityMod.TryFind("EssenceofSunlight", out ModItem essenceOfSunlight))
                 {
-
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        NPC.NewNPC(player.GetSource_ItemUse(Item), (int)player.Center.X, (int)player.Center.Y, NPCID.BoundWizard);
-                    }
-                    else
-                    {
-                        ModPacket req = Mod.GetPacket();
-                        req.Write((byte)UnuBattleRodsR.Message.SummonNPC);
-                        req.Write((int)NPCID.BoundWizard);
-                        req.Write((int)player.Center.X);
-                        req.Write((int)player.Center.Y);
-                        req.Write((int)Item.type);
-                        req.Send();
-                    }
+                    itemLoot.Add(new OneFromRulesRule(1,
+                        ItemDropRule.NotScalingWithLuck(essenceOfEleum.Type, 1, 1, 4),
+                        ItemDropRule.NotScalingWithLuck(essenceOfHavoc.Type, 1, 1, 4),
+                        ItemDropRule.NotScalingWithLuck(essenceOfSunlight.Type, 1, 1, 4)
+                    ));
                 }
-                else
+
+                if (calamityMod.TryFind("CoreofEleum", out ModItem coreOfEleum)
+                    && calamityMod.TryFind("CoreofHavoc", out ModItem coreOfHavoc)
+                    && calamityMod.TryFind("CoreofSunlight", out ModItem coreOfSunlight))
                 {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.WizardsHat);
+                    spectreRodRule.OnSuccess(new OneFromRulesRule(3,
+                        ItemDropRule.NotScalingWithLuck(coreOfEleum.Type, 1, 1, 4),
+                        ItemDropRule.NotScalingWithLuck(coreOfHavoc.Type, 1, 1, 4),
+                        ItemDropRule.NotScalingWithLuck(coreOfSunlight.Type, 1, 1, 4)
+                    ));
                 }
             }
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofLight, Main.rand.Next(3, 16));
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofNight, Main.rand.Next(3, 16));
+            itemLoot.Add(spectreRodRule);
 
-            if(Main.rand.Next(3) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofFlight, Main.rand.Next(3, 16));
-            }
-            if (Main.rand.Next(3) == 0 && NPC.downedMechBoss1)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofSight, Main.rand.Next(1, 9));
-            }
-            if (Main.rand.Next(3) == 0 && NPC.downedMechBoss2)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofFright, Main.rand.Next(1, 9));
-            }
-            if (Main.rand.Next(3) == 0 && NPC.downedMechBoss3)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SoulofMight, Main.rand.Next(1, 9));
-            }
-
-            if (FindSpectreRod(player))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Ectoplasm, Main.rand.Next(1, 5));
-            }
-
-            if (ModLoader.TryGetMod("CalamityMod", out Mod calamity))
-            {
-                switch (Main.rand.Next(3)) {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "EssenceofEleum").Type, Main.rand.Next(1, 5));
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "EssenceofHavoc").Type, Main.rand.Next(1, 5));
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "EssenceofSunlight").Type, Main.rand.Next(1, 5));
-                        break;
-                }
-                if (FindSpectreRod(player) && Main.rand.NextBool(3))
-                {
-                    switch (Main.rand.Next(3))
-                    {
-                        case 0:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "CoreofEleum").Type, Main.rand.Next(1, 5));
-                            break;
-                        case 1:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "CoreofHavoc").Type, Main.rand.Next(1, 5));
-                            break;
-                        default:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), new ItemDefinition("CalamityMod", "CoreofSunlight").Type, Main.rand.Next(1, 5));
-                            break;
-                    }
-                }
-            }
-
-            base.RightClick(player);
-        }
-
-        private bool FindSpectreRod(Player player)
-        {
-           for(int i = 0; i< 50; i++)
-            {
-                if(player.inventory[i].type == Mod.Find<ModItem>("SpectreBattlerod").Type || player.inventory[i].type == Mod.Find<ModItem>("LifeforceBattlerod").Type || player.inventory[i].type == Mod.Find<ModItem>("RodContainmentUnit").Type)
-                {
-                    return true;
-                }
-            }
-            return false;
+            IItemDropRule wizardRule = new DropNPCRule(NPCID.BoundWizard, 5);
+            wizardRule.OnFailedRoll(ItemDropRule.NotScalingWithLuck(ItemID.WizardsHat));
+            itemLoot.Add(new LeadingConditionRule(new NoExistingNPCsItemDropCondition(NPCID.Wizard, NPCID.BoundWizard)))
+                .OnSuccess(wizardRule);
         }
     }
 }

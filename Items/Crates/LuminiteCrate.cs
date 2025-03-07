@@ -1,8 +1,10 @@
-﻿using Terraria.ModLoader;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -20,89 +22,57 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("LuminiteCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (NPC.downedMoonlord)
+            base.ModifyItemLoot(itemLoot);
+
+            itemLoot.Add(new OneFromRulesRule(1, GetFragmentRules()));
+
+            IItemDropRule postMoonLordRule = new LeadingConditionRule(new DownedMoonLordItemDropCondition());
+            postMoonLordRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.LunarOre, 1, 4, 24));
+            postMoonLordRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(25, ItemID.Meowmere, ItemID.Terrarian, ItemID.StarWrath, ItemID.LastPrism, ItemID.LunarFlareBook, ItemID.SDMG, ItemID.FireworksLauncher, ItemID.MoonlordTurretStaff, ItemID.RainbowCrystalStaff));
+            postMoonLordRule.OnSuccess(new OneFromRulesRule(3,
+                ItemDropRule.NotScalingWithLuck(ItemID.MoonlordArrow, 1, 10, 50),
+                ItemDropRule.NotScalingWithLuck(ItemID.MoonlordBullet, 1, 10, 50)
+            ));
+
+            itemLoot.Add(postMoonLordRule);
+        }
+
+        private static IItemDropRule[] GetFragmentRules()
+        {
+            List<int> fragments = [ItemID.FragmentSolar, ItemID.FragmentVortex, ItemID.FragmentNebula, ItemID.FragmentStardust];
+
+            void AddToListIfExistsInMod(Mod mod, string name)
             {
-                if (Main.rand.Next(25) == 0)
+                if (mod.TryFind(name, out ModItem item))
                 {
-                    switch (Main.rand.Next(9))
-                    {
-                        case 0:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Meowmere);
-                            break;
-                        case 1:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Terrarian);
-                            break;
-                        case 2:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.StarWrath);
-                            break;
-                        case 3:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LastPrism);
-                            break;
-                        case 4:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LunarFlareBook);
-                            break;
-                        case 5:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SDMG);
-                            break;
-                        case 6:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.FireworksLauncher);
-                            break;
-                        case 7:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordTurretStaff);
-                            break;
-                        default:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.RainbowCrystalStaff);
-                            break;
-                    }
+                    fragments.Add(item.Type);
                 }
-
-                if (Main.rand.Next(3) == 0)
-                {
-                    if (Main.rand.Next(2) == 0)
-                    {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordBullet, Main.rand.Next(10, 51));
-                    }
-                    else
-                    {
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MoonlordArrow, Main.rand.Next(10, 51));
-                    }
-                }
-
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LunarOre, Main.rand.Next(4, 25));
             }
-            List<int> possibleFragments = new List<int>();
-            possibleFragments.Add(ItemID.FragmentSolar);
-            possibleFragments.Add(ItemID.FragmentNebula);
-            possibleFragments.Add(ItemID.FragmentStardust);
-            possibleFragments.Add(ItemID.FragmentVortex);
 
-            if (UnuBattleRodsR.thoriumPresent)
+            if (ModLoader.TryGetMod("ThoriumMod", out Mod thoriumMod))
             {
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:CelestialFragment"));
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:WhiteDwarfFragment"));
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:CometFragment"));
+                AddToListIfExistsInMod(thoriumMod, "CelestialFragment");
+                AddToListIfExistsInMod(thoriumMod, "WhiteDwarfFragment");
+                AddToListIfExistsInMod(thoriumMod, "CometFragment");
             }
-            if(ModLoader.TryGetMod("DBZMOD", out _))
+            if (ModLoader.TryGetMod("DBZMOD", out Mod dbzMod))
             {
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("DBZMOD:RadiantFragment"));
+                AddToListIfExistsInMod(dbzMod, "RadiantFragment");
             }
-            if (ModLoader.TryGetMod("SacredTools", out _))
+            if (ModLoader.TryGetMod("SacredTools", out Mod sacredTools))
             {
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("SacredTools:FragmentNova"));
+                AddToListIfExistsInMod(sacredTools, "FragmentNova");
             }
-            if (ModLoader.TryGetMod("ExpandedSentries", out _))
+            if (ModLoader.TryGetMod("ExpandedSentries", out Mod expandedSentries))
             {
-                possibleFragments.Add(UnuBattleRodsR.getItemTypeFromTag("ExpandedSentries:EclipseFragment"));
+                AddToListIfExistsInMod(expandedSentries, "EclipseFragment");
             }
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),possibleFragments[Main.rand.Next(possibleFragments.Count)] , Main.rand.Next(2, 21));
-
-            base.RightClick(player);
+            return fragments.Select(type => ItemDropRule.NotScalingWithLuck(type, 1, 2, 20)).ToArray();
         }
     }
 }

@@ -1,15 +1,14 @@
-﻿using Terraria.ModLoader;
+﻿using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
-using System.Collections.Generic;
-using System.Collections;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class FruitCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults(); Item.ResearchUnlockCount = 10;
@@ -20,12 +19,29 @@ namespace UnuBattleRodsR.Items.Crates
             base.SetDefaults();
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("FruitCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            List<int> fruits = new List<int>()
+            // Do not drop normal crate loot
+            //base.ModifyItemLoot(itemLoot);
+
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.JunimoPetItem, 1000));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Spaghetti, 1000, 1, 3));
+
+            IItemDropRule hardmodeRule = new LeadingConditionRule(new Conditions.IsHardmode());
+            hardmodeRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.Bananarang, 100));
+            hardmodeRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.BlessedApple, 250));
+
+            IItemDropRule specialFruitRule = new LeadingConditionRule(new Conditions.BeatAnyMechBoss());
+            specialFruitRule.OnSuccess(new SequentialRulesNotScalingWithLuckRule(25,
+                ItemDropRule.ByCondition(new HasntUsedAegisFruitItemDropCondition(), ItemID.AegisFruit, 10),
+                ItemDropRule.NotScalingWithLuck(ItemID.LifeFruit)
+            ));
+            hardmodeRule.OnSuccess(specialFruitRule);
+            itemLoot.Add(hardmodeRule);
+
+            int[] fruits =
             {
                 ItemID.Apple,
                 ItemID.Apricot,
@@ -52,39 +68,10 @@ namespace UnuBattleRodsR.Items.Crates
                 ItemID.Grapes,
             };
 
-            if(Main.rand.NextBool(1000))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), 5276, 1);
-            }
-            if (Main.rand.NextBool(1000))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Spaghetti, Main.rand.Next(1, 4));
-            }
-
-            if (Main.hardMode && Main.rand.NextBool(100))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Bananarang, 1);
-            }
-            if (Main.hardMode && Main.rand.NextBool(250))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BlessedApple, 1);
-            }
-            if (Main.hardMode && Main.rand.NextBool(25) && NPC.downedMechBossAny)
-            {
-                if(Main.rand.NextBool(10) && !player.usedAegisFruit)
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.AegisFruit, 1);
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.LifeFruit, 1);
-                }
-            }
-
-            for(int i = 0; i < 3; i++)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), fruits[Main.rand.Next(0, fruits.Count)], Main.rand.Next(1,4));
-            }            
+            IItemDropRule fruitsRule = new OneFromRulesRule(1, fruits
+                .Select(type => ItemDropRule.NotScalingWithLuck(type, 1, 1, 3))
+                .ToArray());
+            itemLoot.Add(new RepeatRules(3, 1, fruitsRule));
         }
-      }
-   }
+    }
+}

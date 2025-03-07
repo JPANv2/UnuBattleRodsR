@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -19,89 +19,16 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("GraniteCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            if(Main.rand.Next(20) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.NightVisionHelmet);
-            }
-            
-
-            if (Main.rand.Next(5) == 0)
-            {
-                switch (Main.rand.Next(3))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteGolemStatue);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.WomanStatue);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SkeletonStatue);
-                        break;
-                }
-            }
-
-            switch (Main.rand.Next(16))
-            {
-                case 0:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteBathtub);
-                    break;
-                case 1:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteBed);
-                    break;
-                case 2:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteBookcase);
-                    break;
-                case 3:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteCandelabra);
-                    break;
-                case 4:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteCandle);
-                    break;
-                case 5:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteChair);
-                    break;
-                case 6:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteChandelier);
-                    break;
-                case 7:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteChest);
-                    break;
-                case 8:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteClock);
-                    break;
-                case 9:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteDresser);
-                    break;
-                case 10:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteLamp);
-                    break;
-                case 11:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteLantern);
-                    break;
-                case 12:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GranitePiano);
-                    break;
-                case 13:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteSink);
-                    break;
-                case 14:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteSofa);
-                    break;
-                default:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.GraniteTable);
-                    break;
-            }
-
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Granite, Main.rand.Next(25, 76));
-           
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Granite, 1, 25, 75));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.NightVisionHelmet, 20));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ItemID.GraniteBathtub, ItemID.GraniteBed, ItemID.GraniteBookcase, ItemID.GraniteCandelabra, ItemID.GraniteCandle, ItemID.GraniteChair, ItemID.GraniteChandelier, ItemID.GraniteChest, ItemID.GraniteClock, ItemID.GraniteDresser, ItemID.GraniteLamp, ItemID.GraniteLantern, ItemID.GranitePiano, ItemID.GraniteSink, ItemID.GraniteSofa, ItemID.GraniteTable));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ItemID.GraniteGolemStatue, ItemID.WomanStatue, ItemID.SkeletonStatue));
         }
     }
 }

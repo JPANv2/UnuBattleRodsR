@@ -1,8 +1,8 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
-using UnuBattleRodsR.NPCs;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -18,109 +18,30 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("CobwebCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (!NPC.AnyNPCs(NPCID.Stylist) && !NPC.AnyNPCs(NPCID.WebbedStylist))
-            {
+            base.ModifyItemLoot(itemLoot);
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    NPC.NewNPC(player.GetSource_ItemUse(Item), (int)player.Center.X, (int)player.Center.Y, NPCID.WebbedStylist);
-                }
-                else
-                {
-                    ModPacket req = Mod.GetPacket();
-                    req.Write((byte)UnuBattleRodsR.Message.SummonNPC);
-                    req.Write((int)NPCID.WebbedStylist);
-                    req.Write((int)player.Center.X);
-                    req.Write((int)player.Center.Y);
-                    req.Write((int)Item.type);
-                    req.Send();
-                }
-            }
-            if (Main.rand.Next(100) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.WebSlinger);
-            }
-            if (Main.rand.Next(100) == 0 && Main.hardMode)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.RuneHat);
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.RuneRobe);
-            }
-            if (Main.rand.Next(50) == 0)
-            {
-                switch (Main.rand.Next(11))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.WizardHat);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.MagicHat);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GypsyRobe);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.AmethystRobe);
-                        break;
-                    case 4:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TopazRobe);
-                        break;
-                    case 5:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.RubyRobe);
-                        break;
-                    case 6:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SapphireRobe);
-                        break;
-                    case 7:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.EmeraldRobe);
-                        break;
-                    case 8:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.DiamondRobe);
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.AmberRobe);
-                        break;
-                }
-                
-            }else if (Main.rand.NextBool(12))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Robe);
-            }
-            if (Main.rand.NextBool(100) && NPC.downedAncientCultist)
-            {
-                switch (Main.rand.Next(4))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BlueLunaticRobe);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.BlueLunaticHood);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.WhiteLunaticHood);
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.WhiteLunaticRobe);
-                        break;
-                }
-            }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Cobweb, 1, 5, 25));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Silk, 1, 2, 10));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.WebSlinger, 100));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(50, ItemID.WizardHat, ItemID.MagicHat, ItemID.GypsyRobe, ItemID.AmethystRobe, ItemID.TopazRobe, ItemID.RubyRobe, ItemID.SapphireRobe, ItemID.EmeraldRobe, ItemID.DiamondRobe, ItemID.AmberRobe))
+                .OnFailedRoll(ItemDropRule.NotScalingWithLuck(ItemID.Robe, 12));
 
-            if (Main.hardMode && Main.rand.Next(5) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.SpiderFang, Main.rand.Next(1,6));
-            }
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.SpiderFang, 5, 1, 5));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.RuneHat, 100))
+                .OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.RuneRobe));
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Cobweb, Main.rand.Next(5, 26));
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Silk, Main.rand.Next(2, 11));
+            itemLoot.Add(new LeadingConditionRule(new DownedAncientCultistItemDropCondition()))
+                .OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(100, ItemID.BlueLunaticHood, ItemID.BlueLunaticRobe, ItemID.WhiteLunaticHood, ItemID.WhiteLunaticRobe));
 
-            base.RightClick(player);
+            itemLoot.Add(new LeadingConditionRule(new NoExistingNPCsItemDropCondition(NPCID.Stylist, NPCID.WebbedStylist)))
+                .OnSuccess(new DropNPCRule(NPCID.WebbedStylist, 1));
         }
     }
 }

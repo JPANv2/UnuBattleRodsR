@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -16,91 +16,18 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetDefaults()
         {
             base.SetDefaults();
-           // AddTooltip("Right-click to open.");
+            // AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("MeteorCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            /*if(Main.rand.Next(25) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),);
-            }*/
-            
-
-            if (Main.rand.Next(5) == 0)
-            {
-                switch (Main.rand.Next(3))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.KingStatue);
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.HeartStatue);
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.SkeletonStatue);
-                        break;
-                }
-            }
-
-            switch (Main.rand.Next(16))
-            {
-                case 0:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteBathtub);
-                    break;
-                case 1:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteBed);
-                    break;
-                case 2:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteBookcase);
-                    break;
-                case 3:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteCandelabra);
-                    break;
-                case 4:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteCandle);
-                    break;
-                case 5:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteChair);
-                    break;
-                case 6:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteChandelier);
-                    break;
-                case 7:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteChest);
-                    break;
-                case 8:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteClock);
-                    break;
-                case 9:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteDresser);
-                    break;
-                case 10:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteLamp);
-                    break;
-                case 11:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteLantern);
-                    break;
-                case 12:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoritePiano);
-                    break;
-                case 13:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteSink);
-                    break;
-                case 14:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteSofa);
-                    break;
-                default:
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MeteoriteTable);
-                    break;
-            }
-
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Meteorite, Main.rand.Next(15, 36));
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Meteorite, 1, 15, 35));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(5, ItemID.KingStatue, ItemID.HeartStatue, ItemID.SkeletonStatue));
+            itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ItemID.MeteoriteBathtub, ItemID.MeteoriteBed, ItemID.MeteoriteBookcase, ItemID.MeteoriteCandelabra, ItemID.MeteoriteCandle, ItemID.MeteoriteChair, ItemID.MeteoriteChandelier, ItemID.MeteoriteChest, ItemID.MeteoriteClock, ItemID.MeteoriteDresser, ItemID.MeteoriteLamp, ItemID.MeteoriteLantern, ItemID.MeteoritePiano, ItemID.MeteoriteSink, ItemID.MeteoriteSofa, ItemID.MeteoriteTable));
         }
     }
 }

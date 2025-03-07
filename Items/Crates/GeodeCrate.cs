@@ -1,8 +1,9 @@
-﻿using Terraria.ModLoader;
+﻿using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -19,63 +20,22 @@ namespace UnuBattleRodsR.Items.Crates
             base.SetDefaults();
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("GeodeCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            int rolls = Main.rand.Next(1,4);
-            for (int i = 0; i < rolls; i++)
-            {
-                switch (Main.rand.Next(6))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Topaz, Main.rand.Next(2, 6));
-                        break;
-                    case 1:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Amethyst, Main.rand.Next(2, 6));
-                        break;
-                    case 2:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Emerald, Main.rand.Next(2, 6));
-                        break;
-                    case 3:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Ruby, Main.rand.Next(2, 6));
-                        break;
-                    case 4:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Sapphire, Main.rand.Next(2, 6));
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Diamond, Main.rand.Next(2, 6));
-                        break;
-                }
-            }
-            if (Main.rand.NextBool(50))
-            {                
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.AmberMosquito);
-            }
-            if (Main.rand.NextBool(5))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Amber, Main.rand.Next(2, 6));
-            }
+            base.ModifyItemLoot(itemLoot);
 
-            if (Main.hardMode && Main.rand.NextBool(25))
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Geode, Main.rand.Next(2, 6));
-            }
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Amber, 5, 2, 5));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.AmberMosquito, 50));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.Geode, 25, 2, 5));
+            itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.QueenSlimeCrystal, 20))
+                .OnFailedRoll(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.CrystalShard, 1, 2, 5));
 
-            if (Main.hardMode)
-            {
-                if (Main.rand.NextBool(20))
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.QueenSlimeCrystal);
-                }
-                else
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.CrystalShard, Main.rand.Next(2, 6));
-                }
-            }
-            
-            base.RightClick(player);
+            int[] gems = [ItemID.Amethyst, ItemID.Topaz, ItemID.Sapphire, ItemID.Emerald, ItemID.Ruby, ItemID.Diamond];
+            itemLoot.Add(new RepeatRules(1, 3, 1, 1,
+                new OneFromRulesRule(1, gems.Select(type => ItemDropRule.NotScalingWithLuck(type, 1, 2, 5)).ToArray())
+            ));
         }
     }
 }

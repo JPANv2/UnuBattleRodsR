@@ -1,13 +1,14 @@
-﻿using Terraria.ModLoader;
+﻿using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
+using UnuBattleRodsR.ItemDrops;
 
 namespace UnuBattleRodsR.Items.Crates
 {
     public class EclipseCrate : Crate
     {
-
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Eclipse Crate");
@@ -20,84 +21,33 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("EclipseCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ButchersChainsaw ,1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.NeptunesShell, 1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.DeadlySphereStaff, 1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ToxicFlask, 1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.NailGun, 1);
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Nail, Main.rand.Next (25,76));
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.DeathSickle, 1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BrokenBatWing, 1);
-            }
-            if (Main.rand.Next(7) == 0)
-            {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MoonStone, 1);
-            }
-            if (Main.rand.Next(20) == 0 && NPC.downedGolemBoss)
-            {
-                if (UnuBattleRodsR.thoriumPresent)
-                {
-                    switch (Main.rand.Next(4))
-                    {
-                        case 0:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BrokenHeroSword, 1);
-                            break;
-                        case 1:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroScythe"), 1);
-                            break;
-                        case 2:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroStaff"), 1);
-                            break;
-                        default:
-                            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),UnuBattleRodsR.getItemTypeFromTag("ThoriumMod:BrokenHeroBow"), 1);
-                            break;
-                    }
+            base.ModifyItemLoot(itemLoot);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Nail, 3, 25, 75));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ButchersChainsaw, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.NeptunesShell, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.DeadlySphereStaff, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ToxicFlask, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.DeathSickle, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.BrokenBatWing, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.MoonStone, 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.NailGun, 7))
+                .OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.Nail, 1, 25, 75), hideLootReport: true);
 
-                }else
-                {
+            IItemDropRule downedGolemCondition = new LeadingConditionRule(new DownedGolemItemDropCondition());
+            downedGolemCondition.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MothronWings, 200));
+            downedGolemCondition.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.TheEyeOfCthulhu, 200));
 
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.BrokenHeroSword, 1);
-                }
-                if (Main.rand.Next(10) == 0)
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.MothronWings, 1);
-                }
-                if (Main.rand.Next(10) == 0)
-                {
-                    player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.TheEyeOfCthulhu, 1);
-                }
-
-            }
-            if (Main.rand.Next(3) == 0)
+            List<IItemDropRule> brokenHeroItems = [ItemDropRule.NotScalingWithLuck(ItemID.BrokenHeroSword)];
+            if (ModLoader.TryGetMod("ThoriumMod", out Mod thoriumMod) && thoriumMod.TryFind("BrokenHeroFragment", out ModItem brokenHeroFragment))
             {
-                player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.Nail, Main.rand.Next(25, 76));
+                brokenHeroItems.Add(ItemDropRule.NotScalingWithLuck(brokenHeroFragment.Type, 1, 1, 3));
             }
-            base.RightClick(player);
+            downedGolemCondition.OnSuccess(new OneFromRulesRule(20, [.. brokenHeroItems]));
+            itemLoot.Add(downedGolemCondition);
         }
     }
 }

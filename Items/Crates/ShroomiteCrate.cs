@@ -1,7 +1,7 @@
-﻿using Terraria.ModLoader;
-using Terraria;
+﻿using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace UnuBattleRodsR.Items.Crates
 {
@@ -19,28 +19,19 @@ namespace UnuBattleRodsR.Items.Crates
             //AddTooltip("Right-click to open.");
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.createTile = Mod.Find<ModTile>("ShroomiteCrate").Type;
-
         }
 
-        public override void RightClick(Player player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
+            base.ModifyItemLoot(itemLoot);
 
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player,Type,"crate"),ItemID.ShroomiteBar, Main.rand.Next(3, 10));
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.Mushroom, Main.rand.Next(1, 4));
-            player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GlowingMushroom, Main.rand.Next(1, 4));
-            if (Main.rand.NextBool(5))
-            {
-                switch (Main.rand.Next(2))
-                {
-                    case 0:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.GreenMushroom, Main.rand.Next(1, 4));
-                        break;
-                    default:
-                        player.QuickSpawnItem(new EntitySource_ItemOpen(player, Type, "crate"), ItemID.TealMushroom, Main.rand.Next(1, 4));
-                        break;
-                }
-            }
-            base.RightClick(player);
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.Mushroom, 1, 1, 3));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.GlowingMushroom, 1, 1, 3));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ItemID.ShroomiteBar, 1, 3, 9));
+            itemLoot.Add(new OneFromRulesRule(5,
+                ItemDropRule.NotScalingWithLuck(ItemID.GreenMushroom, 1, 1, 3),
+                ItemDropRule.NotScalingWithLuck(ItemID.TealMushroom, 1, 1, 3)
+            ));
         }
     }
 }
