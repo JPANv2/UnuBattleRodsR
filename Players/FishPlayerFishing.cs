@@ -381,6 +381,8 @@ namespace UnuBattleRodsR.Players
                     return;
 
                 }
+                if (ItemID.Sets.IsFishingCrate[itemDrop] || ItemID.Sets.IsFishingCrateHardmode[itemDrop])
+                    AddFishedCrate(ContentSamples.ItemsByType[itemDrop], 1);
             }
         }
 

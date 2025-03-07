@@ -12,6 +12,8 @@ namespace UnuBattleRodsR.Items.Crates
             // DisplayName.SetDefault("Chlorophyte Crate");
             base.SetStaticDefaults();
             Item.ResearchUnlockCount = 10;
+            ItemID.Sets.IsFishingCrate[Type] = true;
+            ItemID.Sets.IsFishingCrateHardmode[Type] = true;
         }
 
         public override void SetDefaults()

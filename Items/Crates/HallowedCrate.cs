@@ -12,7 +12,11 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Hallowed Crate");
-            base.SetStaticDefaults(); Item.ResearchUnlockCount = 10;
+            base.SetStaticDefaults();
+
+            Item.ResearchUnlockCount = 10;
+            ItemID.Sets.IsFishingCrate[Type] = true;
+            ItemID.Sets.IsFishingCrateHardmode[Type] = true;
         }
 
         public override void SetDefaults()

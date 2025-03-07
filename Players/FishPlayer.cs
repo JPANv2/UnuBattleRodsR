@@ -930,9 +930,14 @@ namespace UnuBattleRodsR.Players
             if(fishedCrates.Count > 0)
             {
                 TagCompound fishCrates = new TagCompound();
+                int i = 0;
                 foreach (string s in fishedCrates.Keys)
-                    fishCrates[s] = fishedCrates[s];
-                tag["fishedCrates"] = fishCrates;
+                {
+                    tag["fcrt." + i + ".t"] = s;
+                    tag["fcrt." + i + ".c"] = fishedCrates[s];
+                    i++;
+                }
+                tag["fcrt"] = i;
             }
 
             for(int i = 0; i < DedicatedBaits.Length; i++)
@@ -960,12 +965,15 @@ namespace UnuBattleRodsR.Players
         public override void LoadData(TagCompound tag)
         {
             fishedCrates.Clear();
-            if (tag.ContainsKey("fishedCrates"))
+            if (tag.ContainsKey("fcrt"))
             {
-                TagCompound fishCrates = tag.GetCompound("fishedCrates");
-                foreach(string s in fishedCrates.Keys)
+                int max = tag.GetInt("fcrt");
+                for(int i = 0; i < max; i++)
                 {
-                    fishedCrates[s] = fishCrates.GetInt(s);
+                    fishedCrates.Add(
+                        tag.GetString("fcrt." + i + ".t"),
+                        tag.GetInt("fcrt." + i + ".c")
+                        );
                 }
             }
 

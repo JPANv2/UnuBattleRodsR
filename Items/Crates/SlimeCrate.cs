@@ -12,7 +12,9 @@ namespace UnuBattleRodsR.Items.Crates
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Slime Crate");
-            base.SetStaticDefaults(); Item.ResearchUnlockCount = 10;
+            base.SetStaticDefaults();
+            Item.ResearchUnlockCount = 10;
+            ItemID.Sets.IsFishingCrate[Type] = true;
         }
 
         public override void SetDefaults()
